@@ -1,0 +1,8 @@
+
+Type Specification:
+- Strong, static typing that uses traits instead of classes.
+- Classes are just collections of specific traits.
+
+Fundamental Types:
+
+Higher-Level Types:

@@ -1,0 +1,74 @@
+
+Purpose:
+- Niceness?
+- Nice development iteration because of static checking.
+- Integrated state machines.
+- Scaling? Maybe not if multithreading isn't a big priority.
+- Definitely not performance.
+- A prototyping language maybe.
+
+Goals:
+- Syntax the way I want it.
+- Better one-liners.
+- Sensible use of braces and blocks.
+- Better mathematical support e.g. for trees, graphs, data types.
+- Very strong duck typing the way it should be done.
+- Structures with traits a la rust.
+- Great namespaces copied from python.
+- Optional non-garbage-collected memory blocks for high-performance apps.
+    - Hmm, maybe in a limited sense, not really a performance language I don't think.
+- Super easy interop with other languages, especially c and python.
+- Explicit mutability on variables.
+- Ingrained difference between passing references and copies.
+- Super easy typeless copy operation.
+- Integrated state machines.
+    - Either advanced type, library class, or language feature.
+- Lightweight exceptions in addition to static error handling like rust.
+- Functional things like partial applications.
+- And of course easy first-class functions.
+- Handling variables like python as names of course.
+- Module setup like python.
+- Built-in support for unit testing.
+- Stronger exception handling? Second return value for results?
+- Quick init of lists without commas, e.g. perl's qw(a b c d)?
+- Prefix for built-in functions to prevent clashes.
+    - Less name clashes in general.
+- Streamlined version of if __name__ == __main__
+
+Mainly:
+- Heavily structural typing and algebraic data types.
+- Error prevention using static checking, explicit mutability, and clear syntax.
+- Very strong pattern matching conditionals.
+
+Style:
+- ALL types, even built-in ones, use the same style, UpperCamelCase.
+- Variables and functions use snake_case.
+
+Anti-Goals:
+- Threading and multiprocessing support?
+- Conventional typing.
+- Conventional object orientation.
+- Large standard library.
+- Meta-programming and macros.
+- Evaluation of expressions as values.
+- Runtime creation of structure variables.
+- Super high performance.
+- Platform compatibility.
+- Complicated plugins and extensions.
+    - Think c++ templates + external libraries, or js hell-bloat.
+- JIT interpretation.
+    - Compiled and run with a build tool.
+
+Questions:
+- How to prevent common typing annoyances?
+    - For example, say a library image defines a type size, and now you also
+    want a type size, how is that resolved? What if there is an external type
+    that you want to extend or modify? What if you want to pass a type of your
+    own into a library function that only takes library types?
+    - What about the anti-pattern where you have to make a million different
+    versions of something to handle every possible type?
+- How to handle multi-typed containers?
+- Could we do something about dispatch functions? Like how callbacks always
+require the perfect set of arguments to run. Can we work around that?
+- What about removing type-associated methods completely and just using the
+universal function call syntax?

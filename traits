@@ -1,0 +1,46 @@
+
+Ideas:
+- Static checking is performed on traits instead of types.
+- Algebraic data types a la haskell.
+- Data is stored in structures.
+- Structures can be associated with functions.
+- Maybe they all can be wrapped under one type name.
+- Types can be checked for member variables or associated functions.
+- Runtime creation of new structure members is not allowed.
+- All definitions have to happen in the type definition.
+- No additional impl blocks as in rust.
+- No tacking on additional functions to basic types as in ruby.
+
+# A trait binds a name to a set of function prototypes.
+# If a variable has a trait, its functions are guaranteed to work.
+trait iterable {
+    item next()
+    void close()
+}
+
+# A datatype is a an algebraic, fundamental set of literals.
+datatype bool {
+    true, false
+}
+
+datatype int {
+    (defined in implementation)
+}
+
+# Types are high-level collections of data, traits, and loose vars and funcs.
+type mytype {
+    bool truthy
+    trait iterable {
+        item next() {
+        }
+        void close() {
+        }
+    }
+    fn myfunc() {
+    }
+}
+
+# What about conflicting types?
+int float a
+# I guess if they define the same functions they won't combine.
+# So if int and float both define add and numval or something they'll conflict.

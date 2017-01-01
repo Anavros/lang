@@ -1,0 +1,6 @@
+
+Ideas:
+- Built-in extern function that calls functions from other languages.
+
+extern python {
+}

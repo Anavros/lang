@@ -1,0 +1,8 @@
+
+Built-in functions have a prefixed name to distinguish from user names. They
+call special magic methods like python?
+
+
+.length() =>
+    (type).length()
+    len(type)? there's no need really

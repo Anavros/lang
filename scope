@@ -1,0 +1,12 @@
+
+Ideas:
+- More explicit global variables.
+
+[Python]
+global var1, var2
+var1 = True
+var2.obliviate()
+
+[]
+outside var1 = True
+outside var2.obliviate()

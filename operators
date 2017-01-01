@@ -1,0 +1,58 @@
+
+Notes:
+- We know we'll need at least some infix operators
+to keep things from getting too cluttered, but
+they are a bit difficult to work with. Partial
+applications get more complicated, symbols get
+overloaded with many possible meanings.
+- I don't think the bitwise operations are common
+enough to justify their own infix operators, or
+at least symbolic ones. They can still be infix if
+they're words I guess.
+- It would be nice if you could chain boolean
+operators like "if x == 1 or 2 or 3", where the
+subsequent expressions infer that x is still being
+used. Actually, in that case, it's even infering
+that the operation is '=='.
+- I wonder if that would also extend to
+expressions like "if x or y or z == 1". Maybe not,
+that's ambiguous if x or y are booleans.
+
+Operators:
+1 + 1 => 2
+2 - 1 => 1
+2 * 2 => 4
+4 / 2 => 2 or 2.0?
+2 ^ 3 => 8
+4 | 2 => 0 (mod operator?)
+4 % 2 => 2 (int division?)
+2 pow 3 => 8
+8 log 2 => 3
+2 bitor 1
+2 bitxor 1
+2 bitand 1
+2 bitnand 1
+1 in [1, 2, 3]
+x has y
+x is y
+
+1 == 1
+2 >= 1
+1 <= 2
+3 != 5
+2 > 1
+1 < 2
+
+sum(1, 1)
+sum(2, -1)
+product(2, 2)
+divide? intdiv? div? divmod? mod?
+power(2, 3)
+log(8, 2)
+bitor(2, 1)
+bitxor(2, 1)
+bitand(2, 1)
+bitnand(2, 1)
+in(1, [1, 2, 3])
+has(x, y)
+is(x, y)

@@ -1,0 +1,41 @@
+
+import linkedlistnamespace
+
+type LinkedList {
+    traits is array
+    items has push, iter
+    new(*traits) {
+        ...
+        return ll
+    }
+    append(self, item) {
+        #if not all(item has traits)?
+        for t in traits {
+            panic if not <t item>
+        }
+        self.items.push(item)
+    }
+    nth() {}
+    remove(index) {}
+}
+
+def fill(LinkedList ll) {
+    ll.append(4)
+    # also works as linkedlistnamespace.append(ll, 4)
+    return ll
+}
+
+def consume(LinkedList ll) {
+    for item in ll {
+        # What assertions can we make about the contents of the list?
+        # Are they typechecked?
+        item += 1  # What if it's a string or a bool?
+        print(item)
+    }
+}
+
+def main() {
+    ll = LinkedList.new(<has intopt>)
+    ll = fill(ll)
+    consume(ll)
+}

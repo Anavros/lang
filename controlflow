@@ -1,0 +1,102 @@
+
+[Ideas]
+- If/Elif/Else (possibly renamed elif? for spacing purposes)
+- while condition ...
+- loop ... ('forever' loop?)
+- goto label?
+- break (from loop, to label?)
+- coroutines a la yielding in python but more general
+- switch case
+- for each in iter
+- for i over range
+- loop x times
+- definitely comprehensions, maybe even more general
+- pattern matching, maybe favored over if/else?
+    - match against traits or values
+- retry a subroutine?
+- loop with tests in middle, init parts at beginning, i.e. multi-part loops
+
+[Control Flow Operations]
+> Simple Conditionals
+    if condition {
+        f()
+    } else {
+        g()
+    }
+    f() if condition else g()
+> Loops
+    loop @outer {
+        f()
+        break if true
+        loop @inner {
+            if true {
+                break @outer
+            } else {
+                continue @inner
+            }
+        }
+    }
+    loop { f() }
+
+
+[Scratch]
+for x in list {
+}
+
+forever {
+}
+
+match obj {
+    obj.impl(quack): do_something_with_a_quacker(obj)
+}
+
+match val {
+    1 < val < 5: f()
+    5 < val: g()
+    _: x()
+}
+
+options = [
+    "cmd1"
+    "cmd2 args etc"
+]
+loop {
+    response = cmd.offer(options)
+    match response {
+        "cmd1": exec {
+            function1()
+            imperative_thing()
+            val = 4
+            etc
+        }
+        "cmd2": exec {
+        }
+    }
+}
+
+Consider:
+if condition {
+    f()
+} elif othercondition {
+    g()
+} else {
+    h()
+}
+
+Vs:
+match {
+    condition: f()
+    othercondition: g()
+    _: h()
+}
+
+In the simple case:
+if condition {
+    f()
+}
+f() if condition
+
+And:
+match {
+    condition: f()
+}

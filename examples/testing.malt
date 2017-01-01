@@ -1,0 +1,16 @@
+
+import malt
+
+def main() {
+    options = [
+        "stuff",
+    ]
+    loop {
+        response = malt.offer(options)
+        match (==) response {
+            "stuff": print("Correct!")
+        } else {
+            print("Raw input: {response._text}")
+        }
+    }
+}

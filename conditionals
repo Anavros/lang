@@ -1,0 +1,35 @@
+
+Conditionals in malt are limited to simple if expressions and matches. Matches
+replace switch statements and if/else trees.
+
+#Python3
+if conditional:
+    f()
+elif other:
+    g()
+else:
+    h()
+
+/*C*/
+switch(c) {
+    case 'f':
+        f();
+        break;
+    case 'g':
+        g();
+        break;
+    case 'h':
+        h();
+        break;
+}
+
+#Malt
+f() if conditional
+if conditional {
+    f()
+}
+match {
+    conditional: f()
+    other: g()
+    _: h()
+}

@@ -1,0 +1,27 @@
+
+Concept:
+- Brace-delimited blocks and colons do the same thing. Colons are for one line
+  and braces are for many.
+- Is it better than just using braces?
+- And how important are braces really?
+- There's also the concept of a prefix statement, where the statement comes
+  before the conditional.
+
+if true: f()
+if true {
+    f()
+}
+match var: 1 {
+    f()
+}
+match var: 1: f()
+
+Versus...
+
+if true { f() }
+match var { 1 { f() } }
+
+Versus...
+
+f() if true
+f() match var 1  # that one doesn't really work
