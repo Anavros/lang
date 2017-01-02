@@ -1,0 +1,36 @@
+
+# Would structs use parens because they involve
+# lists of expressions, not statements?
+struct Vertex(
+    # implied int from value?
+    int x=0,
+    int y=0,
+);
+
+struct Edge(v1=Vertex(), v2=Vertex());
+
+fun randomize(Vertex v) : Vertex {
+    v.x = randint(0, 10);
+    v.y = randint(0, 10);
+    return v;
+}
+
+fun generalrandomize(<v has x&y>) :: Something {
+    ...
+}
+
+# What if the compiler automatically inferred
+# which parameters were necessary from which
+# parameters were used?
+fun inferredtype(v) {
+    v.x, v.y;
+}
+# Compiler throws warning if function called with
+# a type that doesn't have x or y? Is this any
+# different from normal missing attribute errors
+# that happen at runtime? Can this happen at
+# compile time?
+v = Vertex(2, -2);
+e = Edge();
+inferredtype(v);  # compiles because v has x and y
+inferredtype(e);  # throws an error

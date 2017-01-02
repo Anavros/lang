@@ -5,7 +5,9 @@ Delimiters:
 - [ ] Brackets are used for various type constructs.
 - < > Angle brackets are reserved for comparison operators.
 
-- 
+Or:
+- ( ) Parens are for tuples and function applications.
+- [ ] Brackets are for lists and are also reused as type specs.
 
 fun example(int x) {
     statement1;
@@ -15,9 +17,17 @@ fun example(int x) {
 struct Point[N] {
     N x, y, z;
 }
+# Or
+struct Point[N] (N x, N y, N z);
 
 items = Vector[Int](1, 2, 3, 4, 5);
 tuple = (1, 2, 3);
 hashmap = (
     "a" = 1,
 )
+hashmap = (a=1, b=2, c=3);
+# Should maps allow omission of quotes for string keys?
+# Probably not.
+# But it does conflict with named arguments in functions.
+hashmap = [a=1, b=2, c=3];
+hashmap = [1='a', 2='b', 3='c'];
