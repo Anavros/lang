@@ -8,6 +8,8 @@ variable has a certain trait.
 - We want pretty light-weight lambda functions too.
 - Maybe have some way of making early returns more clear?
 
+Function Design:
+
 
 def myfunc(truthy b, iterable sexy a) {
     return if not b

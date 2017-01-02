@@ -1,8 +1,11 @@
 
-Built-in functions have a prefixed name to distinguish from user names. They
-call special magic methods like python?
+Built-in functions have a prefixed name to
+distinguish from user names. They call special
+magic methods like python?
 
+There might not be a need for magic methods if
+the functions are just normally named and added on
+an interface basis.
 
-.length() =>
-    (type).length()
-    len(type)? there's no need really
+But there could still be some low level functions
+that are included by default? Like print and so?

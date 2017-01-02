@@ -17,7 +17,7 @@ loop {
     break if not g()
 }
 
-# Looping on a Condition
+# Looping On a Condition
 loop if i < 10 {
     i += 1
 }
@@ -29,3 +29,11 @@ while i < 10 {
 }
 until i >= 10 {
 }
+
+# Looping n Times
+loop * 10 {
+}
+
+# Inline Loops
+print(x) for x in xs;
+Vector(x for x in xs);
