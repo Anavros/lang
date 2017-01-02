@@ -1,0 +1,57 @@
+
+data int {
+    # Implemented on a low level.
+}
+
+
+data float {
+    # Implemented on a low level.
+}
+
+
+data bool {
+    true, false
+}
+
+
+data char {
+}
+
+
+data string {
+}
+
+
+###
+A growable collection of any type of item.
+###
+type vector {
+    fun iter() => T {
+    }
+}
+# Should we make a distinction between concrete
+# types and containers? Containers have secondary
+# types tightly associated with them.
+container T array {
+    rawdata T contents
+    fun new(int size) => array {
+    }
+    fun at(int index) => T {
+        return rawdata[index]
+    }
+    fun push(T item) => void {
+        contents.append(item)
+    }
+}
+
+# Maybe we could just generalize that syntax, so
+# not only containers can use it. Some types might
+# be tied to a certain subtype but not be
+# specifically an item container.
+type [subtype T] vector {
+    val BASE_SIZE = 16
+    # Here's the classic clunky static typing
+    # syntax in play.
+    var array[T] contents = array.new(BASE_SIZE)
+    fun new() => ...
+}

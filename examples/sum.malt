@@ -1,0 +1,12 @@
+
+# There should be a way to indicate the absence of
+# a keyword argument.
+fun intsum(int glob items, min=?, max=?) => int {
+    total = 0;
+    for i in items {
+        total += i;
+    }
+    return min if given min and total < min;
+    return max if given max and total > max;
+    return total;
+}

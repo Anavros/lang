@@ -4,11 +4,43 @@ hashmap/dict
 statemachine
 
 compose array {
-    struct items = []
+    struct items = [];
     def next() {
     }
     def length() {
     }
     def sort() {
     }
+}
+
+Vector[Int] numbers;
+
+type Argument {
+    int position;
+    string key;
+    string value;
+    type cast;
+    fun new(int position, string key, string value,
+            type cast) => Argument {
+    }
+}
+
+# Should be able to handle 2D/3D and int/float points.
+type [subtype NUMCLASS] Point {
+    NUMCLASS x, y, z;
+}
+
+# Type-specific point classes.
+type [subtype Int] Point2D {
+    Int x, y;
+}
+
+# Needs an input that has integer x and y values.
+# Well, why doesn't it just ask for those directly?
+fun needs_int_point2D(int x, int y) {
+    print(x, y);
+}
+
+fun needs_int_point2D(Point2D point) {
+    print(point.x, point.y);
 }

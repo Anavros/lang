@@ -1,0 +1,23 @@
+
+Delimiters:
+- { } Braces denote blocks of statements. Each statement in a block terminates with a semicolon.
+- ( ) Parentheses show lists of expressions. Expressions are separated by commas. A comma may optionally follow the last item in a list.
+- [ ] Brackets are used for various type constructs.
+- < > Angle brackets are reserved for comparison operators.
+
+- 
+
+fun example(int x) {
+    statement1;
+    statement2;
+}
+
+struct Point[N] {
+    N x, y, z;
+}
+
+items = Vector[Int](1, 2, 3, 4, 5);
+tuple = (1, 2, 3);
+hashmap = (
+    "a" = 1,
+)

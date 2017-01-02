@@ -1,0 +1,31 @@
+
+# Python
+
+class Drink:
+    def __init__(self, liters, flavor):
+        self.liters = liters
+        self.flavor = flavor
+    def drink(self):
+        self.liters = max(0, self.liters-1)
+
+tea = Drink(1, "earthy yet spicy, grounded in reality")
+coffee = Drink(1, "warm and musty")
+tea.drink()
+
+
+# Malt
+struct Drink {
+    int liters;
+    string flavor;
+}
+
+# Should there be a syntax to describe that a
+# function is going to modify an input and return
+# it?
+fun drink(Drink d) => Drink {
+    d.liters = sum(d.liters, -1, min=0);
+    return d;
+}
+
+tea = Drink(1, "earthy yet spicy, grounded in reality");
+coffee = Drink(1, "warm and musty");

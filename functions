@@ -77,3 +77,15 @@ def int func(int a) { }
 def func(int a) => int { }
 func(int a) => void { }
 func(int a) { }
+func(int a) returns int { }
+
+# And anonymous functions?
+() => void { }
+lambda (int a) => void { }
+
+# Maybe use a decorator to define a function as an
+# entry point if the module is run directly.
+@entry
+def main() => void {
+    do_the_stuff()
+}

@@ -1,8 +1,21 @@
 
-Type Specification:
-- Strong, static typing that uses traits instead of classes.
-- Classes are just collections of specific traits.
+# Maybe types are just structs, and methods are
+# really just normal functions that take those
+# structs as their first parameter.
+# Then we can have a generic struct initialization
+# syntax.
 
-Fundamental Types:
+struct Point {
+    int x=0, y=0, z=0;
+}
 
-Higher-Level Types:
+p = Point(x=1, z=3);  # y=0 from default argument
+
+fun normalize(Point p) => Point {
+    ...
+}
+
+normalize(p)
+# Or, because of universal function calling
+# syntax:
+p.normalize()
