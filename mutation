@@ -1,0 +1,104 @@
+
+# Function arguments are passed as immutable
+# references by default. If the function
+# definition marks an argument as mutable, it may
+# mutate that argument. Args must be marked as
+# mutable when given as well for reading clarity.
+
+fun no_side_effects(MyType t) => Int {
+    return 1;
+}
+
+fun mutator(MyType t) {
+    t.destroy();
+}
+# Should there be a mark for a mutation result?
+fun mutator(MyType t) => !!! {
+    t.destroy();
+}
+# But then what about functions that mutate and
+# return a normal value.
+fun mutate_and_return(MyType t) => Int {
+    t.destroy();
+    return 1;
+}
+# Is there a happy combination?
+fun mutate_and_return(MyType t) => !!! + Int {
+}
+# Syntax liable to change of course.
+
+mutator(t!);
+n = mutate_and_return(t!);
+
+# So what are side effects exactly?
+# I suppose in a general sense you'd like to know
+# if calling a function twice will produce
+# different results. You usually don't want that
+# to happen, at least without knowing about it.
+
+# So stuff like logging to a file or printing
+# output are not really anything to worry about;
+# although they can produce unexpected errors.
+# Those should be uncommon though.
+
+# Basically we're talking about mutation of state
+# here. And the only two ways a function can have
+# access to mutable state is by specifying a
+# mutable parameter or using global variables.
+# Hopefully I'm not forgetting any special cases.
+
+# What about this?
+fun mutate_system() {
+    shell.exec("sudo shutdown -h now");
+}
+
+fun totally_innocent_touches_no_state() {
+    mutate_system();
+}
+
+# There are going to be functions that change
+# environment at least, which should count as a
+# side effect.
+
+# But, in this case, 'shell' is a global variable;
+# an imported module. So it does use global state.
+
+fun mutate_system() {
+    @global{
+        shell.exec("sudo shutdown");
+    }
+}
+
+# Of course, that might get a little annoying to
+# type every time you want to call a module.
+
+# And what if it's an external module that doesn't
+# have any side effects, like a math library?
+
+fun no_effect() {
+    math.pow(2, 16);
+}
+
+# Maybe functions that mutate external state are
+# marked as such, and any function that calls
+# another marked function must be marked itself.
+
+fun mutate_system()! {
+    shell.exec("sudo shutdown -h now")!;
+    # or shell.exec!("sudo shutdown -h now");
+}
+
+fun totally_innocent_touches_no_state()! {
+    mutate_system()!;
+}
+
+# That syntax might not mesh with the mutable
+# parameters very well.
+mutate_and_return(s!)!;
+# But of course syntax can change.
+mutate_and_return(s*)!;
+
+p = Point(1, 2, 3);
+p.x = 1;  # does this need a bang?
+fun mut(p) { p.x = 1; }
+mut(p)!;

@@ -9,18 +9,12 @@
 
 # See `scope` for global variables.
 
-# What about side-effect-producing calls?
+# See `mutation` for side-effect-producing calls.
 
-fun order_a_pizza() {
-    ... # side effects
-}
+# See `passby` for input mutation.
 
-a = foo()
-b = bar()
-order_a_pizza();  # does something externally!
-c = baz()
-
-# Maybe it's an error to assign the return value
-# of a non-returning function. Although that still
-# doesn't fix the case where a function has side
-# effects and a return value.
+# And that should cover all side effects.
+# In summary functions that have the potential to
+# do something spooky at a distance are marked as
+# such; and parameters that might be mutated by a
+# function are marked as such as well.
