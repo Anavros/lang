@@ -1,0 +1,86 @@
+
+###
+Concept:
+-> Functions operate on copies and use return
+values by default.
+-> Suffixing a ! to the end of a function call will
+change its behavior so that it mutates its inputs
+in place instead of returning a new copy.
+###
+
+# Example:
+a = List(1, 2, 3, 4);
+
+# Convention for methods that only modify input?
+fun append5(List l) => List {
+    l.push(5);
+    return l;
+}
+
+print(a) => List(1, 2, 3, 4);
+b = a.append5();
+print(a) => List(1, 2, 3, 4);
+print(b) => List(1, 2, 3, 4, 5);
+c = a.append5!();  # error for assigning return?
+print(a) => List(1, 2, 3, 4, 5);
+print(c) => [error];
+
+# This all might tie in with return values
+# generally being different anyway. We already
+# want a separate value for errors. Maybe the
+# single return type should be rethought.
+
+# Function Outputs
+foo() # side effects
+a = bar() # return value
+if bool() # condition testing
+try() # error detection
+obj.foo() # object mutation
+for x in gen()  # generators
+
+# Generally, value calculation, side effects,
+# error handling, and generation.
+
+# So maybe only functions with bangs are allowed
+# to have side effects. But are they allowed to
+# return values?
+
+a = "hello world";
+a.split(); => returns List("hello", "world")
+a.split!(); => changes a to List?
+
+###
+Concept:
+- A special attribute for function calls that
+replaces the return value with a mutation.
+- Might be too tightly tied to struct
+modification.
+###
+
+datatype String(...);
+
+s = String("hello");
+
+fun upper(String s) => String {
+}
+
+t = s.upper();  # s == "hello", t == "HELLO"
+s.upper!();  # s == "HELLO"
+
+# Which is really the same as...
+t = upper(s);
+upper!(s);
+
+# Which kind of conflicts with the arg! syntax in
+# passby.
+
+fun upper(String s!) {
+}
+
+t = upper(s);  # would this work without mut?
+upper(s!);
+
+# We can't assume in the general case that all
+# functions will have something useful to do when
+# given a const value when expecting a mutable
+# one. So this idea might not work.

@@ -2,6 +2,8 @@
 array/list
 hashmap/dict
 statemachine
+trees?
+radix trees?
 
 compose array {
     struct items = [];

@@ -1,0 +1,44 @@
+
+###
+Concept:
+-> Is malt pass-by-value, by-reference, by-name (as
+in python), or something else?
+-> Can individual variables be marked as const or
+mutable?
+-> Are only bang functions allowed to take mutable
+references?
+###
+
+struct Point(x, y, z);
+
+fun mutate(Point p) {
+    p.x += 5;
+}
+
+p = Point(1, 2, 3);
+q = mutate(p)  # p stays the same
+mutate!(p);  # p is different, no return val
+
+b = ReallyBigStructure();
+
+p = get_piece(b);  # need to copy the whole thing?
+# In that case, we just need an immutable
+# reference.
+# Can we assume every argument pass is immutable
+# reference?
+
+fun mutate_with_consts(Point p!, Int x y z) {
+    # x, y, z are const
+    # p is mutable
+    p.x += x;
+    p.y += y;
+    p.z += z;
+}
+
+mutate_with_consts(p, 1, 2, 3);
+mutate_with_consts(p!, 1, 2, 3);
+# But what about...
+p.mutate_with_consts(1, 2, 3);
+p!.mutate_with_consts(1, 2, 3);
+# Do we need a visual marker for all mutating
+# functions?

@@ -1,0 +1,18 @@
+
+Concept:
+- Powerful generic oneline statements.
+
+# If Conditions
+break if true;
+
+# Loops
+print(x) for x in range(10);
+print("good") until condition;
+# Could we use a variable from a while condition?
+print("number generated") while gen_numbers();
+print(x) for x in gen_numbers();  # ?
+
+# Blocks with Postfix Conditions?
+{ print("hello"); } if condition;
+# Vs
+if condition { print("hello"); }

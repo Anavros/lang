@@ -1,0 +1,45 @@
+
+###
+Concept:
+-> Functions usually can only communicate one
+return value.
+-> However, they have a lot more information to
+give.
+-> Besides their normal values, they have side
+effects, mutations to their inputs, errors,
+including panic situations where the function can
+not finish, even changes to global variables.
+-> So only having one return value is missing out
+on a lot of good information.
+-> The trouble arises when accessing those values.
+-> Some things can be done by contract; say in the
+function definition a certain value is marked
+mutable.
+-> And at least one can be accessed through normal
+assignment.
+-> But what about the others?
+-> Traditionally, in c, a pointer was sent in and
+used to set a value.
+-> This is clunky and error prone.
+-> So how else?
+###
+
+# Function Interaction
+val = return();
+mutate(val);
+if condition();
+while condition();
+try { mayerr() } except;
+
+# Example: File Reading
+# Iterate over every character in a file, stopping
+# when the EOF is reached.
+loop {
+    c = file.read();
+    break if c == EOF;
+}
+
+for c in file.readchars() {
+}
+
+# See `contracts`.

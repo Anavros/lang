@@ -1,4 +1,44 @@
 
+fundamental Array {
+    DefinedInImplementation
+}
+
+struct Vector {
+    Array items;
+    fun iterate() {
+    }
+}
+
+struct Hashmap {
+    Array pairs;
+}
+
+fun iterate(container) {
+    # But the Hashmap has a variable called pairs!
+    for x in container.items {
+    }
+
+    # I think the better way to do it is to follow
+    # go's example and only allow function
+    # interfaces. So that way the internal
+    # variables can be named whatever.
+    for x in container.iterate() {
+    }
+}
+
+interface iterable {
+    fun iterate(): something;
+}
+
+fun iterate(iterable container) {
+    for x in container.iterate() {
+        f(x);
+    }
+}
+
+###
+###
+
 Ideas:
 - Static checking is performed on traits instead of types.
 - Algebraic data types a la haskell.
@@ -11,36 +51,31 @@ Ideas:
 - No additional impl blocks as in rust.
 - No tacking on additional functions to basic types as in ruby.
 
-# A trait binds a name to a set of function prototypes.
-# If a variable has a trait, its functions are guaranteed to work.
-trait iterable {
-    item next()
-    void close()
+
+struct Consumable {
+    String flavor;
+    Int kilograms;
 }
 
-# A datatype is a an algebraic, fundamental set of literals.
-datatype bool {
-    true, false
+type Drink {
+    Consumable c;
+    Int liters;
 }
 
-datatype int {
-    (defined in implementation)
+struct Snack {
+    # this is just the same thing as inheritance
+    Consumable c;
+    Float saltiness;
 }
 
-# Types are high-level collections of data, traits, and loose vars and funcs.
-type mytype {
-    bool truthy
-    trait iterable {
-        item next() {
-        }
-        void close() {
-        }
-    }
-    fn myfunc() {
-    }
+struct Meal {
+    Consumable c;
+    Int deliciousness;
+    Bool gluten_free;
 }
 
-# What about conflicting types?
-int float a
-# I guess if they define the same functions they won't combine.
-# So if int and float both define add and numval or something they'll conflict.
+fun eat(Consumable c) {
+    print(c.flavor);
+    print("This weighs {c.kilograms} kilos!");
+}
+

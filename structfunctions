@@ -1,0 +1,44 @@
+
+###
+Concept:
+-> Some functions are closely tied with
+structures, such that it would make sense for them
+to be associated.
+-> There could be a special type of function that
+specifically operates on one kind of struct.
+-> Which is essentially normal object orientation.
+###
+
+# Should there be a special class of functions
+# that only modify a single item? Is that common
+# enough?
+
+mod push5(List l) {  # modification function
+    l.push(5);
+}
+
+m = l.push5();
+l.push5()!;
+
+# They are very tied with structs, pretty much in
+# the same way normal objects are. And some things
+# are just going to be like that I think.
+
+struct Contact {
+    String name, password, address;
+}
+
+fun change_name(Contact c, String name) => Contact {
+    c.name = name;
+    return c;
+}
+
+mod change_name(String name) for Contact {
+    self.name = name;
+}
+
+# It doesn't actually make that big of a
+# difference. And it would make things more
+# complicated under the hood.
+
+# So probably no then.

@@ -1,0 +1,26 @@
+
+Notes:
+- Calling syntax should be clear.
+- Ruby for example allows calling functions with
+no variables without parens.
+- I think that's too easy to get functions mixed
+up with variables.
+- We already have a split between functions and
+structures.
+- Maybe structure member variables can have a
+different calling syntax?
+
+struct Point(x, y, z);
+
+# Special type of function?
+# Modifies an instance of one particular struct.
+fun zero(Point p) => Point {
+    p.x = p.y = p.z = 0;
+}
+
+p = Point(1, 2, 3);
+zero(p);
+p.zero();  # ufcs
+p.x  # ambiguous?
+p->x  # two chars = bad
+p'x  # weird and unnecessary?

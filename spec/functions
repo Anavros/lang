@@ -41,3 +41,7 @@ fun (a, b): something {
 Questions:
 - What about functions that return nothing?
 - Or functions that return an unchecked type?
+- What happens when two types have variables of
+the same name, so that they both pass the
+attribute test? Is that something we need to
+guard against?

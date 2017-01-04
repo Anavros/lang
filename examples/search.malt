@@ -1,0 +1,72 @@
+
+interface Iterable {
+    fun iterate(any items): items generator;
+    # Enumerate should automatically derive from
+    # iterate because it doesn't require any
+    # other data. Structs that implement iterable
+    # shouldn't have to define that too.
+    fun enumerate(items): int, item gen;
+    fun length(items): int;
+}
+
+derive enumerate from iterate {
+    return i, item;
+}
+
+struct IntItems {
+    Int Vector : items;
+}
+
+struct FloatItems {
+    Float Array : numbers;
+}
+
+fun iterate(container) from IntItems: i {
+    yield i for i in container.items;
+}
+
+# There's a lot of redundancy here.
+fun iterate(container) from FloatItems: i {
+    yield i for i in container.numbers;
+}
+
+###
+Get the index of an item in a list.
+###
+fun linear_search(Iterable items, value) {
+    # Items can be enumerated because enumerate
+    # derives from iterate, which items
+    # implements.
+    for i, n in items.enumerate() {
+        return i if n == value;
+    }
+    error; # ?
+}
+
+###
+Python
+def linear_search(numbers:list[int], value:int) -> int:
+###
+
+fun binary_search(Iterable Ordered items,
+    value, sort=false): Int
+{
+    if sort {
+        items = sorting.quicksort(items);
+    }
+    x = 0;
+    y = items.length() - 1;
+    loop {
+        i = (x+y) % 2;
+        match {
+            items[i] == value { return i; }
+            items[i]  < value { x = i; }
+            items[i]  > value { y = i; }
+        }
+        match items[i] {
+            == value { return i; }
+             < value { x = i; }
+             > value { y = i; }
+        }
+    }
+}
