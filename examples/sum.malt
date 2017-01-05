@@ -10,3 +10,15 @@ fun intsum(int glob items, min=?, max=?) => int {
     return max if given max and total > max;
     return total;
 }
+
+# Try Two
+
+sum = func(*ns:Int, min=?, max=?) : Int {
+    total = 0;
+    total += i for i in items;
+    match {
+        given min and total < min { return min; }
+        given max and total > max { return max; }
+    }
+    return total;
+}

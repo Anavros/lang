@@ -37,8 +37,6 @@ fun iterate(iterable container) {
 }
 
 ###
-###
-
 Ideas:
 - Static checking is performed on traits instead of types.
 - Algebraic data types a la haskell.
@@ -50,6 +48,7 @@ Ideas:
 - All definitions have to happen in the type definition.
 - No additional impl blocks as in rust.
 - No tacking on additional functions to basic types as in ruby.
+###
 
 
 struct Consumable {

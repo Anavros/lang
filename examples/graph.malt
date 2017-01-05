@@ -1,0 +1,31 @@
+
+List = Type[Item] { }
+
+namespace graph {
+    Node = Type[N] {
+        |x,y,z| = 0:N;
+        # Equivalent to...
+        # x = 0:N;
+        # y = 0:N;
+        # z = 0:N;
+    }
+
+    Edge = Type[N] {
+        |a,b| = (..):Node[N];
+    }
+
+    Graph = Type[N] {
+        nodes = (..):List[Node[N]];
+        edges = (..):List[Edge[N]];
+    }
+
+    connected = Func(g:Graph) : Bool { }
+}
+
+
+import graph;
+
+g = (..):graph.Graph[Float];
+if graph.connected(g) { }
+# UFCS?
+if g.graph.connected() { }

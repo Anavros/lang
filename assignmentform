@@ -1,6 +1,6 @@
 
 x = 3.5:Rational;
-pow = func(n:Int, e:Int) { }
+pow = func(n:Int, e:Int):Int { }
 Point = Type[x:Int, y:Int, z:Int];
 zero = func(p:Point) { }
 Area = Data[Plains, Forest, Ocean];

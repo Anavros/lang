@@ -1,0 +1,11 @@
+
+factorial = Func(n=1:Num) : Num {
+    return 1 if n == 1;
+    return n + factorial(n-1);
+}
+
+main = Func {
+    n = 5;
+    result = factorial(n);
+    print("{n}! => {result}");
+}

@@ -37,3 +37,33 @@ fun ngrams(String path, Int len) : [String, Int] Mapping {
     }
     return map;
 }
+
+# Try Two
+
+open = func(s:String) : File { }
+close = func(f:File) { }
+
+read_file_or_stdin = func(path:String) : File {
+    handle = open(path) err stdin;
+    yield handle;
+    close(handle);
+}
+
+ngrams = func(path:String, len:Int)
+    :Map[String, Int]
+{
+    mapping = Map[String, Int]();
+    with(file = read_file_or_stdin(path)) {
+        for pack in file.chars(step=len) {
+            pack.lower!().sort!();
+            continue if <' ' or '\n'> in pack;
+            if mapping.has(pack) {
+                mapping.set(pack,
+                    mapping.get(pack)+1);
+            } else {
+                mapping.set(pack, 1);
+            }
+        }
+    }
+    return mapping;
+}

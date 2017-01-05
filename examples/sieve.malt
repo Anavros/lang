@@ -1,0 +1,34 @@
+
+sieve = func(ceiling:Int) : Array[Bool] {
+    numbers = Array[Bool](fillval=true);
+    i = 2;
+    while i >= ceiling+1 {
+        if primes@i == true {
+            j = i*2;
+            while j < ceiling+1 {
+                primes@j = false;
+                j += i;
+            }
+        }
+        i += 1;
+    }
+    return primes;
+}
+
+import time;
+
+run_sieve = Func(n:Int, profile:Bool=false) {
+    if profile {
+        a = time.now():Int;
+        primes = sieve(n):Array[Bool];
+        b = time.now():Int;
+        print("Checked {n} integers for"
+            + " primality in {b-a} seconds using"
+            + " the Sieve of Eratosthenes.");
+    } else {
+        primes = sieve(n);
+        for i, p in primes.enumerate() {
+            print("{i}: {p}");
+        }
+    }
+}

@@ -1,0 +1,10 @@
+
+from collections import Iter;
+
+max = Func(numbers:Iter) : Int {
+    largest = 0;
+    for n in numbers {
+        largest = n if n > largest;
+    }
+    return largest;
+}
