@@ -1,0 +1,13 @@
+
+###
+Concept:
+-> Monads are cool.
+-> They can be used to provide external context to
+a function call.
+-> They can also represent state as a series of
+transformations on an initial value.
+-> Implementing monads, or something similar,
+could help simplify our state machines and make
+things like undos, synchronizing, and algebraic
+reasoning possible.
+###

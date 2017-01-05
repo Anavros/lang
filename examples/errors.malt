@@ -1,0 +1,39 @@
+
+import sys;
+
+
+fun open(String s) : File {
+    return magic.get(s);
+}
+
+fun close(File f) {
+    magic.release(f);
+}
+
+
+fun read_file_or_stdin(String filepath) : File {
+    open_and_close = defer_chain(open, close);
+    match open_and_close(path) {
+        File f { yield f; }
+        Error  { yield sys.stdin; }
+    }
+    #return open(path) err sys.stdin;
+}
+
+
+fun ngrams(String path, Int len) : [String, Int] Mapping {
+    map = Mapping();
+    with (file = read_file_or_stdin(path)) {
+        # What if EOF? How is that error handled?
+        for pack in file.chars(step=len) {
+            pack!.lower().sort()
+            continue if <' ' or '\n'> in pack;
+            if map.has(pack) {
+                map.set(pack, map.get(pack)+1);
+            } else {
+                map.set(pack, 1);
+            }
+        }
+    }
+    return map;
+}

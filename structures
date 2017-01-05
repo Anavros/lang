@@ -5,6 +5,10 @@ statemachine
 trees?
 radix trees?
 
+# Are tuples anonymous structs?
+struct (a, b, c);
+return (a, b, c);
+
 compose array {
     struct items = [];
     def next() {

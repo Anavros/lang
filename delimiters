@@ -31,3 +31,20 @@ hashmap = (a=1, b=2, c=3);
 # But it does conflict with named arguments in functions.
 hashmap = [a=1, b=2, c=3];
 hashmap = [1='a', 2='b', 3='c'];
+
+# There really needs to be a way to visually join
+# braced statements together.
+
+if x {
+} else {
+}
+# Vs
+if x { }
+else { }
+# Vs
+if x {
+}
+else {
+}
+
+# But how?

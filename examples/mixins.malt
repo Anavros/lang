@@ -1,0 +1,69 @@
+
+
+packet Numbers(x, y, z);
+packet Names(first, middle, last);
+
+mixin Zero uses Numbers {
+    concrete fun zero()
+}
+
+struct Person {
+    include Numbers;
+    include Names;
+}
+
+# An interface declares a set of abstract function signatures that can be
+# matched for parameter typing.
+interface
+
+# A mixin actually implements a set of functions. It may require a certain set
+# of structures to be present within the type.
+mixin
+
+# Structs can be composed into larger structs by assigning new variables.
+datatype Float;
+datatype Array;
+struct Node(Float x, y, z);
+struct Edge(Node a, b);
+struct Graph([Node]List nodes, [Edge]List edges);
+
+# Or names can automatically be imported for ease of use.
+datatype Name;
+struct Identity(name, surname, dob);
+struct Employment(company, position, salary);
+struct Contact(phone, email);
+
+struct Person {
+    Identity id;
+    Employment em;
+    Contact cn;
+}
+p = Person();
+p.id.name;
+p.em.position;
+p.cn.phone;
+# Vs
+struct Person {
+    Identity *;
+    Employment *;
+    Contact *;
+}
+p.name;
+p.position;
+p.phone;
+
+# Conflicts can be handled by manually specifying the desired structure.
+struct AlterIdentity(name, tagline);
+struct Person {
+    Identity *;
+    Employment *;
+    Contact *;
+    AlterIdentity *;
+}
+p.name;  # fails!
+p.Identity:name;
+p.AlterIdentity:name;
+
+Identity.name(p);  # ?
+Identity:p.name;
+Identity:name(p);

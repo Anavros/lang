@@ -1,0 +1,14 @@
+
+###
+Concept:
+-> What if there were a specific type of function
+designed to be recursive?
+###
+
+recursive fun nth(Link l, Int n) : Link {
+    match {
+        n < 0  { fail; }
+        n == 0 { return l; }
+        n > 0  { return nth(l.next, n-1); }
+    }
+}

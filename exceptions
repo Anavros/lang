@@ -1,0 +1,246 @@
+
+###
+Concerns
+-> Exception handling can be a difficult-to-track
+source of problems.
+-> What's wrong with what python does?
+-> Functions that don't finish don't have the
+chance to release their holds on external
+resources.
+-> Of course, python handles this using context
+managers; which are essentially deferred
+statements that always execute.
+-> That way is nice because you can separate what
+is important and what isn't in cleaning up.
+-> So anything that might cause trouble if stopped
+halfway should be opened cautiously.
+-> So really we should take python's exception
+handling and make it even easier to use, with
+generic support for cautious opening.
+-> Could there be two kinds of errors; those that
+are recoverable and those that are not?
+-> Recoverable errors could be resumed somehow.
+-> One notable problem is that function calls that
+throw exceptions are not easy to spot. So you
+might end up with an exception you didn't expect.
+-> The unwinding process can also be very
+unpredictable.
+-> Maybe we'll have two classes of unusual
+behavior: exceptions, which are a normal part of
+programming and can be recovered from, and errors,
+which are programming mistakes that need to be
+fixed.
+-> The best course of action for exceptions is to
+monitor error codes and have a good plan for
+whatever problems might arise.
+-> Errors should halt the program, ideally at
+compile time, and let the programmer know where
+the problem is so they can fix it.
+-> The real question is what to do when an
+exception is encountered but not caught. Would
+that count as a programmer error?
+-> I guess we should make exception handling in
+the basic case as simple as possible.
+###
+
+try {
+    file = open(FILE);
+} except IOError {
+    handle();
+} else {
+    file.write("Hello!");
+} finally {
+    file.close();
+}
+
+with open(FILE) as file {
+    file.write("Hello!");
+}
+
+try { mutex.lock(); }
+dispatch {
+    ErrorA { handle(); }
+    ErrorB { raise; }
+}
+
+try { mutex.lock(); }
+catch (Error e) {
+    match e {
+        ErrorA { handle(); }
+        ErrorB { raise; }
+    }
+}
+
+monitor {
+    mutex.lock()
+} condition {
+    ErrorA { }
+    ErrorB { }
+    Ok { }
+}
+
+cautiously {
+    file = open(FILE);
+} case {
+    Ok {
+        file.write("Hello!");
+    }
+    Errors.FileNotFound { }
+    Errors.IO { }
+}
+
+with file = open(FILE) defer close(file);
+
+{
+    mutex.lock();
+    defer mutex.unlock();
+    problematic_function();
+}
+# mutex is unlocked
+
+panic("all hope is lost");
+
+fun batteries_included(Int x, y) {
+    if y < 0 {
+        handle @negative;
+    }
+    return x%y;
+} handle {
+    @negative {
+        # Who's responsible for this?
+        print("We've got a problem!");
+        # What's the return value now?
+    }
+}
+
+fun batteries_included(Int x, y) {
+    return x%y;
+} handle {
+    DivideByZero {
+    }
+}
+
+risky mutex.lock();
+
+wound fun lock(Mutex m) {
+    m.locked = true;
+} unwind {
+    m.locked = false;
+}
+
+fun dangerous() {
+    mutex.lock();
+    problem_causer_3000();
+    # If problem_causer_3000() fails, the mutex
+    # will unlock as per its unwind function.
+    mutex.unlock();
+
+    # Or with a cleaner syntax...
+    wind mutex.lock();
+    problem_causer_3000();
+    # When the wound function leaves scope, it's
+    # unwind method is called.
+
+    # Or with a block like python...
+    with mutex.lock() {
+        problem_causer_3000();
+    } # unwind no matter what
+}
+
+pair lock(Mutex m) {
+}
+with unlock(Mutex m) {
+}
+
+fun lock(Mutex m) { }
+fun unlock(Mutex m) { }
+pair lock with unlock;
+
+fun lock(Mutex m) {
+    m.locked = true;
+    yield;
+    m.locked = false;
+}
+
+# Basically
+file|ok = open(FILE);
+if not ok {
+    handle();
+    error;
+    return;
+}
+file.write("Hello!");
+close(file);
+
+fun open(String path): File {
+    handle|status = magic.get(path);
+    match status {
+        Ok { return handle }
+        FileNotFound { return null|err }
+    }
+}
+
+# But we can wrap that in a nice block.
+cautiously {
+    file = open(FILE);
+} status {
+    Ok {
+        file.write("Hello");
+    }
+    FileNotFound {
+        handle();
+    }
+} anyway {
+    # What if file is null?
+    close(file);
+}
+
+fun open(String path) : File {
+    cautiously {
+        handle = magic.open(path);
+    } status {
+        Ok { return handle; }
+        [FileNotFound] Error { reraise; return; }
+    }
+}
+
+# What if errored functions don't return values at
+# all? That might cause problems? But the value is
+# replaced with an error. Maybe using a different
+# way to access it so it doesn't get confusing.
+
+fun open(String path) : File {
+    caution {
+        handle = magic.open(path);
+    } status {
+        Ok { return handle; }
+        Error { fail; }  # like a return but bad
+    }
+}
+
+# Without error checking.
+PATH.open().write("Wee!").close();
+# Panics when errors are unchecked?
+
+# Written out in more detail.
+f = open(PATH);  # 'fail;' on unchecked error?
+f.write("Hello!");
+close(f);
+
+check open(path) as f {
+    Ok { file = f; }
+    Error { file = sys.stdin; }
+}
+
+match open(path) {
+    File f { return f; }
+    Error  { return sys.stdin; }
+}
+
+if failed(file = open(path)) {
+    file = sys.stdin
+}
+
+file = open(path) else sys.stdin;
+
+risky_foo() else safe_foo();

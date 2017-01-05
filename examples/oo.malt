@@ -1,0 +1,39 @@
+
+struct Point(x, y, z);
+
+# Completely standalone functions.
+fun zero(Point p) : Point {
+    p.x = p.y = p.z = 0;
+}
+fun increment(Point p, StructMember m, Int n) : Point {
+    p{m} += n;
+}
+fun swap_xy(Point p) : Point {
+    p.x, p.y = p.y, p.x;
+}
+
+# Versus a more traditional method.
+methodlist Point {
+    # Point is implicitly the first arg and return.
+    method zero() { }
+    method increment(StructMember m, Int n) { }
+    method swap_xy() { }
+}
+
+# Versus maybe a grouping.
+object Point(x, y, z) {
+    fun zero(...) : Point { }
+    fun increment(...) : Point { }
+    fun swap_xy(...) : Point { }
+}
+
+# Other considerations.
+struct Complex(real, i);
+struct ComplexPoint(x, y, z);
+
+struct [N] Point(x, y, z);
+cp = [Complex] Point(
+    Complex(1, 1),
+    Complex(2, 1),
+    Complex(3, 1),
+);

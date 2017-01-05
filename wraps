@@ -1,0 +1,20 @@
+
+###
+Concept:
+-> Allow functions to wrap other functions,
+executing before or after.
+-> Suspiciously similar to decorators.
+###
+
+fun increment(Int n) : Int {
+    return n+1;
+}
+
+fun log(Function f) : Result {
+    print("executing function");
+    r = f();
+    print("got result $r");
+}
+
+log <- increment(5);
+log(increment(5));

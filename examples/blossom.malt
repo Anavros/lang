@@ -1,0 +1,70 @@
+
+###
+Player = Inventory + Location + Player Stats
+Inventory = [Item] Sequence + Capacity
+Item = Name + Amount
+Location = Area + Side
+
+Vehicle = Inventory + Location + Movement Stats
+###
+
+struct Item {
+    name : String;
+    amount : Int;
+}
+# apples = Item("Apple", 10);
+
+struct Inventory[Int n] {
+    items: List[Item, len = n];
+}
+# inv = Inventory[5]();
+
+datatype Area { Plains, Ocean, Woods }
+datatype Side { In, Out }
+
+struct Location {
+    area = Area.Plains;
+    side = Side.In;
+}
+# loc = Location(Area.Ocean, Side.Out);
+
+struct Player {
+    inv : Inventory;
+    loc : Location;
+    name : String;
+    deaths : Int = 0;
+}
+# p = Player(Inventory[5](), Location(), "Bim");
+
+struct Vehicle {
+    inv : Inventory;
+    loc : Location;
+    name : String;
+    speed : Int;
+}
+player.inv.items[0].name;
+player.loc.area;
+player.name;
+player.deaths;
+
+###
+Name Import Mechanic
+###
+
+struct Player {
+    include Inventory as inv;
+    include Location as loc;
+    name : String;
+    deaths : Int;
+}
+player.items[0].name;  # from inv
+player.area;  # from loc
+
+# If two structs contain the same name, accessing
+# the name will cause a failure. The name must be
+# accessed through the structure's alias.
+
+# Assume location has a name variable.
+player.name;  # failure
+player.loc.name;  # safe access
+# But how to access the normal player.name?

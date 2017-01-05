@@ -43,3 +43,40 @@ for c in file.readchars() {
 }
 
 # See `contracts`.
+
+# C-Style
+int check() {
+    data = malloc();
+    err = function(*data);
+    if err {
+        handle()
+    }
+    use(data);
+}
+
+# Python-Style
+def check() {
+    try:
+        data = function()
+    except Error:
+        handle()
+    else:
+        use(data)
+}
+
+# New Territory
+fun check() {
+    # Have to get the return value.
+    # But also check for errors.
+    monitor (data = function()) {
+        error { handle(); }
+        else { use(data); }
+    }
+    # Or
+    data|ok = function();
+    if not ok { handle(); }
+    else { use(data); }
+    # Or
+    data = function();
+    use(data)
+}

@@ -1,0 +1,25 @@
+
+struct Point {
+    Int x, y, z;
+}
+
+struct Point(Int x, y, z);
+
+struct [N] Point {
+    N x, y, z;
+}
+
+p = Point { x=1, y=2, z=3 }
+p = Point(1, 2, 3);
+i = [Int] Point(1, 2, 3);
+i = [Float] Point(1, 2, 3);
+
+struct [N, M] Complex(N x, y, z; M i);
+
+struct MutablePoint(Int x!, y, z);  # no sense
+
+fun name(args) { }
+struct Name { params }
+struct Name(params);
+struct Name(params) { ? }
+fun [args] name { }

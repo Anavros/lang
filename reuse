@@ -1,0 +1,67 @@
+
+
+# Really there are two positions happening here.
+# On one hand, some structures are going to
+# operate similarly internally, allowing reuse of
+# functions. On the other hand, some things need
+# separate functions that behave the same
+# externally.
+
+type List;
+type Array;
+type Tuple;
+type LinkedList;
+type SkipList;
+type Mapping;
+
+fun printall(items) {
+    # What type is items?
+    for i in items.iterate() {
+        # What type is i?
+        print(i);
+    }
+}
+
+# Approach 1: Duplicate Functions
+fun printall(List items) { }
+fun printall(Array items) { }
+fun printall(Tuple items) { }
+# And so on.
+
+# Interfaces
+fun printall(<T has iterate> items) { }
+# Or
+interface Iterable { iterate() }
+fun printall(Iterable items) { }
+
+# Inheritance
+type Sequence {
+    data items;
+    func iterate() { }
+}
+type List inherits Sequence { }
+type ...
+fun printall(Sequence s) { }
+
+# Trait Composition
+trait Sequence {
+    dat sequence;
+}
+trait Iterable {
+    fun iterate();
+}
+type List {
+    has Sequence, Iterable;
+    Int index;
+}
+
+# There's even a solution for conflicts.
+trait Conflict {
+    dat sequence;
+}
+type MyList has Sequence, Iterable, Conflict;
+fun printall(Iterable items) {
+    for Item i in items.sequence {  # ambiguous?
+    }
+    items:Sequence.sequence
+}

@@ -1,0 +1,38 @@
+
+x = 3.5:Rational;
+pow = func(n:Int, e:Int) { }
+Point = Type[x:Int, y:Int, z:Int];
+zero = func(p:Point) { }
+Area = Data[Plains, Forest, Ocean];
+
+# Variables
+Int n = 3;
+n = 3:Int;
+
+# Void Functions
+fun start() { }
+Function start() { }
+start = func() { }
+Void start() { }
+
+# Functions
+fun pow(Int n, e) : Int { }
+Function[Int n, Int e; Int] pow { }
+pow = func(n:Int, e:Int) : Int { }
+Int pow(Int n, Int e) { }
+
+# Function Calls
+start();
+nine = pow(3, 2);
+
+# Structures
+struct Point(Int x, y, z);
+struct Point { Int x, y, z; }
+Type Point { Int x, y, z; }
+Point = Type[x, y, z : Int];
+
+# Datatypes
+datatype Area { Plains, Forest, Ocean }
+datatype Area(Plains, Forest, Ocean);
+Area = Data(Plains, Forest, Ocean);
+Area = Data[Plains, Forest, Ocean];
