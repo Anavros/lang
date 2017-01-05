@@ -1,5 +1,5 @@
 
-from collections import Iter;
+from sequence import Iter;
 
 max = Func(numbers:Iter) : Int {
     largest = 0;

@@ -1,39 +1,31 @@
 
-Ideas:
-- Add a loop keyword for infinite loops.
-- Use iteration-based for loops like python.
-- List comprehensions would also be nice but could
-  maybe be tweaked a bit? They might generalize
-  to a composable inline looping method.
-- While loops with actual conditions are not super
-  common in my code but they are still important
-  enough to exist. Maybe we can combine loop and
-  if in one expression.
 
 # Infinite Loop
-loop { f() }
+loop { f(); }
 loop {
-    f()
-    break if not g()
+    f();
+    break if not g();
 }
 
-# Looping On a Condition
-loop if i < 10 {
-    i += 1
-}
-loop if not i >= 10 {
-    i += 1
-}
-# Versus
+# Conditional Loop
 while i < 10 {
+    f();
 }
 until i >= 10 {
+    f();
 }
 
-# Looping n Times
+# Looping `n` Times
 loop * 10 {
 }
 
 # Inline Loops
 print(x) for x in xs;
 Vector(x for x in xs);
+
+# Repeat Expansion
+if " " in word or "/" in word or ":" in word { }
+if |" ", "/", ":"| in word { }
+
+x = 0; y = 0; z = 0;
+|x,y,z| = 0;

@@ -1,0 +1,36 @@
+
+###
+Concept:
+-> Every function parameter must have a default
+value.
+-> Why? Removes need for null values.
+-> Option to default to a '?' value which fails
+when used, which is essentially a null value.
+-> It simplifies type specification I guess?
+###
+
+Person = Type {
+    name = String("");  # or implicitly ""
+    birthyear = Num(1);
+}
+p = Person(..);  # person with default values
+p = Person;      # person type
+p = Person(birthyear=1990);
+p = Person("Beef", 48879);
+
+# What about things that don't make sense by
+# default? Person already doesn't make sense.
+
+open = Func(path=String("")) : File {
+    fail if not given path;
+    # Would be nicer just to get a compiler
+    # warning.
+}
+
+# Use colon operator for denoting empty values?
+
+reverse = Func (seq:Sequence) : Sequence { }
+pow = Func (n:Int, e=Int(2)) : Int { }
+pow = Func (n:Int, e=2) : Int { }
+
+Person = Type (name:String, birthyear:Num);

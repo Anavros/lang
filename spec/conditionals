@@ -9,19 +9,17 @@ if x {
 }
 if x { f(); } elif y { g(); } else { h(); }
 
-# Inline Conditionals
+# Inline Conditional Statements
 f() if x;
-f() if x else g();  # ?
-var = f() if x;  # expression or statement?
 
 # Matches
 match {
-    false : f();
-    true  : g();
+    false { f(); }
+    true  { g(); }
 }
 
 # Matches with Partial Application
-match (? has iter) {
-    x: x.iter();
-    y: y.iter();
+match has(?, iter) {
+    x { x.iter(); }
+    y { y.iter(); }
 }

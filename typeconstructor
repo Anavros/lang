@@ -1,0 +1,36 @@
+
+Node = Type[N=Int] {
+    x = y = z = N(0);
+}
+
+Node = Type [N=Int] (x=y=z=N(0)) { }
+
+n = Node();
+n = Node[Float]();
+n = Node[Float](y=5);
+
+# What goes into the Type constructor?
+
+Type [types] (parameters) {assignments}
+
+# How does it relate to functions?
+
+Func [types] (parameters) {statements}
+
+# What working references do we have?
+n = Num(1, max=10);
+p = Point[Int](1, 2, 3);
+
+# What's the worst case, space-wise?
+
+ReallyLongTypeThatTBHWouldFitRightInAtJava =
+Type [T, U, V, XCLASS, YCLASS] (
+    one:two:three:T,
+    four:five:U,
+    six:seven:eight:nine:ten:eleven:V,
+    xclass:XCLASS,
+    yclass:YCLASS,
+    name:String
+) {
+    statements;
+}

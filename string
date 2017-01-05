@@ -1,0 +1,8 @@
+
+String = Type[includes=Sequence] { }
+
+namespace string {
+    format = Func { }
+    lowercase = Func { }
+    uppercase = Func { }
+}

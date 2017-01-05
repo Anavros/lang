@@ -1,0 +1,10 @@
+
+pow = Func(n:Int, e:Int) : Int { }
+
+r = pow(n, e);
+n.pow(e);
+n pow e;
+
+p = pow:Infix;
+
+n p e;

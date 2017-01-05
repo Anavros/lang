@@ -1,5 +1,5 @@
 
-sieve = func(ceiling:Int) : Array[Bool] {
+sieve = Func (ceiling:Num) : Array[Bool] {
     numbers = Array[Bool](fillval=true);
     i = 2;
     while i >= ceiling+1 {

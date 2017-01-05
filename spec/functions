@@ -1,72 +1,15 @@
 
-###
-Ideas:
--> We might need a different function definition
-syntax that's a little more long-winded so we can
-allow arbitrary specification of traits.
--> What about having "where x has ... {" blocks
-that will only execute if a variable has a certain
-trait.
--> Partial application should be built-in.
--> We want pretty light-weight lambda functions too.
--> Maybe have some way of making early returns
-more clear?
 
-Function Design:
--> Functions are marked with the 'fun' keyword.
--> 'fun' was chosen because it has three letters
-and lines up nicely with a 4-space tab.
--> The keyword is followed by a name, then a tuple
-of arguments.
--> The function body is delimited by braces.
--> Parameter types are inferred from the body of
-the function.
--> Functions with the @entry decorator will be
-called if a module is executed directly instead of
-being imported.
--> Anonymous functions are defined in the same way,
-with the name ommitted.
-###
-
-
-fun name(a, b): returntype {
-    body;
+# Normal functions.
+name = Func (a:A, b:B) : C {
+    statements;
 }
 
-
-@entry
-fun main(): void {
+# Entry points can be specified by assigning a
+# function to sys.entry.
+sys.entry = Func {
 }
 
-
-fun (a, b): something {
+# Anonymous functions aren't really a thing.
+Func (a:A, b:B) : C {
 }
-
-
-###
-Questions:
-- What about functions that return nothing?
-- Or functions that return an unchecked type?
-- What happens when two types have variables of
-the same name, so that they both pass the
-attribute test? Is that something we need to
-guard against?
-###
-
-# Return Type Specification
-fun name(a, b) => Struct { }
-fun name(a, b): Struct { }
-fun name(a, b) :: Struct { }
-fun name(a, b) returns Struct { }
-fun name(a, b) { }
-Struct name(a, b) { }
-fun Struct name(a, b) { }
-
-# Similarities
-name = value;
-name = List(1, 2, 3);
-struct Type { Type name; }
-
-# Side Effect Mark
-fun name(a, b)! { } /// name(1, 2)!;
-fun name!(a, b) { } /// name!(1, 2);

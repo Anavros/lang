@@ -1,0 +1,43 @@
+
+# The classic.
+print("Hello, world!");
+
+# As an entry-point function.
+sys.entry = Func {
+    print("Hello, world!");
+}
+
+# Echo user input from stdin to stdout.
+name = input("What's your name? ");
+print("Your name is {name}.");
+
+# Basic conditionals.
+name = input("What's your name? ");
+if name.lowercase() == "alice" or "bob" {
+    print("Hi, {name}!");
+} else {
+    print("I don't know you.");
+}
+
+# Factorial function.
+factorial = Func(n:Num) : Num {
+    return sum(range(1, n));
+}
+
+# Printout of multiplication tables.
+multiple_tables = Func(dim:Num) : Num {
+    for i in range(1, dim) {
+        for j in range(1, dim) {
+            print("{i*j} ", end="");
+        }
+        print();
+    }
+}
+
+# Reverse a generic list of items in place.
+reverse = Func(items:Sequence!) {
+    half = items.length()/2;  # floor division
+    for i in range(half) {
+        items@i, items@(-i) = items@(-i), items@i;
+    }
+}

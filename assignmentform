@@ -1,25 +1,73 @@
 
-x = 3.5:Rational;
-pow = func(n:Int, e:Int):Int { }
-Point = Type[x:Int, y:Int, z:Int];
-zero = func(p:Point) { }
-Area = Data[Plains, Forest, Ocean];
+###
+Working Style
+###
 
 # Variables
+x = 3.5:Rational;
+p = (2, .., z=3):Point;
+
+# Functions
+sys.entry = Func { }
+pow = Func (n:Int, e:Int):Int {
+    return n^e;
+}
+zero = Func (p:Point!) {
+    p.x = p.y = p.z = 0;
+}
+
+# Datatypes
+Point = Type {
+    x = y = z = 0:Int;
+}
+
+###
+Options
+###
+
+# Instance Construction
 Int n = 3;
+n = 3;
 n = 3:Int;
+n = Int(3);
+n = Int {3};
+
+# Parameterized Instance Construction
+Point[Int] p = Point(1, 2, 3);
+Point[Int] p = (1, 2, 3);
+p = Point[Int](1, 2, 3);
+p = Point(1, 2, 3, N=Int);
+
+# Constrained Instances
+Num[max=10] n = 0;
+n = Num[max=10](0);
+n = Num(0, max=10);
+
+# Non-Initialized Instances
+p:Point;
+
+# Chained Declarations
+p:q:r:s:Point;
+
+# Chained Assignments
+p=q=r=s=Point(1, 2, 3);
+
+# Completely Empty Functions
+empty = Func;
 
 # Void Functions
 fun start() { }
 Function start() { }
 start = func() { }
 Void start() { }
+start = Func { }
 
 # Functions
 fun pow(Int n, e) : Int { }
 Function[Int n, Int e; Int] pow { }
 pow = func(n:Int, e:Int) : Int { }
 Int pow(Int n, Int e) { }
+pow = Func [Int] (n = e = Int(0)) { }
 
 # Function Calls
 start();
@@ -30,6 +78,7 @@ struct Point(Int x, y, z);
 struct Point { Int x, y, z; }
 Type Point { Int x, y, z; }
 Point = Type[x, y, z : Int];
+Point = Type { x = y = z = Int(0) }
 
 # Datatypes
 datatype Area { Plains, Forest, Ocean }
