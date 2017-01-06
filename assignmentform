@@ -6,6 +6,7 @@ Working Style
 # Variables
 x = 3.5:Rational;
 p = (2, .., z=3):Point;
+i : Int;
 
 # Functions
 sys.entry = Func { }
@@ -15,6 +16,7 @@ pow = Func (n:Int, e:Int):Int {
 zero = Func (p:Point!) {
     p.x = p.y = p.z = 0;
 }
+default = Func (a=Num(1), b=Num(2)) { }
 
 # Datatypes
 Point = Type {

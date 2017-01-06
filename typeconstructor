@@ -4,14 +4,32 @@ Node = Type[N=Int] {
 }
 
 Node = Type [N=Int] (x=y=z=N(0)) { }
+Node = Type [N=Int] (x=y=z=N(0));
 
 n = Node();
 n = Node[Float]();
 n = Node[Float](y=5);
 
+Mapping = Type [K, V];
+
+m = Mapping[String, Num]();
+m.add("Hello", 1);
+
+NDimPoint = Type[N=Int] (ndim:Num, init=N(0)) {
+    for i in range(ndim) {
+        blockscope@(f"d{i+1}") = init;
+    }
+}
+two_dim_point = NDimPoint[Float](2);
+two_dim_point.d1, two_dim_point.d2;
+
+contradiction = Func (p:NDimPoint)
+
 # What goes into the Type constructor?
 
 Type [types] (parameters) {assignments}
+
+Type [T=String, U=String];
 
 # How does it relate to functions?
 

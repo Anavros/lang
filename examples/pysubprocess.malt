@@ -1,0 +1,32 @@
+
+# Python
+
+def call(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None):
+    ...
+
+
+call = Func (args:Sequence[String], *,
+stdin:File, stdout:File, stderr:File, shell=false, timeout:Int) {
+    ...
+}
+
+###
+Notes
+-> Type specification is pretty long-winded sometimes.
+-> There's some ambiguity about passing null types. Are they kwargs? Can they
+be provided positionally?
+-> I think every argument should be accessible by keyword.
+-> There can be a methodology for passing args by position still, but keywords
+should always be available.
+-> That should make partial application easier to deal with.
+###
+
+call = Func
+(args:Sequence[String], stdin:stdout:stderr:File, shell=false, timeout=Num(0)) {
+    ...
+}
+
+# What default File() value should std* use?
+# We don't really have a null type.
+# What about the given function?
+# They would still be required if they didn't have a default value though.

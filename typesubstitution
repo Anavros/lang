@@ -1,0 +1,29 @@
+
+###
+Concept:
+-> Function definitions define the types of their
+arguments to ensure at compile-time that all
+function calls will have appropriate arguments.
+-> Appropriate in this sense means that each
+argument given to the function can fulfill all
+requirements that the function imposes on it.
+-> In a rigid type system, argument typing
+succeeds technically, but has a number of annoying
+drawbacks.
+-> Each type must be specified directly, with no
+room for substitution or abstraction, even when a
+substitution works in practical terms.
+-> Consider a function that prints the value of an
+argument: in a perfectly rigid system, a new
+function would have to be created for every
+possible type, when practically speaking only a
+small subset of functionality is required.
+-> Therefore the goal of a typing system is to
+allow reasonable type fuzziness while still
+proving that all arguments will be able to fulfill
+their requirements.
+###
+
+###
+Class-Based Hierarchy:
+###

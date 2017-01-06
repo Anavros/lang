@@ -34,3 +34,18 @@ pow = Func (n:Int, e=Int(2)) : Int { }
 pow = Func (n:Int, e=2) : Int { }
 
 Person = Type (name:String, birthyear:Num);
+
+open = Func(path:String) : File {
+    # Compile-time warning if called without path.
+}
+
+###
+Conclusion:
+-> Each parameter can be accessed by name, but not
+every param has a default value.
+-> It is up to the function definition to
+determine which parameters are required and which
+ones are optional.
+-> We can have an ordering heuristic for passing
+args positionally.
+###

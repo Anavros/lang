@@ -1,0 +1,10 @@
+
+###
+An array is a typed, ordered collection of items
+that are stored contiguously in memory.
+###
+
+# Module
+Array = Type(length:Num, element_size:Num);
+
+# Usage

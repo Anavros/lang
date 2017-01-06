@@ -1,0 +1,38 @@
+
+###
+A sequence is a set of arbitrary items stored in
+some order. Sequences are unsorted and untyped.
+They are implemented like lists in python: as
+arrays of pointers to arbitrary objects.
+###
+
+###
+Implementation details: A sequence of arbitrary
+objects would have to be an array of object
+pointers in c. We would also want different kinds
+of sequences like arrays that directly store the
+memory.
+###
+
+module sequence {
+    Sequence = Type { }
+
+    new = Func(length:Num) : Sequence { }
+
+    insert = Func (s!:Sequence, element:Any) {
+    }
+
+    concat = Func { }
+    length = Func { }
+    contains = Func { }
+    index = Func { }
+    sort = Func { }
+    join = Func { }
+}
+
+# Usage
+
+import sequence;
+
+s = sequence.new(5);
+s.
