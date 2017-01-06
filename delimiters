@@ -48,3 +48,19 @@ else {
 }
 
 # But how?
+
+
+###
+Concept:
+-> Remove braces or at least semicolons.
+Motivation:
+-> They are a little visually cluttering.
+-> The primary motivation for keeping delimiters
+is explicitely marking where statements end.
+-> Notably, this makes multi-line statements much
+easier to handle.
+-> If we have a dedicated method for multi-line
+statements (and perhaps another for
+multi-statement lines), then we might be able to
+axe the delimiters.
+###

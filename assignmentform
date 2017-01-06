@@ -33,6 +33,13 @@ n = 3;
 n = 3:Int;
 n = Int(3);
 n = Int {3};
+var n = 3;
+
+# Assigning a Return Value
+Num size = mem.sizeof(T);
+size = mem.sizeof(T);
+size = mem.sizeof(T) : Num;
+size = Num(mem.sizeof(T));
 
 # Parameterized Instance Construction
 Point[Int] p = Point(1, 2, 3);
@@ -63,6 +70,7 @@ Function start() { }
 start = func() { }
 Void start() { }
 start = Func { }
+Func start;
 
 # Functions
 fun pow(Int n, e) : Int { }
@@ -70,6 +78,7 @@ Function[Int n, Int e; Int] pow { }
 pow = func(n:Int, e:Int) : Int { }
 Int pow(Int n, Int e) { }
 pow = Func [Int] (n = e = Int(0)) { }
+Func pow = [Int] (n=e=Int(0)) { }
 
 # Function Calls
 start();

@@ -1,0 +1,10 @@
+
+###
+Low-level memory manipulation.
+###
+
+sizeof = Func (T:Type) : Num;
+alloc =  Func (nbytes:Num) : Address;
+write =  Func (ptr:Address, nbytes:Num, data:Binary);
+read =   Func (ptr:Address, nbytes:Num) : Binary;
+convert =Func [T] (data:Binary) : T;
