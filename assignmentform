@@ -78,6 +78,7 @@ Function[Int n, Int e; Int] pow { }
 pow = func(n:Int, e:Int) : Int { }
 Int pow(Int n, Int e) { }
 pow = Func [Int] (n = e = Int(0)) { }
+pow = Func (n:e:Int) : Int { }
 Func pow = [Int] (n=e=Int(0)) { }
 
 # Function Calls
