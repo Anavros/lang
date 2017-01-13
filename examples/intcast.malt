@@ -1,0 +1,40 @@
+
+###
+Cast a string to an number and handle all possible exceptions.
+###
+
+fun numcast(str:String) : Result[Num] {
+###
+Possible error cases:
+    "abc" :: no numerals
+    "a12" :: numerals but also letters
+    "" :: empty string
+###
+    if str.contains(letters) or str.empty() {
+        return Fail();
+    } else {
+        return Succ(magic.cast(str) : Num);
+    }
+}
+
+string = stdin.readline();
+numcast(string); # might fail
+
+watch numcast(string) for {
+    Succ(n:Num) {
+        print("Success! '{string}' --> {n}.");
+    }
+    Fail() {
+        print("Failed to convert string '{string}'.");
+    }
+}
+# Which is really a dressed-up match statement.
+match numcast(string) {
+    Succ(n:Num) { ... }
+    Fail() { ... }
+}
+# What we really want is a dressing specifically for results.
+f = numcast(string) err {
+    error();
+}
+progress();

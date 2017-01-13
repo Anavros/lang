@@ -1,0 +1,106 @@
+
+###
+Concept:
+-> Data structures and algorithms are kept
+separate.
+-> Groups of functions can be associated with an
+underlying structure.
+-> Function groups can require multiple
+structures.
+-> Each interface can only be defined for one set
+of structures.
+###
+
+struct Array(items, n, size);
+
+fun  put(a:Array, element:T, i:Index) { }
+fun  get(a:Array, i:Index) { }
+fun push(a:Array, element:T, i:Index) { }
+fun  pop(a:Array, i:Index) { }
+
+interface ArbitraryAccess(put, get);
+interface StackAccess(push, pop);
+
+# Requires a structure.
+fun total_array_size(a:Array) {
+    return n*size;
+}
+
+# Requires an interface, but implicity requires
+# the underlying array structure too?
+fun empty(a:StackAccess) {
+    a.pop() loop * a.n;
+}
+
+###
+It's kind of like a magma in abstract algebra.
+There's a set of elements and a set of functions
+that operate on those elements.
+###
+
+# Would it be easier to just group structs and
+# functions together normally? Each class defines
+# a set of functions and a set of elements. Then
+# when a function requires a variable of a certain
+# type, it will be guaranteed to have at least
+# those sets of elements and functions.
+
+Stack = Type {
+    size:Num;
+    push()
+    pop()
+}
+
+f = Func (x:Stack) {
+    x.size
+    x.push()
+    x.pop()
+}
+
+###
+Consider the problem from the other direction. You
+are writing a function that performs some action
+using x, y, and z. Therefore you need a guarantee
+that the object you are passed at runtime has x,
+y, and z. It doesn't matter how they work, just
+that you know how to use them.
+###
+
+f = Func(var:Interface) {
+    var.x;
+    var.y;
+    var.z;
+}
+
+Interface = {
+    x, y, z;
+}
+
+impl Type {
+    x = 1;
+    y = 2;
+    z = 3;
+}
+
+###
+How does structure reuse work then?
+###
+
+Array = {
+    memblock:Memory;
+    size:Num;
+    length:Num;
+    get();
+    put();
+}
+
+Map = {
+    # Array of (hash, pointer) pairs.
+    get();
+    put();
+}
+
+# Maybe we don't need reuse like that.
+# Maybe the example isn't the best. The real
+# benefit is in composing complex types from
+# simple pieces.

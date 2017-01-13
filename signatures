@@ -1,0 +1,11 @@
+
+###
+Function signatures have a lot more than normal going on, with types, contracts,
+return values, and such. So we may want to consider a different sort of syntax
+for declaring them. Possibly even integrating tests and documentation.
+###
+
+# Our Type[key=val] syntax is an example of dependent typing, and could maybe be
+# extended to include runtime checks against other variables.
+
+fun value_at_index[T](a:Array[T], i:Num[max=a.length]) : T;

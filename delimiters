@@ -64,3 +64,83 @@ statements (and perhaps another for
 multi-statement lines), then we might be able to
 axe the delimiters.
 ###
+
+normal statement;
+function(a, b) {
+    statement;
+}
+not_in_function;
+str = "Really long statement which doesn't really"
+    + "map onto one line nicely and has to be"
+    + "broken up into multiple parts.";
+MyObject()
+    .do()
+    .the()
+    .thing();
+multilinecall(
+    a=1,
+    b=2,
+    c=3,
+);
+monitor {
+    f();
+} status {
+    Ok { g(); }
+}
+
+# Vs
+normal statement
+function(a, b)
+    statement
+not_in_function
+str = "Really long statement which doesn't really"
+    + "map onto one line nicely and has to be"
+    + "broken up into multiple parts."
+MyObject()
+    .do()
+    .the()
+    .thing()
+multilinecall(
+    a=1,
+    b=2,
+    c=3,
+);
+monitor
+    f()
+status
+    Ok: g()
+
+# Basically the two important ingredients here are
+# line continuations and block delimiting. Which
+# are kind of the same in an abstract sense.
+
+# There is probably a small, finite set of general
+# approaches.
+
+# Beginning and end tokens.
+function %
+    statment
+%
+
+# Keyword marked beginning and explicit end.
+function
+    statement
+%
+
+# Indent counting.
+function
+    statement
+
+# But then there's also the problem of joining
+# several smaller statments together.
+
+monitor % f() % status % Ok % g() % %
+
+monitor f()
+status
+    Ok g()
+
+# So really there's another problem presenting
+# itself here. Why are some statements required to
+# split onto a new line, and how do you join them
+# back together?

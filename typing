@@ -1,44 +1,55 @@
 
 ###
-Concept:
--> Datatypes are fundamental pieces, like int.
--> Structs are groups of either datatypes or more
-structs.
--> Both store data. Both are considered types.
--> Functions can only return types.
--> Functions can accept either types or
-interfaces. Actually that doesn't make sense
-because values can't have functions associated
-with them.
 ###
 
-datatype Int { 1, 2, 3, ... }
-datatype Bool { true, false }
-datatype String { ... }
-
-struct Sequence { *items }
-
-??? List {
-    Sequence;
-    fun ...;
-    fun ...;
-    fun ...;
+Display = Abstract {
+    # Superclass must implement all functions.
+    repr = Fun();
 }
 
-fun typed_function(Int i, Bool b, Sequence s): Sequence {
+Displayer = Type {
+    implement Display {
+        repr = Fun() {};
+    }
 }
 
-fun iterate([T]Sequence s) : [T]Generator {
-    yield item for item in s;
+Switch = Type {
+    # Requires no implementation.
+    switch:Bool;
 }
 
-###
-So just like everything in python is an object,
-everything in malt is a data structure.
-###
+Super = Type {
+    include Display, Switch;  # Error
+}
 
-# Ok so what about grouping together like
-# functions, notably functions that all work
-# together on the same structure? This is like
-# traditional object oriented programming; is that
-# a bad thing?
+Super = Switch + Display;  # Error
+
+Super = Type {
+    include Switch;
+    implement Display {
+        repr = Fun() { }
+    }
+}
+
+f = Fun(x:Display+Switch) { }
+
+# What about construction functions?
+Super = Type[N](length:Num) {
+    if N == Int {
+        include Switch;
+    };
+    implement Display {
+        repr = Fun() {
+            return Str(length);
+        };
+    };
+};
+
+s = Super[Real](5);
+s.switch;  # fails, not known at compile time
+
+# Misc note on syntax.
+var : Type
+var = Type(value)
+Subset <: Superset
+Superset >: Subset

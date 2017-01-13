@@ -2,6 +2,6 @@
 ###
 ###
 
-Num = Type;
-Int = Type;
-Float = Type;
+Num (uint)
+Int (int)
+Real (float)

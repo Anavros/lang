@@ -1,0 +1,10 @@
+
+# Module
+Address = import mem.Address;
+Maybe = import logic.Maybe;
+
+Node[T] = T + Maybe[Address[T]]
+Node = Type [T] (leaf:T, link:Maybe[Address[T]]) {
+}
+
+# Usage

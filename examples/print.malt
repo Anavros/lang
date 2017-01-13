@@ -1,0 +1,39 @@
+
+###
+###
+
+print = Func(d:Display) {
+    stdout.write(d.repr());
+};
+
+Display = Interface {
+    fun repr(d:Display):String;
+    # Concrete functions allowed in interface?
+    fun default():String {
+        return "\_(<.<)_/"
+    };
+};
+
+Inventory = Mixin {
+}
+
+...
+
+Player = Inventory + Location + Achievements +
+Statistics + Display + Ordered + {
+    fun talk();
+};
+
+Player = {
+    include Inventory, Location, Achievements;
+    implement Display {
+        fun repr() { };
+    };
+    implement Ordered {
+        fun eq() { };
+    };
+    fun talk() { };
+}
+
+p = Player();
+p.repr()  # ???

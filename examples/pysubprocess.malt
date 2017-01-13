@@ -22,11 +22,15 @@ should always be available.
 ###
 
 call = Func
-(args:Sequence[String], stdin:stdout:stderr:File, shell=false, timeout=Num(0)) {
+(args:Sequence[String], stdin:stdout:stderr:File?, shell=false, timeout:Num?) {
     ...
+    if given(stdin) ...  # 'File?' can be Some[File] or None.
 }
 
-# What default File() value should std* use?
-# We don't really have a null type.
-# What about the given function?
-# They would still be required if they didn't have a default value though.
+File? = Option[File]
+File! = Result[File]  # ?
+
+###
+So we do have a 'None' type, but it has to be allowed explicitely. Therefore,
+we avoid the unexpected null problem.
+###

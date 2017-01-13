@@ -1,4 +1,68 @@
 
+Item = {
+    name:Str;
+    amount:Num;
+};
+
+Inventory = {
+    items:List[Item];
+    give();
+    take();
+};
+
+Health = {
+    hp:Num;
+    armor:Real;
+    hurt();
+    heal();
+    kill();
+}
+
+Location = {
+    Plains=Forest=Ocean=Token;
+    move();
+};
+
+Achievements = {
+    flirted_with_death:Bool;
+    juggled_knives:Bool;
+    climbed_large_tree:Bool;
+}
+
+Player = Inventory + Location + Achievements
++ Health + {
+    name:String;
+    deaths:Num;
+};
+
+Vehicle = Inventory + Location + {
+    speed:Real;
+};
+
+Func(p:Player);
+
+Func(i:Inventory);  # Will this only accept
+# Inventory objects, or also include any superset
+# of Inventory?
+
+# Should be superset, right? Unless it isn't clear
+# enough that that's the intention.
+
+Func(m:Location+Achievements); # Has to have both?
+
+player = Player();
+player.give(item);
+player.take(item);
+player.hurt(5);
+player.heal(5);
+player.move(Location.Ocean);
+
+vehicle.move();
+vehicle.hurt();
+vehicle.give();
+
+
+
 ###
 Player = Inventory + Location + Player Stats
 Inventory = [Item] Sequence + Capacity

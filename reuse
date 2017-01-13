@@ -65,3 +65,6 @@ fun printall(Iterable items) {
     }
     items:Sequence.sequence
 }
+
+# What about a reimplement ability?
+# Aka overriding. It would have to be explicit.

@@ -1,0 +1,19 @@
+
+###
+Concept:
+-> Some languages, like Ada, use output variables
+rather than return values.
+-> It's an interesting concept to think about.
+-> We could maybe extend it even farther to denote
+possible error cases too.
+###
+
+fun divmod(n:d:Int) : (d:m:Int) {
+    return d, m;
+}
+
+(d, m) = divmod(8, 2);
+
+# So it would work pretty much just like a normal
+# tuple return, but with a more explicit
+# declaration of return values.

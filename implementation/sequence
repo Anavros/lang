@@ -14,25 +14,24 @@ of sequences like arrays that directly store the
 memory.
 ###
 
-module sequence {
-    Sequence = Type { }
+# Module
+Address = import mem.Address;
+Array = import array.Array;
 
-    new = Func(length:Num) : Sequence { }
-
-    insert = Func (s!:Sequence, element:Any) {
-    }
-
-    concat = Func { }
-    length = Func { }
-    contains = Func { }
-    index = Func { }
-    sort = Func { }
-    join = Func { }
+Sequence = Type (length:Num) {
+    items = Array[Address](length);
+    Index = Num[max=length-1];
+    put = Func (s:Sequence!, element:Any, i:Index) { }
+    get = Func (s:Sequence!, i:Index) { }
 }
+
+contains = Func { }
+index = Func { }
+sort = Func { }
+join = Func { }
 
 # Usage
 
 import sequence;
 
 s = sequence.new(5);
-s.

@@ -1,0 +1,6 @@
+
+Like python but more reliable for larger systems.
+Fast development of reliable programs.
+Well suited for making small-to-mid-sized games.
+Semi-explicit memory management for better data control.
+Checked types for slower but less buggy number handling.

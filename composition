@@ -1,0 +1,52 @@
+
+Stack = Array + Num + push + pop
+# A stack is an array of items that doesn't quite
+# behave like an array. So the data is largely the
+# same but the functionality is a little
+# different.
+
+struct Array[T] (head:Address, length:size:Num);
+struct Sequence (head:Address, length:Num);
+
+interface Access[Array[T]] {
+    get(a:Array, i:Index) : T;
+    put(a:Array, element:T, i:Index);
+};
+
+interface Stackcess[C[E]] {
+    fun  pop(collection:C) : E;
+    fun push(collection:C, element:E);
+};
+
+implement Stackcess[Array[T]] {
+    fun pop(a:Array) : T { }
+    fun push(a:Array, element:T) { }
+}
+
+implement Stackcess[Sequence[T]] {
+    fun pop(s:Sequence) : T { }
+    fun push(s:Sequence, element:T) { }
+}
+
+# Usage
+array = Array[Int](5) with Access;
+array.put(100, 0);
+array@1 = 200;
+x = array.get(0);
+
+stack = Array[Int](5) with Stackcess;
+stack.push(100);
+stack.push(200);
+x = stack.pop();
+
+###
+So with this model, data is often the same, but
+its interpretation changes.
+###
+
+fun empty_stack(s:Stackcess[Array]) {
+    # Does Stackcess guarantee length?
+    until s.length == 0 {
+        discard s.pop();
+    };
+};

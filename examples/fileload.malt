@@ -1,0 +1,75 @@
+
+###
+Load a file from the disk.
+Handle errors appropriately.
+###
+
+PATH = "./file";
+
+
+# Option 1:
+# Return a result object that can either be the result or an error. Check for
+# error in the calling code. Checking for errors over and over again can be
+# annoying, but we could conceivably introduce some sugar for it.
+def load(filepath:String) : Result[File, FileNotFound] { }
+match load(PATH) {
+    f:Success[File] { read(f) }
+    e:Failure[FileNotFound] { exit(e) }
+}
+# Or with sugar, which has its own problems.
+f = load(PATH) otherwise exit(e);
+read(f);
+
+# Option 2:
+# Require the caller to supply a default file. Complicates the function
+# signature and doesn't handle cases where execution should stop very well.
+# Might be better handled as a conditional in the caller.
+def load(filepath:String, default:File) : File { }
+f = load(PATH, stdin);
+# What if we want to exit if the file can't be loaded?
+
+# Option 3:
+# Return execution status as a separate variable that can be moved and
+# manipulated in its own right.
+def load(filepath:String) : File, FileNotFoundError { }
+f, e = load(PATH);
+if e { exit(e) } else { read(f) };
+
+###
+Interesting sidebar on different kinds of errors. Most errors are predictable
+and recoverable, like connection loss, parsing errors, data conversion, etc. But
+some things are never fixable at runtime and must be fixed by a programmer, like
+segfaults, array miss-indexing, or bad logic. Ideally, you want to catch
+programmer errors in the compiler, but that isn't always possible. So you might
+introduce a different kind of error.
+###
+
+# See `intcast` for another example more focused on recoverable exceptions.
+
+###
+Another interesting idea is using pre and post-conditions. Conditions are part
+of a function's signature that are checked at runtime and ensure values passed
+to the function are appropriate. This is similar to advanced typechecking as
+already designed, i.e. 'Num[max=100]', but can be extended to include other
+arguments, i.e. 'require a >= b', and arbitrary logic.
+###
+
+# It might even integrate with normal type specification.
+fun divmod(num:den:Int) : Int
+    where den != 0 {
+}
+fun divmod {
+    *num : Int
+    *den != 0 : Int
+} execs {
+}
+
+# Option 4:
+# Pass along a keeper object that determines what to do in case of errors. This
+# way all paths are accounted for before the function is called, not after.
+def load(filepath:String, errhandler:Keeper) : File { }
+errhandler = case {
+    FileNotFound { exit() }
+    File f { read(f) }
+}
+# But that's just a more complicated match statement.
