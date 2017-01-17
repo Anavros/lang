@@ -1,0 +1,16 @@
+
+A bare-bones minimum-spec language to serve as the underpinnings of something
+larger. Implementation in c.
+
+Needs:
+Memory access.
+Very basic arrays, with bounds checking.
+Some sort of failure mode.
+Split into modules.
+
+Doesn't Need:
+Higher-order data structures.
+Complicated control flow.
+Sophisticated error handling.
+Preprocessor macros.
+Object orientation or types.

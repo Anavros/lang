@@ -1,0 +1,18 @@
+
+import array;
+
+fun sieve(ceil:int) : array {
+    numbers = array(ceil, bool);
+    i:j:int;
+    for i in numbers.bounds {
+        # bounded access?
+        if numbers[i] == false {
+            j = i+1;
+            while j <= ceil {
+                numbers[j] = true;
+                j += i;
+            }
+        }
+    }
+    return numbers;
+}

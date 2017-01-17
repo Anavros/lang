@@ -1,0 +1,36 @@
+
+How is all of this going to be structured in memory?
+
+[
+type id
+other stuff
+?
+]
+
+What if type ids are bitmasks that can be composed?
+That might not be very space efficient, maybe? You'd only get one type per
+bit; so 8 per byte instead of 255.
+
+Can we get away with static dispatch, because we have no method overloading?
+There's no inheritance. Types can be composed together, but functions will
+ever conflict; in fact it would raise an error.
+
+Note that some polymorphic functions are meant to behave the same on different
+types; e.g. zip should work the same no matter what kind of list it's given. But
+some functions are in fact supposed to be different; e.g. repr behaves
+completely differently for different types. I don't know if this has an impact
+on static dispatch.
+
+More formally, assume functions f and g. f operates on all types identically,
+while g must be redeclared for every type. The function f is unique, as it only
+has one declaration; it operates only on the head of the type structure,
+ignoring the rest. All declarations of g are also unique, because each
+declaration has a unique namespace associated with it, given by the type
+implementing g.
+
+    void f(Type* t);
+    void A_g(A* a);
+    void B_g(B* b);
+    void C_g(C* c);
+
+Where A, B, and C are headed by Type.

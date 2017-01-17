@@ -1,0 +1,9 @@
+
+Types are fundamental datatypes. There is no support for object orientation.
+Data-only structs will probably be allowed.
+
+Numerics:
+num :: 64-bit unsigned integer
+int :: 64-bit signed integer
+dbl
+flt

@@ -1,0 +1,20 @@
+
+# Allocate a block of void memory.
+import mem;
+void pointer v = mem.alloc(100);
+
+# Create a statically-sized array.
+int array a = array(100);
+
+# Place an element into an array.
+a[0] = 52;
+x = a[0];
+
+# Iterate over an array.
+for i in a.bounds {
+    a[i] = 1;
+}
+
+# Iterate over multiple arrays.
+for x, y, z in zip(a, b, c) {
+}

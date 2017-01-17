@@ -35,3 +35,7 @@ Invariants are constraints put on certain
 variables. These might already be handled with
 type modifiers.
 ###
+
+# One big use of contracts is array indexing. If
+# we have a better way to bound indices, it may
+# obviate a lot of use cases for contracts.

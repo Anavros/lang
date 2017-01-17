@@ -1,0 +1,39 @@
+
+###
+Array mis-indexing is a big cause of programming errors. If our indexed types
+automatically bound check we can avoid a lot of that.
+###
+
+# Option 1:
+# Return a result from indexing functions that has to be checked.
+interface Indexed {
+    sign at_index(array:Indexed, i:Num) : Result;
+}
+array = Array[Char]('a', 'b', 'c');
+# Doesn't work because it's wrapped.
+# assert 'a' == array.at_index(0);
+match array.at_index(0) {
+    Succ(c) { assert c == 'a'; }
+    Fail(e) { crash(e); }
+}
+# This is too inconvenient for something as common as array access.
+
+# Option 2:
+# Crash the system on bad indices and require the programmer to check their
+# bounds beforehand.
+sign at_index(array:Indexed[T], i:Num) : T;
+array = Array(x, y, z);
+array@3;  # crashes
+if x in array.bounds {
+    array@x;
+}
+
+# A more complicated example of option 2.
+func read(b:Buffer, index:Num, count:Num) : Num
+predicate {
+    index in b.bounds;
+    # always index in b.bounds;  # invariant?
+    b.length-index >= count;
+} body {
+    ...
+};

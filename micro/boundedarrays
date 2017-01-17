@@ -1,0 +1,63 @@
+
+Array access should be bounded to prevent overflow errors. The naive method,
+checking the index for every access, introduces a huge performance slowdown. I
+think we can do better than that. We should examine the most common use-cases of
+array access and optimize for them in order of occurance.
+
+-> Iterate over one array.
+-> Random access.
+-> Iterate over multiple arrays together.
+-> Iterate over a range and do something fancy with it.
+-> Iterate in non-standard steps.
+
+Probably the most common pattern is to iterate over the entire array. This is a
+best-case scenario for bounds checking, because it only has to happen once.
+
+    for(i=0; i<length; i++) {
+        ab[i] = a[i]*b[i];
+    }
+
+The c equivalent of this uses three unbounded pointer lookups per iteration.
+
+A naive bounding approach would be roughly the same code, but with the addition
+of three conditionals in each iteration. Not good.
+
+In this case, why not just offer a method to iterate over the entire array at
+once? It would ultimately come down to the same code as above, except the length
+parameter would be automatically picked and guaranteed to be within bounds.
+
+    for i in a.bounds {
+    }
+
+    for(i=0; i<a.length; i++) {
+    }
+
+That works for one array, but what if you're iterating over three at the same
+time? I would think either some sort of zip function or a check that all three
+are the same length. It also raises the question of what to do for different
+step sizes, i.e. not just i++.
+
+    assert ab.length == a.length == b.length;
+    for i in ab.bounds {
+        ab.unbound(i) = a.unbound(i) * b.unbound(i);
+    }
+
+Maybe if you know ahead of time that all three arrays are the same length, you
+can iterate over one and use the same index for the others, explicitly using
+unbounded accesses.
+
+    iter i over ab {
+        // If a and b are <= the size of ab, then they don't need to be checked.
+        ab[i] = a[i]*b[i];
+    }
+
+    iter i over a, b, ab {
+        ab[i] = a[i]*b[i];
+    }
+
+    iter a, b, ab {
+        ab = a*b;
+    }
+
+Maybe at first we can just have normal random access and then introduce an
+unchecked iteration loop.

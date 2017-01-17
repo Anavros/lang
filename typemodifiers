@@ -1,0 +1,24 @@
+
+###
+Types can accept parameters that restrict their allowed values. This goes hand
+in hand with generics.
+
+I'm not sure what should happen at compile time and what at runtime, or if it
+even matters for type restrictions.
+
+Type restrictions might play a role in contracts too?
+###
+
+Int;
+Int[-100,+100];
+Array[Int[0,10]];
+
+type Datetime {
+    month   : Int[1,12];
+    day     : Int[1,31];
+    hour    : Int[0,23];
+    minute  : Int[1,60];
+    second  : Int[1,60];
+}
+
+func index[T](a:Array[T], i:Int[0,a.len]) : T;
