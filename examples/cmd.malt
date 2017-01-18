@@ -1,0 +1,15 @@
+
+
+fun main() {
+    options = Array[Str](
+        "add i:a i:b",
+        "pow f:n i:e=2",
+    );
+    loop {
+        res = cmd.offer(options);
+        match res.head {
+            "add" { print(res.a + res.b); };
+            "pow" { print(res.n ^ res.e); };
+        };
+    };
+};

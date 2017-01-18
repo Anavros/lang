@@ -52,3 +52,19 @@ Type [T, U, V, XCLASS, YCLASS] (
 ) {
     statements;
 }
+
+# Maybe type constructors are just like functions.
+
+cls Point(x:y:z:Float) {
+    cls.x = x;
+    cls.y = y;
+    cls.z = z;
+}
+
+fun new_point(x:y:z:Float) {
+    Point p;
+    p.x = x;
+    p.y = y;
+    p.z = z;
+    return p;
+}

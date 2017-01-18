@@ -96,10 +96,10 @@ not_in_function
 str = "Really long statement which doesn't really"
     + "map onto one line nicely and has to be"
     + "broken up into multiple parts."
-MyObject()
-    .do()
-    .the()
-    .thing()
+MyObject().
+    do().
+    the().
+    thing()
 multilinecall(
     a=1,
     b=2,

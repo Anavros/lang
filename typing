@@ -53,3 +53,10 @@ var : Type
 var = Type(value)
 Subset <: Superset
 Superset >: Subset
+
+type Point() {
+    x:y:z:Num;
+}
+func chomp() {
+    if x { y(); };
+}

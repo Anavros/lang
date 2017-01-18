@@ -1,0 +1,36 @@
+
+Purpose:
+To quickly create small, maintainable systems.
+
+Faster development than rigid languages like java.
+More explicit and easy-to-maintain typing than python.
+Cleaner and more consistent syntax than c++.
+More integrated data structures than c.
+
+Use-Cases:
+-> Small to mid-sized interactive text programs.
+-> Lightweight graphics and GUI programming.
+-> Game design prototypes.
+-> Terminal user interfaces.
+-> Tight loops with unboxed types and memory access.
+
+Anti-Cases:
+-> Advanced graphics processing as in c++.
+-> Big data processing as in python.
+-> Highly parallel applications as in go.
+-> OS-related scripting as in bash or perl.
+-> Hardcode security like rust.
+-> Extreme low-level speed like c.
+-> Inheritance-based polymorphism as in java or c#.
+
+Features:
+-> Highly composable types using subtype polymorphism instead of inheritance.
+-> Syntax well suited to interactive development.
+-> Probably a nice REPL.
+-> Explicit syntax with marking for mutability and side-effects.
+-> Included suite of fundamental data structures like trees, maps, and fsm.
+-> Probably full unicode support.
+-> Integrated development tools like unit testing, debugging, and documentation.
+-> Syntax as consistent and simple as possible.
+-> Manual memory management without being annoying if that's possible.
+-> Closely-tied toolset that doesn't impose too many structural restrictions.
