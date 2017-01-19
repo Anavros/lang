@@ -1,5 +1,20 @@
 
 ###
+Revisit: Mutation functions make more sense now that we have functions defined
+inside types again.
+###
+
+type Point(x:y:z:Float) {
+    mut zero() {
+        x=y=z=0.0;
+    }
+}
+p = Point(1, 2, 3);
+p.zero!();
+
+
+
+###
 Concept:
 -> Functions operate on copies and use return
 values by default.

@@ -1,20 +1,19 @@
 
 ###
-Concept:
--> Allow functions to wrap other functions,
-executing before or after.
--> Suspiciously similar to decorators.
+Wraps or decorators take functions and execute them with other statements.
 ###
 
-fun increment(Int n) : Int {
+log = (f:Function) {
+    print("Starting execution of {f.name}().");
+    r = f();
+    print("Finished execution. Received return value {r}.");
+}
+
+increment = (n:Num) : Num {
     return n+1;
 }
+increment = log(increment(?));
 
-fun log(Function f) : Result {
-    print("executing function");
-    r = f();
-    print("got result $r");
+sys.entry = {
+    increment(5);
 }
-
-log <- increment(5);
-log(increment(5));

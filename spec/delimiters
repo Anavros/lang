@@ -1,0 +1,40 @@
+
+# Braces denote blocks of statements. Each statement in a block terminates with
+# a semicolon.
+
+action {
+statement;
+statement;
+};
+
+# Parentheses show lists of expressions. Expressions are separated by
+# commas. A comma may optionally follow the last item in a list.
+
+call(
+    expression,
+    expression,
+);
+
+# Brackets are used for vague typing things.
+
+?
+
+# Angle brackets are reserved for comparison operators.
+
+x <= y
+A <: B
+
+# Semicolons follow every statement. Blocks are considered statements, for
+# consistency's sake.
+
+func x();
+func x() {
+};
+x();
+
+# Double quotes delimit strings.
+
+"Hello, world!"
+
+# Single quotes currently have no use.
+# Backticks have no use.

@@ -1,0 +1,47 @@
+
+###
+Blocks are generic, first class objects. Arguments within parens can be applied
+inside the block scope. Generic connection between types and funcs?
+###
+
+(x) {
+    x;
+};
+
+function = (x, y) {
+    print(x);
+    print(y);
+};
+
+###
+Inheritly two kinds of blocks: those that take on the enclosing scope, and those
+that ask for variables explicitly.
+###
+
+# Enclosing scope.
+x = 10;
+loop {
+    print(x);
+};
+
+# Explicit variables.
+(v) {
+    print(v);
+};
+map((v){print(v);}, items);
+
+# What about type constructors?
+Point = {
+    # These are just input variables, right? Declarations.
+    x;
+    y;
+    z;
+};
+
+Point = (x:y:z:Float);
+Health = (
+    hp:Num,
+    hurt:Function,  # what to do about functions?
+    heal:Function,
+);
+Monster = Point :: Health :: (name:Str);

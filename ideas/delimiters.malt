@@ -1,36 +1,4 @@
 
-Delimiters:
-- { } Braces denote blocks of statements. Each statement in a block terminates with a semicolon.
-- ( ) Parentheses show lists of expressions. Expressions are separated by commas. A comma may optionally follow the last item in a list.
-- [ ] Brackets are used for various type constructs.
-- < > Angle brackets are reserved for comparison operators.
-
-Or:
-- ( ) Parens are for tuples and function applications.
-- [ ] Brackets are for lists and are also reused as type specs.
-
-fun example(int x) {
-    statement1;
-    statement2;
-}
-
-struct Point[N] {
-    N x, y, z;
-}
-# Or
-struct Point[N] (N x, N y, N z);
-
-items = Vector[Int](1, 2, 3, 4, 5);
-tuple = (1, 2, 3);
-hashmap = (
-    "a" = 1,
-)
-hashmap = (a=1, b=2, c=3);
-# Should maps allow omission of quotes for string keys?
-# Probably not.
-# But it does conflict with named arguments in functions.
-hashmap = [a=1, b=2, c=3];
-hashmap = [1='a', 2='b', 3='c'];
 
 # There really needs to be a way to visually join
 # braced statements together.
@@ -48,7 +16,11 @@ else {
 }
 
 # But how?
-
+# Require semicolons on everything I guess.
+if x {
+} else {
+};
+# It's all one statement.
 
 ###
 Concept:

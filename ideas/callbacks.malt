@@ -1,0 +1,54 @@
+
+###
+Callback functions typically all need to accept the same arguments, even if some
+of the arguments will not be used.
+
+Find a way to mix and match callback functions that only take what they need.
+###
+
+a = (n:Num) { };
+b = (s:Str) { };
+c = (n:Num, s:Str) { };
+
+# It probably has something to do with block scopes I think.
+
+# Structural way to do it. Gets out of hand quickly.
+dispatch(name:Str) {
+    match name {
+        "a" { a(Num()); };
+        "b" { b(Str()); };
+        "c" { c(Num(), Str()); };
+    }
+};
+
+# Doesn't work because the functions would be called on creation.
+mapping = Map(
+    "a" = a(Num()),
+    "b" = b(Str()),
+    "c" = c(Num(), Str()),
+);
+mapping.at(char)();
+
+# Doesn't work because a and b have different signatures.
+mapping = Map(
+    "a" = a,
+    "b" = b,
+    "c" = c,
+);
+mapping.at(char)(Num(), Str());
+
+###
+We already have an idea of partial application; what about over-application?
+It seems reasonable, although it might mess up in the corner cases.
+###
+
+# Functions only take the given arguments if they're needed.
+# Of course syntax is liable to change. Not even partial applications have a
+# good form yet.
+mapping.at(char)(?Num(), ?Str());
+
+###
+It's like the opposite of currying. The caller doesn't know how many arguments
+are needed, but the callee will always get exactly what it needs. The real
+trouble is how to make it clear what's happening.
+###

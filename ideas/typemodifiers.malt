@@ -22,3 +22,29 @@ type Datetime {
 }
 
 func index[T](a:Array[T], i:Int[0,a.len]) : T;
+
+###
+What happens when constraints are broken?
+Consider the number case at least. If you have an n : Num[1, 10], and you assign
+100 to it, what happens? It could cause an error, wrap around back to 1, or
+constrain to 10.
+
+It could be an option that defaults to causing an error.
+###
+
+n : Num[1, 10];
+n = 5;  # fine
+n = 10; # error
+n : Num[1, 10, overflow="wrap"];
+n = 5;  # fine
+n = 15; # fine, n actually equals what?
+
+# Maybe separate assignment and mutation. Assigning an invalid range always
+# fails. Overflowing when wrap is set is like a modulous operation. Constrain is
+# more like a min/max assignment.
+
+n : Num[1, 10, overflow="wrap"];
+n = 5;  # fine
+n = 15; # error
+n += 6; # n wraps over into 5+6 % 10 == 1
+n += 5; # n wraps over into 5+5 % 10 == 0? that's not good

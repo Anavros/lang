@@ -62,7 +62,6 @@ p:q:r:s:Point;
 p=q=r=s=Point(1, 2, 3);
 
 # Completely Empty Functions
-empty = Func;
 
 # Void Functions
 fun start() { }
@@ -71,6 +70,9 @@ start = func() { }
 Void start() { }
 start = Func { }
 Func start;
+start = Func;
+start = ();
+func start() { };
 
 # Functions
 fun pow(Int n, e) : Int { }

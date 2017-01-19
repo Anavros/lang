@@ -1,0 +1,39 @@
+
+###
+I think side effects in general should be
+contracted. There's no way to keep a handle on
+every other thing possible.
+
+So there are a few things we're looking out for:
+global variable access, side-effect-producing
+function calls, and input mutations.
+
+See `scope` for global variables.
+
+See `mutation` for side-effect-producing calls.
+
+See `passby` for input mutation.
+
+And that should cover all side effects.
+In summary functions that have the potential to
+do something spooky at a distance are marked as
+such; and parameters that might be mutated by a
+function are marked as such as well.
+
+There's also the concept of effect annotations.
+
+Functions are defined with input signatures that
+must be fulfilled when called. Every function
+defines its list of arguments and their types,
+which is all checked at compile time, but could
+also extend to include runtime checks on given
+variables.
+
+Invariants are constraints put on certain
+variables. These might already be handled with
+type modifiers.
+
+One big use of contracts is array indexing. If
+we have a better way to bound indices, it may
+obviate a lot of use cases for contracts.
+###

@@ -9,3 +9,14 @@ I like the freedom of Go's error return values, but don't like the ease of
 ignoring exceptions. If we disallow programs with programmer errors to continue,
 then all other errors should be fixable and considered in the design process.
 ###
+
+# Input is a function that may fail.
+input = {
+    if stdin {
+        return stdin.readline();
+    } else {
+        return failure;
+    };
+};
+
+try x = input() err x = "default";

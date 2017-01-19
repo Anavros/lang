@@ -37,3 +37,7 @@ predicate {
 } body {
     ...
 };
+
+# Option 3:
+# Implement fat pointers that carry length information. This way, the overhead
+# is incurred when doing pointer arithmetic, not array access.

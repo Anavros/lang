@@ -1,0 +1,15 @@
+
+###
+Shorten long conditionals with a special syntactic sugar.
+###
+
+if x.has(value) or y.has(value) or z.has(value) { };
+if |x or y or z|.has(value) { };
+
+# Primarily used for chaining 'or' operations.
+# What if there were another for 'and'?
+
+if &x,y,z&.has(value) { };
+if |x,y,z|.has(value) { };
+
+# Got to figure out corner cases and precedence and such.

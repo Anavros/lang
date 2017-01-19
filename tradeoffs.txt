@@ -1,0 +1,5 @@
+
+Familiarity vs Cleverness
+I would like to come up with some new ideas, especially where consistent and
+explicit syntax is concerned. Changes that make a big difference are definitely
+ok. On the other hand, avoid changing things just for the sake of changing them.
