@@ -1,0 +1,11 @@
+
+###
+Interface with the underlying operating system.
+###
+
+###
+Execute a string on the shell. Not safe against malicious inputs.
+TODO: better subprocess management.
+###
+call = (x:String) {
+};

@@ -1,0 +1,10 @@
+
+###
+Parse argv-style arguments.
+###
+
+###
+Offer a function interface as a script option.
+###
+offer = (f:Function) {
+};

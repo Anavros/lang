@@ -1,0 +1,34 @@
+
+import argparse
+import system
+
+###
+Goal:
+Reimplement the tmux starter script.
+
+Usage:
+tm              # List current sessions.
+tm join {name}  # Attach to {name} or create it if it doesn't exist.
+tm pair {name}  # Attack to {name} with a different window view.
+###
+
+# Each function given to argparse is examined for its name and arguments.
+# Script parameters are generated and dispatched automatically.
+
+ls = {
+    system.exec("tmux ls");
+};
+
+join = (name:String) {
+    # system.exec should return a success code
+    # also, there should probably be some error checking here
+    system.exec("tmux attach -t {name} || tmux new-session -s {name}");
+};
+
+pair = (name:String) {
+    system.exec("tmux new -t {name}");
+};
+
+argparse.offer(ls);
+argparse.offer(join);
+argparse.offer(pair);
