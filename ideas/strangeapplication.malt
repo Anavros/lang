@@ -4,6 +4,8 @@ Callback functions typically all need to accept the same arguments, even if some
 of the arguments will not be used.
 
 Find a way to mix and match callback functions that only take what they need.
+
+Also, we need some partial application built in for different reasons.
 ###
 
 a = (n:Num) { };
@@ -51,4 +53,30 @@ mapping.at(char)(?Num(), ?Str());
 It's like the opposite of currying. The caller doesn't know how many arguments
 are needed, but the callee will always get exactly what it needs. The real
 trouble is how to make it clear what's happening.
+
+Maybe we can have function unions, where one function is picked from a group
+and called. Each time the group is called, you pass in enough arguments to cover
+everything.
 ###
+
+# All functions take a first argument n:Num.
+# bar() and baz() both take an argument s, but with different types.
+# All three have different arity.
+foo = (n:Num) {};
+bar = (n:Num, s:Str) {};
+baz = (n:Num, s:Sequence, d:Data) {};
+
+union = (name:Str, n:Num, s:???, d:Data) {
+    match name {
+        "foo" { foo(n); };
+        "bar" { bar(n, s); };
+        "baz" { baz(n, s, d); };
+    };
+};
+# Vs
+union = foo::bar::baz;
+union(n, s, d);
+foo::bar::baz(n, s, d);
+
+# Maybe just give a conflict if two functions have the same arguments?
+# Like combining types.

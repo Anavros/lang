@@ -1,0 +1,85 @@
+
+###
+Is there a good alternative to generic types?
+(Look into "System F<:" aka system f subtype theory.)
+It's all about establishing invariants at compile-time. Assert as many things as
+possible will not change over the course of execution.
+###
+
+# A node in a linked list can hold any value.
+Node[T] = (
+    value:T,
+    next:Node[T],
+);
+
+# Concatenate a linked list of strings in order.
+concat = (head:Node[String]) {
+    result = "";
+    loop {
+        result += head.value;
+        if head.next == None {
+            break;
+        } else {
+            head = head.next;
+        };
+    };
+    return result;
+};
+
+s : Node[String]();
+result = concat(s);
+n : Node[Num]();
+?????? = concat(n);  # Will it work?
+
+# What about type-defined standard functions, like python's __iter__?
+concat = (head:Node[String]) {
+    result = "";
+    for value in head.iterate() {
+        result += head.value;
+    };
+    return result;
+};
+
+
+s : Array[String];
+head = (a:Array[String]) : String {
+    return a.at(0);
+};
+head(s) : String;
+
+a : Array;
+head = (a:Array) : ? {
+    return a.at(0);
+};
+head(a) : ?;
+
+###
+Requirements for sum:
+    a has to have iter
+    e has to have a base value to be summed upon
+    e has to support addition
+###
+sum = (a:?) : ? {
+    result = e.base();  # what is the base case for the elements in a?
+    for e in a.iter() {
+        # e must allow the addition operator!
+        result += e;
+    };
+    return result;
+};
+
+###
+There are really two sides to the same coin. Functions need certain invariants
+to ensure that they will work, and types need to explain what invariants they
+can fulfill. So maybe it would be more natural to separate the type declaration
+from the function parameters.
+###
+
+invariant Summable {
+    A:iter() :: Iter[E];
+    E:base() :: E;
+    E + E    :: E;
+};
+
+sum = (a:Iterable[Addable]) {
+};

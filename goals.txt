@@ -8,20 +8,20 @@ Cleaner and more consistent syntax than c++.
 More integrated data structures than c.
 
 Use-Cases:
--> Small to mid-sized interactive text programs.
--> Lightweight graphics and GUI programming.
--> Game design prototypes.
+-> Single-user interactive programs.
+-> Data visualizations.
+-> Command-driven event loops.
 -> Terminal user interfaces.
--> Tight loops with unboxed types and memory access.
 
 Anti-Cases:
 -> Advanced graphics processing as in c++.
 -> Big data processing as in python.
 -> Highly parallel applications as in go.
 -> OS-related scripting as in bash or perl.
--> Hardcode security like rust.
+-> Hardcore security like rust.
 -> Extreme low-level speed like c.
 -> Inheritance-based polymorphism as in java or c#.
+-> Complex GUI programming.
 
 Features:
 -> Highly composable types using subtype polymorphism instead of inheritance.
@@ -34,3 +34,9 @@ Features:
 -> Syntax as consistent and simple as possible.
 -> Manual memory management without being annoying if that's possible.
 -> Closely-tied toolset that doesn't impose too many structural restrictions.
+-> Quick to getting starting making interactive programs.
+
+Acceptance Cases:
+-> It is fast and easy to create a basic interactive program.
+-> The syntax is consistent and easy to understand.
+-> Programs are structured in a natural way.
