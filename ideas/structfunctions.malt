@@ -106,3 +106,34 @@ struct {
     Func: {
     }
 }
+
+###
+Alternative Idea
+Functions are applied to structures. This seemed more novel before.
+
+Structures are only data. Functions are standalone. Functions operate on
+structures. Inverse function calls are formed as structure.function().
+
+Function groups, though?
+###
+
+# Concept: Arrays, Stacks, Queues, Deques, and Streams are all the same
+# data structures underneath, just different methods.
+
+stack = (s:Sequence[T]) {
+    pop = (s) -> T { };
+    put = (s) { };
+};
+
+stack = FunctionGroup(put, pop);
+x = stack.pop(sequence);
+x = sequence.stack.pop();
+
+###
+What about interfaces? Does a structure need to have a function directly
+associated with it?
+###
+
+Add = {
+    (i:Int, i:Int) {
+};

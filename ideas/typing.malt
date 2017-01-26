@@ -1,62 +1,67 @@
 
 ###
+Data structures and functions are broken up into two separate entities. Structs,
+instead of being considered one type, are considered as a collection of
+disparate types. Function parameters are defined as unions of needed field sets.
 ###
 
-Display = Abstract {
-    # Superclass must implement all functions.
-    repr = Fun();
-}
+Location = (x:y:Float);
+Health = (hp:Num);
+Sprite = (image:Image, scale=1.0, rotation=0.0);
+Weapon = (type:String, damage:speed:Num);
 
-Displayer = Type {
-    implement Display {
-        repr = Fun() {};
-    }
-}
+# An object is a concatenation of data structures.
+player = Location(0, 0)
+    :: Health(100)
+    :: Sprite("player.png")
+    :: Weapon("blaster", 2, 5);
 
-Switch = Type {
-    # Requires no implementation.
-    switch:Bool;
-}
+powerup = Location(0.4, 0.2)
+    :: Sprite("comegetme.png", scale=0.5);
 
-Super = Type {
-    include Display, Switch;  # Error
-}
+ether = Health(1000);
 
-Super = Switch + Display;  # Error
+avatar = Sprite("me.png", rotation=0.25);
 
-Super = Type {
-    include Switch;
-    implement Display {
-        repr = Fun() { }
-    }
-}
+# Can something have a sprite but no location?
+# You could make a requirement that sprites must have locations.
+# But that isn't always the case.
+# Just make it so that drawing functions require Sprite+Location.
+# Then locations and sprites are still separate, even when used together.
 
-f = Fun(x:Display+Switch) { }
-
-# What about construction functions?
-Super = Type[N](length:Num) {
-    if N == Int {
-        include Switch;
-    };
-    implement Display {
-        repr = Fun() {
-            return Str(length);
-        };
-    };
+# Functions only specify the pieces that they need to function.
+# For instance, move() will accept anything with a location component.
+move = (item:Location, dx:dy:Float) {
+    item.x, item.y += dx, dy;  # piecewise operations in tuples?
 };
 
-s = Super[Real](5);
-s.switch;  # fails, not known at compile time
+render = (item:Location+Sprite) {
+    game.render(item.image, (item.x, item.y));
+};
 
-# Misc note on syntax.
-var : Type
-var = Type(value)
-Subset <: Superset
-Superset >: Subset
+# Partial application of functions.
+affect_health = (item:Health, amount:Num, subtract:Bool);
+heal = affect_health(?, ?, subtract=false);
+harm = affect_health(?, ?, subtract=true);
 
-type Point() {
-    x:y:z:Num;
-}
-func chomp() {
-    if x { y(); };
-}
+# Therefore:
+move(player)    # works
+move(ether)     # doesn't work
+render(powerup) # works
+render(avatar)  # doesn't work
+
+###
+No field conflicts are allowed! Only one variable may have a given name in a
+structure union. This may cause problems when combining lots of things from
+different libraries and might need a workaround. No dynamic dispatch or
+overloading though.
+###
+
+# Objects can be constructed directly using a union of sets, or types can be
+# constructed and objects created from that.
+
+me = Location() :: Health();
+Player = Location :: Health;
+me = Player();
+
+# Not sure how constructors would change in that case.

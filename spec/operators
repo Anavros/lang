@@ -4,6 +4,11 @@ Each operator has a infix form and a normal function form.
 There are no user-defined operators.
 ###
 
+# The big list.
++ - * / ^ = :
+< > <= >= == != => <: >: =: ::
++= -= *= /=
+
 # Basic arithmetic.
 1 + 2 | sum(1, 2)
 3 - 1 | sum(3, -1)

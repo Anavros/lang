@@ -1,0 +1,25 @@
+
+###
+Partial applications of functions.
+###
+
+# A normal function definition.
+affect = (hp:Health, amount:Num, take:Bool);
+
+# A normal function call.
+affect(hp, 5, take=false);
+
+# New function definitions using partial application.
+heal = affect(?, ?, take=false);
+hurt = affect(?, ?, take=true);
+
+# A call to the new function.
+heal(hp, 5);
+
+###
+Two problems, both with clarity: the creation of a partial function looks just
+like a normal call; and the order of arguments can potentially become confusing.
+###
+
+affect(hp, 5, false);  # a call
+affect(hp, ?, false);  # a new function

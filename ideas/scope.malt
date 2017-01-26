@@ -41,4 +41,7 @@ fun increment() {
     }
 }
 
-# I think that's the best option overall.
+###
+Well, you usually don't want to include every single global variable, only a
+set few.
+###

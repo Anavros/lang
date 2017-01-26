@@ -83,3 +83,38 @@ invariant Summable {
 
 sum = (a:Iterable[Addable]) {
 };
+
+###
+Generics might be fulfilled by good usage of interfaces. Imagine a sorting
+function. Each item being sorted must have a comparison function, and that's it.
+So no need for generics.
+###
+
+sort = (a:Iter[Compare]) {
+    for e in a {
+        if e > a ...
+    };
+};
+
+###
+Maybe it's only parameter specs that need generics, right? If you have a linked
+list, say, just put whatever you want in there. But when its time for a function
+to use a linked list, it will specify that it needs a certain interface for
+those elements.
+###
+
+Link[T] = (value:T, next:Link);
+
+# Doesn't need to know anything about included types.
+head = (l:Link) { };
+# Specifies that links must support adding.
+sum = (l:Link[Add]) { };
+# What if you just passed in a function that could add two items?
+sum = (l:Link, adder:Function) { };
+
+###
+Interesting Note
+It's not important to know what you have a sequence of, but rather what the
+common functionality of every item in the sequence is. So you might have a bunch
+of ints, floats, and strings, but all of them can be rendered as strings.
+###

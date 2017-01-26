@@ -1,0 +1,14 @@
+
+###
+Code is organized into modules in the same way as python.
+Import statements bring in all named variables from a certain module under a
+namespace.
+###
+
+import module
+from module import a, b
+
+# Import variables directly into the local namespace.
+from module import *
+# Import only variables of a certain type.
+from module import *:Function

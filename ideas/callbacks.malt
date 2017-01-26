@@ -1,0 +1,11 @@
+
+###
+Callbacks are usually annoying because of difficult or second-class functions,
+arrest of control, and difficult parameter typing.
+###
+
+a = () {};
+b = () {};
+c = () {};
+app.register(a, b, c);
+app.take_over_everything();

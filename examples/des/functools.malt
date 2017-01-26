@@ -1,0 +1,75 @@
+
+###
+Write a set of higher-order functions that work on any type.
+
+Tests generics, interfaces, and function parameters.
+###
+
+
+
+###
+Apply a function to each element in a sequence, creating a new sequence.
+
+Limits of the function are imposed upon the elements of the input and output
+sequences.
+###
+map = (f:Function[A=>B], old:Sequence[A]) : Sequence[B] {
+    new = Sequence(old.bounds);
+    # Need a good way to iterate over two lists together.
+    for i in old.bounds {
+        # Does that work for setting elements as well as getting them?
+        new.at(i) = f(old.at(i));
+    };
+};
+invert = (b:Bool) : Bool {
+    return not b;
+};
+map(invert, ?) := (Sequence[Bool]) : Sequence[Bool];
+
+
+inverted = map(invert, Array(true, true, false));
+inverted == Array(false, false, true);
+
+
+
+###
+Check if an item is included within a given sequence. Must work with any type.
+
+Performs a naive linear search. What about sorted lists, where a binary search
+would do? Do different types get to define different inclusion methods?
+###
+
+invariants:
+    item == s.iteritem
+
+included = (item, list, iter:Function, eq:Function) : Bool {
+    for other in iter(list) {
+        if eq(item, other) {  # T == T
+            return true;
+        };
+    };
+    return false;
+};
+
+###
+Compute the sum of a sequence by calling the add function on each element. By
+definition, each element must be addable. In addition, the type must have some
+default value to use as a starting point. Recall python's sum function, which
+doesn't work on strings because the starting point is 0, not "".
+
+Sums are special cases of folds. Note that the identity of addition is 0, while
+the identity of multiplication is 1.
+###
+sum = (s:Sequence[Add]) {
+    total = [Add].identity;
+    for e in s {
+        total += e;  # must support adding
+    };
+};
+
+reduce = (f:Function[A,A=>A], items:Sequence[A], identity:A) : A {
+    reduction = identity;
+    for i in items {
+        f(reduction, i);
+    };
+};

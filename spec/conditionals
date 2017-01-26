@@ -6,8 +6,8 @@ if x {
     g();
 } else {
     h();
-}
-if x { f(); } elif y { g(); } else { h(); }
+};
+if x { f(); } elif y { g(); } else { h(); };
 
 # Inline Conditional Statements
 f() if x;
@@ -16,23 +16,23 @@ f() if x;
 match {
     false { f(); }
     true  { g(); }
-}
+};
 
 # Matches with Partial Application
 match has(?, iter) {
     x { x.iter(); }
     y { y.iter(); }
-}
+};
 
 # Expression matches?
 x = match y {
     1 => 'a';
     2 => 'b';
     3 => 'c';
-}
+};
 # Vs
 match y {
     1 { x='a'; }
     2 { x='b'; }
     3 { x='c'; }
-}
+};

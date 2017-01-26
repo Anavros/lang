@@ -1,0 +1,53 @@
+
+###
+Experimental control flow operators.
+
+Fundamentally, every control structure must include some test and a series of
+blocks selected.
+
+'if' has one test and two blocks. 'switch' has one test and many blocks.
+
+Maybe there needs to be a way to write normal functions that can take blocks as
+arguments. In a sense it's like passing an anonymous, parameterless function.
+###
+
+keyword (condition)
+{ block; };
+{ block; };
+{ block; };
+
+keyword(condition, { block; }, { block; }, { block; });
+
+# Maybe statement form is just syntactic sugar?
+
+if true {
+    x = 1;
+} else {
+    x = 2;
+};
+x = test(true, 1, 2);
+if(true, { x = 1; }, { x = 2});
+
+match c {
+    'a' => {};
+    'b' => {};
+    'c' => {};
+};
+x = select(c,
+    'a' => 1,
+    'b' => 2,
+    'c' => 3,
+);
+match(c, { 'a' => {}; 'b' => {}; 'c' => {}; });
+
+loop #>no condition<# {
+    print("hello");
+};
+loop({ print("hello"); });
+loop({ print("hello"); }, count=10);
+
+for e in a {
+    print(e);
+};
+print(e) for e in a;
+for(e, a, { print(e); });  # does this constitute dynamic scoping?
