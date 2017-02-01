@@ -65,3 +65,90 @@ Player = Location :: Health;
 me = Player();
 
 # Not sure how constructors would change in that case.
+
+###
+Everything gets much more complicated when we start to deal with nested types,
+like sequences.
+###
+
+objects = Array[Location::Health](
+    Location(0, 0) :: Health(100),
+    Location(1, 1) :: Health(200) :: Weapon("blaster.png", 2, 5),
+);
+
+f = (object:Location+Health) : Num {
+    return object.x * object.hp;
+};
+
+map(f, objects);
+
+# What about a shortcut if you're targeting a specific function:
+objects = Array[param(f)]();
+
+###
+Is there anything wrong with that?
+A type T[A+B+C] can only contain objects that have *at least* A+B+C; objects
+may have more as well!
+Just do parameterized types!
+###
+
+Constraint = (T:Type);
+Memory = Constraint :: Address;
+Array = Memory :: (length:size:Num);
+
+# Maybe we could have heterogenous container types that contain both data and
+# functions.
+# Modules are already like that.
+Link = [
+    lists.linkedlist,
+    lists.iterate,
+    lists.insert,
+    lists.remove,
+];
+l = Link();
+l.iterate();
+l.remove();
+
+# Maybe we can bring back functions in group types.
+Health = (
+    hp : Num,
+    affect = (amount:Num, negate=false) {
+        hp = sum(hp, if negate -amount else amount, min=0);
+    },
+    heal = affect(?, negate=false),
+    harm = affect(?, negate=true),
+);
+h = Health(100);
+h.heal(5);
+h.hp = 50;
+
+player = Health(100) :: Location(0, 0) :: (name:String);
+player.x = 10;
+player.heal(100);
+print(player.name);
+
+Array[T] = (
+    mem:Pointer[T],
+    length:size:Num,
+    at = (index:Num) : T? {
+    },
+);
+
+# But then you don't have to define every single member at once.
+Sequence[T] = (
+    length : Num,
+    iterate : () => Gen[T],
+);
+
+Array[T] = Sequence[T](?, array.iterate) :: ...;
+items = Sequence[Num](10, iterate=array.iterate);
+# How would you guarantee an input function like that would have everything it
+# needs?
+
+# And then you can write a function for the interface.
+printall = (elements:Sequence) {
+    print(e) for e in elements;
+};
+apply(print, elements);
+
+# Therefore sequence is sort of an abstract type.

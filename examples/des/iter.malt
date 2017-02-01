@@ -1,0 +1,71 @@
+
+###
+Present a single interface for iterating over a sequence, regardless of what
+structure lies underneath.
+###
+
+
+# Print all elements from a sequential structure.
+# The structure could be a static array, dynamic vector, or linked list; all of
+# which require different methods to parse.
+
+# What type constraints do we have on items?
+# Should we do interfaces and data-function groups?
+printall = (items:Sequence) {
+    # Which iterate is being called?
+    # We can't do dynamic dispatch, can we?
+    for i in iterate(items) {
+        # All objects are printable by default.
+        print(i);
+    };
+};
+printall(List());
+printall(Array());
+printall(Vector());
+
+Sequence : (
+    List || Array || Vector,
+    iterate,
+);
+
+
+
+Link[T] = (value:T, next:Link[T]?);
+iterate[T] = (ll:Link[T]) : T {
+    loop {
+        yield ll.value;
+        if ll.next == None {
+            break;
+        } else {
+            ll = ll.next;
+        };
+    };
+};
+links = Container(
+    Link=Link,
+    iterate=iterate,
+);
+l = links();
+links.iterate();
+
+iterate[T] = (a:Array[T]) : T {
+    for i in range(a.length) {
+        yield T(mem.read(a.address+i*a.size));
+    };
+};
+
+# Maybe sequences are abstract data types?
+# Maybe we need to allow functions in data types again.
+# Maybe just a generalized method for overloading a certain function?
+# Or something clever with namespaces for static dispatch?
+
+import array, lists;
+l = lists.LinkedList();
+a = array.Array();
+l <.< lists.iterate;
+a <<< array.iterate
+l.iterate();
+a.iterate();
+
+Iterable[T] = (iterate: () => Gen[T]);
+printall = (i:Iterable[T]) { };

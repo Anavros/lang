@@ -117,4 +117,12 @@ Interesting Note
 It's not important to know what you have a sequence of, but rather what the
 common functionality of every item in the sequence is. So you might have a bunch
 of ints, floats, and strings, but all of them can be rendered as strings.
+
+Although.
+Some things might work when the sequence is homogenous, but won't work when it's
+heterogenous. If you have an array of adders, where ints, floats, and strings
+can all be added, they can't necessarily be added together.
+
+Is python's single-dispatch approach better? Imagine iterating over a sequence.
+Any object that defines the __iter__ method abstracts away that concern.
 ###

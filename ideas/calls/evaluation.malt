@@ -1,0 +1,77 @@
+
+###
+Maybe we'll do all call-by-reference, where references can be mutable or not.
+
+If everything is a reference, we shouldn't need to mark bindings as mutable or
+not. It should be handled by the reference. This subverts the problem where you
+might have an immutable reference to a mutable container. In this case, if you
+have an immutable reference, you aren't allowed to change *anything*, whatever
+that that thing is.
+###
+
+Point = [x:y:z:Num];
+a = Point(1, 2, 3);
+b = Point(7, 8, 9);
+
+const = (p:Point) : Point {
+    # p.x += 1;  # not allowed! immutable reference
+    return Point(p.x+1, p.y+1, p.z+1);
+};
+c = const(a);
+a == Point(1, 2, 3);
+c == Point(2, 3, 4);
+
+mut = (p:Point!) {
+    p.x += 1;
+    p.y += 1;
+    p.z += 1;
+};
+mut(b!);
+b == Point(8, 9, 10);
+
+mixed = (p:Point!, n:Num) {
+    n = 6;  # not valid? should it just shadow? maybe we need split bind/assign
+    #n <- 6;
+    #val n = 6;
+    #foo() -> bar() -> baz();
+    e += n for e in (p.x, p.y, p.z);
+};
+mixed(c!, 5);
+c == Point(7, 8, 9);
+
+
+b <- (a -> const() -> const() -> const());
+b = a.const().const().const();
+
+###
+How to handle shadowing of immutable references?
+###
+
+countdown = (n:Num) {
+    countdown(n-1) if n > 0;  # not an assignment; fine
+};
+
+increment = (n:Num) {
+    while n < 10 {
+        n -= 1;  # assignment to an immutable reference; not fine
+    };
+};
+
+# What if you want to reuse the same name?
+increment = (n:Num) {
+    n = 0;
+    rebind(n, 0);
+    n rebind 0;
+    while n < 10 {
+        n -= 1;  # assignment to an immutable reference; not fine
+    };
+};
+
+# Using block scoping.
+rebind = (n:Num) {
+    print(n);
+    do {
+        n = 5;  # n isn't imported from outside scope
+        print(n);
+    };
+};

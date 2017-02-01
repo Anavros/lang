@@ -1,0 +1,12 @@
+
+# Each variable is composed of one or more types.
+player = Location() :: Health() :: Sprite();
+
+# Functions can specify one or more types in a similar fashion.
+f = (object:[Location::Health]) { };
+
+# Types can be parameterized.
+a : Array[Location::Sprite];
+
+# Any object that fulfills all requirements OR MORE can be included.
+a = (Location()::Sprite()::Health());

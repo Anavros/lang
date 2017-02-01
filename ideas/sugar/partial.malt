@@ -23,3 +23,18 @@ like a normal call; and the order of arguments can potentially become confusing.
 
 affect(hp, 5, false);  # a call
 affect(hp, ?, false);  # a new function
+
+# Possible solution is to make partial function creation into a builtin
+# function.
+heal = partial(affect, take=false);
+hurt = partial(affect, take=true);
+# That looks good, is pretty clear, and is consistent with other stuff.
+# Especially if you consider that all parameters can be set by keyword.
+
+###
+Match Statements
+###
+###
+Partial functions also have a nice use in matching statements, but it's not sure
+how that syntax will work.
+###

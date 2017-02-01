@@ -1,0 +1,28 @@
+
+###
+Creating new variable and modifying an existing one are two separate tasks.
+###
+
+x = 1;
+do {
+    x = 10;
+};
+print(x);  # ambiguous
+
+x = 1;
+do {
+    ^x = 10;  # clunky and confusing
+};
+print(x);
+
+let x = 1;
+do {
+    x = 10;
+};
+print(x);  # 1; reasonable but not the most clear
+
+x = 1;
+do {
+    x := 10;  # not a fan of that operator, but it does have precedence
+};
+print(x);

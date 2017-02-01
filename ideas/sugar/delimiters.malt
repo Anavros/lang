@@ -1,0 +1,51 @@
+
+# Parentheses are used for lists of expressions, separated by commas.
+# They are used for anonymous tuples, structure definitions, and function calls.
+tuple = (1, 2, 3);
+array = Array(1, 2, 3);
+print("hello");
+
+Point = (x:y:z:Float);  # notably different, types not values
+
+# Curly brackets are used for blocks of statements, delineated by semicolons.
+statement (parameters) { do; the; things; };
+
+# When written without a statement or parameters, blocks will run in place. This
+# can be useful for limiting scope.
+{
+    x = 10;
+    print(x);
+};
+###
+What about when passed into functions?
+function({ print("hello"); });
+Then it's treated like an object and not run.
+That might not be clear.
+Maybe there should be a simple keyword to execute a block in place.
+do {
+    x = 10;
+    print(x);
+};
+###
+
+# Otherwise they are used as first-class objects by the statement proceeding
+# them.
+# Assignment of a parameter-less block.
+function = {
+    statement;
+    statement;
+};
+# A block with parameters.
+function_with_params = (x, y, z) {
+    print(x, y, z);
+};
+# A block used with a keyword.
+loop {
+    statement;
+};
+# Multiple blocks chained together by keywords.
+if condition {
+    one();
+} else {
+    two();
+};

@@ -1,0 +1,31 @@
+
+###
+Short, one-expression functions, used where compactness is desired.
+###
+
+# Normal functions can be used as expressions.
+map((x) { return x*2; }, numbers);
+
+# But lambdas are shorter.
+# They omit the braces, return statement, and semicolon.
+map(x=>x*2, numbers);
+
+# There can be any number of arguments.
+map((x, y) => x*y, numbers);
+
+# Can arguments be typed?
+# Or is typechecking skipped?
+map(x:Num => x*2, numbers);
+
+# There can only be one expression as a result.
+map(x => (y=x*2; y+4), numbers); # not allowed
+
+# Assigning a lambda to a name.
+f = x -> x*2;
+
+###
+What about an alternative approach?
+###
+
+f = lambda(x, x^2);
+f = lambda('x', 'x'^2);

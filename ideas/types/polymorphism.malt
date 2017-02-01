@@ -1,0 +1,12 @@
+
+###
+How can one function work over many types?
+Alternatively, how can functions be selected appropriately when they all use the
+same name and perfom the same task?
+###
+
+a = Array();
+l = LinkedList();
+t = Tree();
+
+iterate = (s:?) { };

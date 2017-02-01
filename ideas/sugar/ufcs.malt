@@ -1,0 +1,61 @@
+
+###
+Universal function call syntax.
+###
+
+# Are conditionals just sugar over normal functions?
+loop {
+    statement;
+};
+loop({statement;});
+
+maybeprint = (condition, message) {
+    if condition {
+        print(message);
+    };
+};
+
+maybeprint(true, "hello");
+maybeprint true {
+    "hello";
+};
+
+# Maybe only for functions that take blocks as arguments?
+
+map = (f, items) { };
+newlist = map((x) { return x+1; }, mylist);
+newlist = map (x) {
+    return x+1;
+} mylist;
+newlist = map x in mylist {
+    return x+1;
+};
+
+register! = (func) {
+    file.add(func);
+};
+register((x, y, z) { return sum(x, y, z); });
+register (x, y, z) {
+    return sum(x, y, z);
+};
+
+for(i in e, (i) { });
+for i in e {
+};
+
+###
+All of this raises the question of whether users should be able to define their
+own constructs. There are macros in c, and operator overloading in c++; those
+are both error-prone and confusing. Maybe users can define their own keyword
+functions and infix functions, provided nothing is overloaded and there are no
+conflicts. Therefore there will be no 'cout << string' overload nonsense. But
+there could be 'a dotprod b dotprod c'.
+
+So I'm thinking to allow infix operators but only allow text and not built-in
+symbols.
+
+There's another problem with names overlapping. What if an array and a linked
+list have the same method?
+
+It should always be very clear where everything comes from.
+###

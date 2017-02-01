@@ -1,5 +1,21 @@
 
 ###
+Update
+###
+
+Player = ();
+SoggyClothes = ();
+
+dry = Player();
+wet = Player()::SoggyClothes();
+
+complain = (sog:SoggyClothes) {};
+
+dry.complain();  # doesn't work
+wet.complain();  # works because wet has SoggyClothes()
+
+
+###
 Traits are sets of functionality that are combined
 with variables directly, rather than their
 classes. They are distinct from mixins: mixins

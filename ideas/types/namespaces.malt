@@ -1,0 +1,58 @@
+
+###
+Functions are independent from structures, but sometimes need to be grouped
+together.
+
+Namespaces disambiguate where functions come from.
+###
+
+# Namespaces are slightly different from tuples. They only accept named
+# variables; the names become the keys.
+x = 100;
+f = { };
+namespace = Namespace(x, f);
+namespace.x;
+namespace.f;
+
+# Clever use of namespaces could obviate the need for dynamic dispatch.
+x = Foo() :: Bar();
+x <<< array.iterate;
+x.iterate();
+
+# Game example.
+Location = (
+    x:y:Float,
+    move=(x:y:Float) { },
+);
+
+Sprite = (
+    image:Image,
+    scale=1.0,
+    rotation=0.0,
+);
+
+thing = Location(1, 2) :: Sprite("me.png");
+thing.move(3, 2);
+
+# This function is independent because it requires both.
+render = (r:Location+Sprite) { };
+render(thing);
+
+# It could also be defined as part of a new group type.
+Renderable = Location :: Sprite :: (
+    render = (r:Location+Sprite) { },
+);
+# Yeah, that works.
+# It's all very flexible.
+
+# Should namespaces be dynamic at runtime? Can user input add new members, or
+# take members away?
+# Suppose they do:
+point = (1, 2, 3);
+input = stdin.readline();
+value = stdin.readline(cast=Num);
+point.set!(input, value);
+point = (1, 2, 3, ?)
+# Is there a problem with that? Probably not.
+# Can you take things away at runtime?
+# That would cause problems. But it might be fine. We'll say ok for now.

@@ -1,0 +1,17 @@
+
+###
+Send output from one function directly into another function.
+###
+
+# Traditionally:
+y = foo(bar(baz(x)));
+
+# Single-dispatch style:
+y = x.foo().bar().baz();
+
+# Functional style:
+y = x >> foo() >> bar() >> baz();
+# Or:
+y << baz() << bar() << foo() << x;
+# Which is a little too close to c++ nonsense for my liking.
+y is baz() of bar() of foo(x);

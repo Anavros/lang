@@ -1,0 +1,11 @@
+
+###
+Dynamic dispatch isn't inherently bad, but it really messes up our type system.
+Single dynamic dispatch will straight-up not work.
+###
+
+# Single dispatch WILL NOT WORK with compound types.
+f = (x:Foo+Bar) { };
+f = (x:Bar+Baz) { };
+x = Foo() :: Bar() :: Baz();
+x.f()  # which f?

@@ -1,0 +1,39 @@
+
+###
+How are mutability and side effects treated when local variables and non-local
+variables are used?
+###
+
+f = (n:Num) {
+    n += 1;  # error; immutable parameter
+};
+
+x = 1;
+x += 1;  # allowed?
+x = x+1; # what about that?
+
+x = add(x, 1);
+add(!x, 1);
+!x + 1;
+!x * 1;
+
+
+f = (a:Point) {
+    a.x += 1;  # error; immutable parameter
+};
+
+p = Point(1, 2, 3);
+p.x += 1;  # allowed?
+p.x = add(p.x, 1);
+add_in_place(p.x!, 1);
+
+# Side effects are different from mutation. That's an important distinguishment.
+add = (x:y:Num) { };
+add = (x:Num!, y:Num) { };
+
+
+x = 1;
+if true {
+    x += 1;  # allowed?
+    ^x += 1; # required extern operator?
+};

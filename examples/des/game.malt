@@ -1,0 +1,16 @@
+
+###
+Create a type structure for a simple game. Types should include monsters,
+weapons, powerups, controls, etc.
+###
+
+Location = (
+    x:y:Float,
+    move=(x:y:Float) { },
+);
+
+Sprite = (
+    image:Image,
+    scale=1.0,
+    rotation=0.0,
+);

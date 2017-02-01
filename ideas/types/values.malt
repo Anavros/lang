@@ -1,0 +1,26 @@
+
+###
+Should there be a distinction between value types and tuple types?
+###
+
+n = 2;
+p = Point(1, 2, 3);
+n;  # a value by itself
+p.x;# a struct of values (or more structs)
+
+# Therefore all numbers could be value types. It would be easy to represent
+# value types as set relations.
+
+Near = Plains || Forest || Ocean;
+Far = Badlands || Island;
+Areas = Near || Far;
+
+Areas > Near, Areas > Far
+
+# Of course, value types and group types look very similar at a glance. It might
+# not be obvious what the difference is.
+
+# It does make numbers a lot easier.
+Array[Float]  # Allows floats, ints, and nums because float > int > num.
+# Any operation that can be performed on a real number (ignoring practical
+# concerns with floating point operations) can be performed on a whole number.

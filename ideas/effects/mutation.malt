@@ -102,3 +102,20 @@ p = Point(1, 2, 3);
 p.x = 1;  # does this need a bang?
 fun mut(p) { p.x = 1; }
 mut(p)!;
+
+
+###
+Bring in the new scoping operators!
+
+If a function produces side effects, its name must end with a bang. If any
+statements within the function's body have side effects, the function has side
+effects. Banging is contagious.
+###
+
+import shell;
+mutate_system! = {
+    ^shell.exec!("shutdown -h now");
+};
+not_so_innocent_now! = {
+    ^mutate_system!();
+};

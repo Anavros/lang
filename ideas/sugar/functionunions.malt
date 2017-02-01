@@ -80,3 +80,10 @@ foo::bar::baz(n, s, d);
 
 # Maybe just give a conflict if two functions have the same arguments?
 # Like combining types.
+
+# Note that there is no discriminant; we can't tell which function to target.
+# Maybe this is better.
+union.foo(n, s, d);
+
+# Could we expand this further to create function tuples similar to the group
+# types we have already?

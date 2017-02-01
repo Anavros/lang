@@ -1,0 +1,7 @@
+
+concat = (items:String*) : String {
+};
+
+# Type* => Glob[Type]
+# Type! => Mutable[Type]
+# Type? => Maybe[Type]
