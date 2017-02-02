@@ -29,3 +29,4 @@ What about an alternative approach?
 
 f = lambda(x, x^2);
 f = lambda('x', 'x'^2);
+f = lambda(x => x^2);

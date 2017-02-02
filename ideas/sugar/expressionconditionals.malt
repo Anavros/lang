@@ -1,0 +1,27 @@
+
+###
+Each conditional structure has a statement form and an expression form.
+###
+
+if condition {
+    x = 1;
+} else {
+    x = 0;
+};
+x = 1 if condition else 0;
+x = test(condition, 1, 0);
+x = select(condition, true => 1, false => 0);
+
+match n {
+    1 { x = 'a'; };
+    2 { x = 'b'; };
+    _ { x = 'z'; };
+};
+x = match n {
+    1 => 'a',
+    2 => 'b',
+    _ => 'z',
+};
+x = select(n, ((1, 'a'), (2, 'b'), (_, 'z')));
+# Could the '=>' operator be a shorthand for a pair?
+x = select(n, 1 => 'a', 2 => 'b', _ => 'z');
