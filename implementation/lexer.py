@@ -7,6 +7,7 @@ tokens = (
     "ASSIGN",
     "SEMICOLON",
     "COMMA",
+    "COLON",
     "NUMERAL",
     "STRING",
     "NAME",
@@ -17,6 +18,7 @@ t_RPAREN    = r'\)'
 t_ASSIGN    = r'='
 t_SEMICOLON = r';'
 t_COMMA     = r','
+t_COLON     = r':'
 t_STRING    = r'".*"'
 t_NAME      = r'[A-Za-z_][A-Za-z_0-9]*'
 

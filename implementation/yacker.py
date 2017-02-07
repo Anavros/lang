@@ -1,27 +1,28 @@
 
 from ply import yacc
 from lexer import tokens
+from objects import *
 
 
 def p_program(p):
     """
-    program : program SEMICOLON statement
+    program : program statement
     """
-    p[0] = p[3]
-    p[0].extend(p[1])
+    p[0] = p[1]
+    p[0].append(p[2])
 
 
 def p_program_end(p):
     """
-    program : statement SEMICOLON
+    program : statement
     """
     p[0] = [p[1]]
 
 
 def p_statement(p):
     """
-    statement : call
-              | assignment
+    statement : call SEMICOLON
+              | assignment SEMICOLON
     """
     p[0] = p[1]
 
@@ -31,14 +32,14 @@ def p_call(p):
     call : NAME LPAREN arguments RPAREN
     """
     #p[0] = return value of p[1]
-    p[0] = p[1], p[3]
+    p[0] = ("CALL", (Function(p[1]), p[3]))
 
 
 def p_assignment(p):
     """
-    assignment : NAME ASSIGN value
+    assignment : variable ASSIGN value
     """
-    p[0] = "{} = {}".format(p[1], p[3])
+    p[0] = ("ASSIGN", (p[1], p[3]))
 
 
 def p_arguments(p):
@@ -58,11 +59,25 @@ def p_arguments_list(p):
 
 def p_value(p):
     """
-    value : NAME
-          | STRING
-          | NUMERAL
+    value : variable
+          | constant
     """
     p[0] = p[1]
+
+
+def p_variable(p):
+    """
+    variable : NAME
+    """
+    p[0] = Variable(p[1])
+
+
+def p_constant(p):
+    """
+    constant : STRING
+             | NUMERAL
+    """
+    p[0] = Constant(p[1])
 
 
 def p_error(p):
