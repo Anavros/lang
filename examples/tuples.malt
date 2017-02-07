@@ -1,0 +1,22 @@
+
+parse = (f:File) : List[String] {
+    state = (
+        quoted => false,
+        keybuf => Buffer[Char](),
+        strbuf => Buffer[Char](),
+        groupstack => Stack[Char](),
+        tokens => List[String](),
+    );
+    #match c for c in f.chars() {
+    #};
+    for c in f.chars() {
+        match {
+            c in WHITESPACE =>      { space(c, state!); };
+            c == DOUBLE_QUOTE =>    { quote(c, state!); };
+            c in GROUPS =>          { group(c, state!); };
+            c == STATEMENT =>       { conclude(c, state!); };
+            default =>              { other(c, state!); };
+        };
+    };
+    return state.tokens;
+};

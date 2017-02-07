@@ -1,0 +1,16 @@
+
+# An apply function that iterates over a list.
+# Specify a set of types and it will only operate on those types.
+
+Location = ();
+Health = ();
+Sprite = ();
+
+render = (i:Location+Sprite);
+heal = (i:Health);
+
+a = Array[Any](...);
+apply(render, Sub[Location+Sprite](a));
+
+# In general the idea of creating a heterogenous sequence and then iterating
+# over only the types you need.

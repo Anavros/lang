@@ -1,2 +1,4 @@
 
 print("hello");
+x = 10;
+exit();

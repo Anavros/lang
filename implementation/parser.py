@@ -1,5 +1,7 @@
 
-WHITESPACE = " \t\n"
+from string import ascii_letters, digits, whitespace
+from tools import Processor, chars
+
 LPAREN = '('
 LBRACE = '{'
 LBRACK = '['
@@ -10,74 +12,55 @@ GROUPS = '({[]})'
 DOUBLE_QUOTE = '"'
 SINGLE_QUOTE = "'"
 STATEMENT = ';'
+KEYWORD = ascii_letters + digits
+WHITESPACE = whitespace
 
 
-class State:
-    def __init__(self):
-        self.quoted = False
-        self.keybuf = []
-        self.strbuf = []
-        self.groupstack = []
-        self.tokens = []
-
-
-def parse(f):
-    state = State()
-    while True:
-        c = f.read(1)
-        if not c:
-            break
+def break_into_statements(f):
+    sts = Processor()
+    for c in chars(f):
+        if c == STATEMENT:
+            sts.chomp()
         elif c in WHITESPACE:
-            space(c, state)
-        elif c == DOUBLE_QUOTE:
-            quote(c, state)
-        elif c in GROUPS:
-            group(c, state)
-        elif c == STATEMENT:
-            conclude(c, state)
+            sts.buffer(' ')
         else:
-            other(c, state)
-    return state.tokens
+            sts.buffer(c)
+    return sts.tokens
 
 
-def space(c, state):
-    if state.quoted:
-        # TODO: ignore newlines in quoted strings
-        state.strbuf.append(c)
+def break_into_tokens(statement):
+    sts = Processor()
+    for c in statement:
+        if c in KEYWORD:
+            sts.buffer(c)
+        elif c in WHITESPACE:
+            pass
+        else:
+            sts.chomp()
+            sts.add(c)
+    sts.chomp()
+    return sts.tokens
 
 
-def other(c, state):
-    if state.quoted:
-        state.strbuf.append(c)
-    else:
-        state.keybuf.append(c)
-
-
-def quote(c, state):
-    if state.quoted:
-        state.quoted = False
-        state.tokens.append(''.join(state.strbuf))
-        state.strbuf = []
-    else:
-        state.quoted = True
-
-
-def group(c, state):
-    pass
-
-
-def conclude(c, state):
-    if state.keybuf:
-        state.tokens.append(''.join(state.keybuf))
-        state.keybuf = []
+def extract_functions(tokens):
+    funcs = []
+    lastkw = ""
+    for t in tokens:
+        if set(t) <= set(KEYWORD):
+            lastkw = t
+        elif t == '(':
+            funcs.append(lastkw+"()")
+    return funcs
 
 
 def main(args):
     f = open(args.filename)
-    tokens = parse(f)
+    ments = break_into_statements(f)
+    exprs = [break_into_tokens(s) for s in ments]
+    funcs = list(map(extract_functions, exprs))
+    print(exprs)
+    print(funcs)
     f.close()
-    for t in tokens:
-        print(t)
 
 
 if __name__ == '__main__':

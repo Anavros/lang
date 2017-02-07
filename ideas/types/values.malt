@@ -20,6 +20,10 @@ Areas > Near, Areas > Far
 # Of course, value types and group types look very similar at a glance. It might
 # not be obvious what the difference is.
 
+Num = Data(0, 1, 2, 3, ...);
+Int = Num :: Data(-1, -2, -3, ...);
+Float = Int :: Data(1.1, 1.01, 1.001, ...);
+
 # It does make numbers a lot easier.
 Array[Float]  # Allows floats, ints, and nums because float > int > num.
 # Any operation that can be performed on a real number (ignoring practical
