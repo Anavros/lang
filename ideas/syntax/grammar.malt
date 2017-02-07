@@ -1,0 +1,19 @@
+
+program     ::= [statement]
+statement   ::= assignment | call ';'
+assignment  ::= name '=' expression
+call        ::= name '(' expression
+name        ::= "\w[\w\d_]"
+expression  ::=
+constant    ::= numeral | string | block
+block       ::= '{' [statement] '}'
+numeral     ::=
+string      ::= '"' ".*" '"'
+
+statement   ::= assignment | call ';'
+assignment  ::= name '=' constant
+call        ::= name '(' constant ')'
+name        ::= "\w[\w\d_]"
+constant    ::= numeral | string | block
+numeral     ::= "\d+"
+string      ::= "\".*\""

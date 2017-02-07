@@ -2,3 +2,4 @@
 examples/blossom/
 old/
 **/brunch
+**/__pycache__/

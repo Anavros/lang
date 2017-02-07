@@ -1,4 +1,6 @@
 
+from constants import *
+
 
 def chars(f):
     """
@@ -20,10 +22,24 @@ class Processor:
     def buffer(self, c):
         self.buf.append(c)
 
-    def add(self, token):
-        self.tokens.append(token)
+    def add(self, token, ty):
+        self.tokens.append(Token(ty, token))
 
-    def chomp(self):
+    def chomp(self, ty):
         if self.buf:
-            self.tokens.append(''.join(self.buf))
+            self.tokens.append(Token(ty, ''.join(self.buf)))
             self.buf = []
+
+
+class Token:
+    def __init__(self, t, value):
+        if t not in [T_CONSTANT, T_NAME, T_OPERATOR]:
+            raise SyntaxError
+        self.t = t
+        self.value = value
+
+    def __str__(self):
+        return "{}{{{}}}".format(self.t, self.value)
+
+    def __repr__(self):
+        return str(self)

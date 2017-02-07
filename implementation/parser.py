@@ -1,45 +1,46 @@
 
-from string import ascii_letters, digits, whitespace
-from tools import Processor, chars
-from op import *
-
-LPAREN = '('
-LBRACE = '{'
-LBRACK = '['
-RPAREN = ')'
-RBRACE = '}'
-RBRACK = ']'
-GROUPS = '({[]})'
-DOUBLE_QUOTE = '"'
-SINGLE_QUOTE = "'"
-STATEMENT = ';'
-KEYWORD = ascii_letters + digits
-WHITESPACE = whitespace
+from tools import *
+from constants import *
+import op
 
 
 def break_into_statements(f):
-    sts = Processor()
+    buf = ""
+    statements = []
     for c in chars(f):
         if c == STATEMENT:
-            sts.chomp()
+            statements.append(buf)
+            buf = ""
         elif c in WHITESPACE:
-            sts.buffer(' ')
+            buf += ' '
         else:
-            sts.buffer(c)
-    return sts.tokens
+            buf += c
+    return statements
 
 
 def break_into_tokens(statement):
     sts = Processor()
+    #opstack = []
+    quoted = False
     for c in statement:
-        if c in KEYWORD:
-            sts.buffer(c)
-        elif c in WHITESPACE:
-            pass
+        if quoted:
+            if c == '"':
+                quoted = False
+                sts.chomp(T_CONSTANT)
+            else:
+                sts.buffer(c)
         else:
-            sts.chomp()
-            sts.add(c)
-    sts.chomp()
+            if c == '"':
+                sts.chomp(T_NAME)
+                quoted = True
+            elif c in KEYWORD:
+                sts.buffer(c)
+            elif c in WHITESPACE:
+                pass
+            else:
+                sts.chomp(T_NAME)
+                sts.add(c, T_OPERATOR)
+    sts.chomp(T_OPERATOR)  # what to put here?
     return sts.tokens
 
 
@@ -47,9 +48,9 @@ def extract_functions(tokens):
     funcs = []
     lastkw = ""
     for t in tokens:
-        if set(t) <= set(KEYWORD):
+        if values.is_keyword(t):
             lastkw = t
-        elif t == '(':
+        elif t == LPAREN:
             funcs.append(lastkw+"()")
     return funcs
 
@@ -80,37 +81,37 @@ def match_functions_with_arguments(tokens):
     args = []
     parens = 0
     for t in tokens:
-        if set(t) <= set(KEYWORD):
-            if parens:
-                args.append(t)
-            else:
-                func = t
-        elif t == LPAREN:
-            parens += 1
-        elif t == RPAREN:
-            parens -= 1
+        if t.t == T_NAME and not func:
+            func = t.value
+        elif t.t == T_NAME or t.t == T_CONSTANT:
+            args.append(t)
+        elif t.t == T_OPERATOR:
+            if t.value == LPAREN:
+                parens += 1
+            elif t.value == RPAREN:
+                parens -= 1
+            elif t.value == COMMA:
+                pass
     return func, args
 
 
 def execute(operations):
+    state = {}
     for f, args in operations:
-        if f == 'print':
-            op_print(args)
+        op.do(f, args, state)
 
 
 def main(args):
     f = open(args.filename)
     ments = break_into_statements(f)
-    exprs = [break_into_tokens(s) for s in ments]
-    #funcs = list(map(extract_functions, exprs))
-    #assgn = list(map(extract_assignments, exprs))
-    mpped = list(map(match_functions_with_arguments, exprs))
-    execute(mpped)
-    #print(exprs)
-    #print(funcs)
-    #print(assgn)
-    #print(mpped)
     f.close()
+    exprs = [break_into_tokens(s) for s in ments]
+    mpped = list(map(match_functions_with_arguments, exprs))
+    #for e in exprs:
+    #    print(e)
+    for m in mpped:
+        print(m)
+    execute(mpped)
 
 
 if __name__ == '__main__':
