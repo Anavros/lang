@@ -1,4 +1,4 @@
 
 print("hello");
-x = 10;
+assign(x, 10);
 exit();

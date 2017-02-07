@@ -51,3 +51,9 @@ for e in a {
 };
 print(e) for e in a;
 for(e, a, { print(e); });  # does this constitute dynamic scoping?
+
+# Could there be a sort of lookahead function for iterators?
+# Peeking without consuming?
+for c in file.chars() {
+    for l in lookahead(<iterator>)...
+};

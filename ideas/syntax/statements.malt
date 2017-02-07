@@ -1,0 +1,24 @@
+
+###
+Each program breaks down into a list of statements. Each statement is terminated
+by a semicolon. Statements can include expressions and operators.
+
+What operations do statements perform?
+###
+
+# Assignment of a variable.
+x = 10;
+
+# Calling a function.
+exit();
+print(func(), variable, "constant");
+();  # no-op, syntax error?
+print;  # plain expression, syntax error?
+
+# Invoking a keyword.
+# Which may boil down to syntactic sugar for calling certain functions.
+if condition { statement; };
+
+# Opening a new block scope? This must be preceded by the 'do' keyword.
+{ x = 10; };  # not allowed
+do { x = 10; };  # allowed
