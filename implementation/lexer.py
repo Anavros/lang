@@ -26,6 +26,10 @@ def t_NUMERAL(t):
     return t
 
 
+def t_COMMENT(t):
+    r'\#.*'
+
+
 t_ignore = ' \t'
 
 
@@ -43,7 +47,3 @@ def run(source):
     lexer.input(source)
     for t in lexer:
         print(t)
-
-with open('example.malt', 'r') as f:
-    source = f.read()
-run(source)

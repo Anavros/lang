@@ -1,4 +1,1 @@
-
-print("hello");
-assign(x, "world");
-print(x);
+print("hello", "world");

@@ -1,0 +1,239 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> program SEMICOLON statement
+Rule 2     program -> statement SEMICOLON
+Rule 3     statement -> call
+Rule 4     statement -> assignment
+Rule 5     call -> NAME LPAREN arguments RPAREN
+Rule 6     assignment -> NAME ASSIGN value
+Rule 7     arguments -> value
+Rule 8     arguments -> arguments COMMA value
+Rule 9     value -> NAME
+Rule 10    value -> STRING
+Rule 11    value -> NUMERAL
+
+Terminals, with rules where they appear
+
+ASSIGN               : 6
+COMMA                : 8
+LPAREN               : 5
+NAME                 : 5 6 9
+NUMERAL              : 11
+RPAREN               : 5
+SEMICOLON            : 1 2
+STRING               : 10
+error                : 
+
+Nonterminals, with rules where they appear
+
+arguments            : 5 8
+assignment           : 4
+call                 : 3
+program              : 1 0
+statement            : 1 2
+value                : 6 7 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . program SEMICOLON statement
+    (2) program -> . statement SEMICOLON
+    (3) statement -> . call
+    (4) statement -> . assignment
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) assignment -> . NAME ASSIGN value
+
+    NAME            shift and go to state 1
+
+    program                        shift and go to state 2
+    statement                      shift and go to state 5
+    call                           shift and go to state 4
+    assignment                     shift and go to state 3
+
+state 1
+
+    (5) call -> NAME . LPAREN arguments RPAREN
+    (6) assignment -> NAME . ASSIGN value
+
+    LPAREN          shift and go to state 6
+    ASSIGN          shift and go to state 7
+
+
+state 2
+
+    (0) S' -> program .
+    (1) program -> program . SEMICOLON statement
+
+    SEMICOLON       shift and go to state 8
+
+
+state 3
+
+    (4) statement -> assignment .
+
+    SEMICOLON       reduce using rule 4 (statement -> assignment .)
+    $end            reduce using rule 4 (statement -> assignment .)
+
+
+state 4
+
+    (3) statement -> call .
+
+    SEMICOLON       reduce using rule 3 (statement -> call .)
+    $end            reduce using rule 3 (statement -> call .)
+
+
+state 5
+
+    (2) program -> statement . SEMICOLON
+
+    SEMICOLON       shift and go to state 9
+
+
+state 6
+
+    (5) call -> NAME LPAREN . arguments RPAREN
+    (7) arguments -> . value
+    (8) arguments -> . arguments COMMA value
+    (9) value -> . NAME
+    (10) value -> . STRING
+    (11) value -> . NUMERAL
+
+    NAME            shift and go to state 10
+    STRING          shift and go to state 13
+    NUMERAL         shift and go to state 14
+
+    value                          shift and go to state 11
+    arguments                      shift and go to state 12
+
+state 7
+
+    (6) assignment -> NAME ASSIGN . value
+    (9) value -> . NAME
+    (10) value -> . STRING
+    (11) value -> . NUMERAL
+
+    NAME            shift and go to state 10
+    STRING          shift and go to state 13
+    NUMERAL         shift and go to state 14
+
+    value                          shift and go to state 15
+
+state 8
+
+    (1) program -> program SEMICOLON . statement
+    (3) statement -> . call
+    (4) statement -> . assignment
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) assignment -> . NAME ASSIGN value
+
+    NAME            shift and go to state 1
+
+    statement                      shift and go to state 16
+    call                           shift and go to state 4
+    assignment                     shift and go to state 3
+
+state 9
+
+    (2) program -> statement SEMICOLON .
+
+    SEMICOLON       reduce using rule 2 (program -> statement SEMICOLON .)
+    $end            reduce using rule 2 (program -> statement SEMICOLON .)
+
+
+state 10
+
+    (9) value -> NAME .
+
+    SEMICOLON       reduce using rule 9 (value -> NAME .)
+    $end            reduce using rule 9 (value -> NAME .)
+    RPAREN          reduce using rule 9 (value -> NAME .)
+    COMMA           reduce using rule 9 (value -> NAME .)
+
+
+state 11
+
+    (7) arguments -> value .
+
+    RPAREN          reduce using rule 7 (arguments -> value .)
+    COMMA           reduce using rule 7 (arguments -> value .)
+
+
+state 12
+
+    (5) call -> NAME LPAREN arguments . RPAREN
+    (8) arguments -> arguments . COMMA value
+
+    RPAREN          shift and go to state 17
+    COMMA           shift and go to state 18
+
+
+state 13
+
+    (10) value -> STRING .
+
+    SEMICOLON       reduce using rule 10 (value -> STRING .)
+    $end            reduce using rule 10 (value -> STRING .)
+    RPAREN          reduce using rule 10 (value -> STRING .)
+    COMMA           reduce using rule 10 (value -> STRING .)
+
+
+state 14
+
+    (11) value -> NUMERAL .
+
+    SEMICOLON       reduce using rule 11 (value -> NUMERAL .)
+    $end            reduce using rule 11 (value -> NUMERAL .)
+    RPAREN          reduce using rule 11 (value -> NUMERAL .)
+    COMMA           reduce using rule 11 (value -> NUMERAL .)
+
+
+state 15
+
+    (6) assignment -> NAME ASSIGN value .
+
+    SEMICOLON       reduce using rule 6 (assignment -> NAME ASSIGN value .)
+    $end            reduce using rule 6 (assignment -> NAME ASSIGN value .)
+
+
+state 16
+
+    (1) program -> program SEMICOLON statement .
+
+    SEMICOLON       reduce using rule 1 (program -> program SEMICOLON statement .)
+    $end            reduce using rule 1 (program -> program SEMICOLON statement .)
+
+
+state 17
+
+    (5) call -> NAME LPAREN arguments RPAREN .
+
+    SEMICOLON       reduce using rule 5 (call -> NAME LPAREN arguments RPAREN .)
+    $end            reduce using rule 5 (call -> NAME LPAREN arguments RPAREN .)
+
+
+state 18
+
+    (8) arguments -> arguments COMMA . value
+    (9) value -> . NAME
+    (10) value -> . STRING
+    (11) value -> . NUMERAL
+
+    NAME            shift and go to state 10
+    STRING          shift and go to state 13
+    NUMERAL         shift and go to state 14
+
+    value                          shift and go to state 19
+
+state 19
+
+    (8) arguments -> arguments COMMA value .
+
+    RPAREN          reduce using rule 8 (arguments -> arguments COMMA value .)
+    COMMA           reduce using rule 8 (arguments -> arguments COMMA value .)
+
