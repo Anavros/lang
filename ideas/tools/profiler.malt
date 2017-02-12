@@ -1,0 +1,6 @@
+
+###
+Include a profiler with the compiler that is automatically run and graphically
+shows what portions of the program are taking the longest. The debugger should
+similarly be automatic, maybe even launching on crashes.
+###

@@ -1,0 +1,19 @@
+
+# It would be nice to be able to pass boolean flags to functions without having
+# to import names from another module.
+
+server = socket.open(50000, socket.Protocols.TCP);
+# Vs.
+server = socket.open(50000, /TCP);
+# Vs.
+server = socket.open(50000, "tcp");
+
+open = (Number port, /TCP or /UDP);
+# Vs.
+open = (Number port, Flag[TCP, UDP]);
+# Vs.
+open = (Number port, Protocol protocol);
+# Vs.
+open = (Number port, String protocol);
+
+# Honestly the string is best in this situation.

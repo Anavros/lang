@@ -1,0 +1,7 @@
+
+###
+The biggest anti-pattern that I want to kill is the framework-controlled event
+loop; where you declare a set of callbacks and then hand everything over to a
+library function. This is super annoying. Declarations are often limited in
+power, where normal imperative control would work better.
+###

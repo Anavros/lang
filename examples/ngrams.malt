@@ -45,6 +45,14 @@ close = func(f:File) { }
 
 read_file_or_stdin = func(path:String) : File {
     handle = open(path) err stdin;
+###
+    result = open(path);
+    if result has Failure {
+        handle = stdin;
+    } else {
+        handle = result.unwrap();
+    };
+###
     yield handle;
     close(handle);
 }
@@ -67,3 +75,83 @@ ngrams = func(path:String, len:Int)
     }
     return mapping;
 }
+
+# Minimal Syntax
+def open(String s) returns File => ()
+def close(File f) => ()
+
+def read_file_or_stdin(String path) returns File =>
+    handle = open(path) err stdin
+    yield handle
+    handle.close()
+
+def ngrams(String path, Number len) return Map[String, Number] =>
+    mapping = Map[String, Number]()
+    with read_file_or_stdin(path) as file =>
+        for packet in file.chars(step=len) =>
+            packet.lower!().sort!()
+            if |' ' or '\n' in pack| => continue
+            if mapping.has(pack) =>
+                mapping.{pack} += 1
+            else =>
+                mapping.{pack} = 1
+    return mapping
+
+# Heavy Syntax Try 3
+open = (s: String): File { }
+close = (f: File) { }
+
+read_file_or_stdin(path: String): File {
+    handle = open(path) err stdin;
+    yield handle;
+    close(handle);
+};
+
+ngrams = (path: String, len: Number):  Map[String, Number] {
+    mapping = Map[String, Number]();
+    with read_file_or_stdin(path) as file {
+        for packet in file.chars(step=len) {
+            packet.lower!().sort!();
+            if |' ' or '\n' in pack| { continue; };
+            if pack in mapping {
+                mapping.{pack} += 1;
+            } else {
+                mapping.{pack} = 1;
+            };
+        };
+    };
+};
+
+# With a counting dict and inverted type position.
+def ngrams(String path, Number len : Count[String]) {
+    count = Count[String]();
+    with read_file_or_stdin(path) as file {
+        for packet in file.chars(step=len) {
+            packet.lower!().sort!();
+            if not |' ' or '\n' in pack| {
+                count.inc(packet);
+            };
+        };
+    };
+};
+
+# With the counting dict and minimal syntax.
+def ngrams(String path, Number len) returns Count[String]
+=>  count = Count[String]()
+    with read_file_or_stdin(path) as file
+    =>  for packet in file.chars(step=len)
+        =>  packet.lower!().sort!()
+            if not |' ' or '\n' in pack|
+            =>  count.inc(packet)
+
+def before(String path, String packet) returns Count[String]
+    count = Count[String]()
+    stack = Stack[Character]()
+    with read_file_or_stdin as file
+        for c in repeat(file.read(1), until=false)
+           if stack.slice(1<?).join() == packet
+               count.inc(stack.at(0))
+            stack.push(c)
+            if stack.length() > packet.length() + 1
+                stack.remove(0)
+    return count

@@ -1,0 +1,34 @@
+
+n:Float
+Float n
+
+x:y:z:Num
+Num x y z
+
+pow = (n:Float, e:Int) : Float {
+    return n^e;
+};
+
+def pow(Float n, Int e) => Float:
+    return n^e
+
+render = (e:Position+Sprite) {
+};
+
+def render(Position::Sprite e):
+    pass
+
+
+def all(Sequence[Position:Sprite] renderables) ::
+    apply(render, renderables)
+
+x:Float = 1.0
+x = 1.0 : Float
+Float x = 1.0
+x = Float(1.0)
+x <- Float(1)
+
+f : (Float x y z);
+f : (x:y:z:Float);
+f : (Float _ _ _);
+f : (Float, Float, Float);

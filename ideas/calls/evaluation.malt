@@ -7,6 +7,11 @@ not. It should be handled by the reference. This subverts the problem where you
 might have an immutable reference to a mutable container. In this case, if you
 have an immutable reference, you aren't allowed to change *anything*, whatever
 that that thing is.
+
+Generally speaking, you either need read access or read/write access to each
+variable. Return values being a weird special case. So whether parameters are
+passed by value or reference, as far as the programmer is concerned, the only
+real difference is whether those variables can be changed.
 ###
 
 Point = [x:y:z:Num];

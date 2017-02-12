@@ -1,0 +1,21 @@
+
+object = (
+    x = 1,
+    y = { return x*2 },
+    set = (n) { x = n },
+);
+
+object.x;
+object.set(5);
+
+object.y();
+# or
+object.y;
+# ?
+
+# It's read-only, in the same sense as a variable, right?
+# What about setting though.
+
+object.x = 10;
+object.y = 10;  # not good
+object.y() = 10;  # obviously disallowed

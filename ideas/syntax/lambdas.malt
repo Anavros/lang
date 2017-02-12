@@ -30,3 +30,15 @@ What about an alternative approach?
 f = lambda(x, x^2);
 f = lambda('x', 'x'^2);
 f = lambda(x => x^2);
+
+a = Array[Numbers](1, 2, 3);
+map({Number n => n^2}, a);
+
+###
+Can lambdas not evaluate to an expression?
+###
+
+# This doesn't make sense, really.
+map(x=>print(x), items);
+# Use apply for this.
+apply(print, items);

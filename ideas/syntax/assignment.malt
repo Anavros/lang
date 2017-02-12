@@ -1,0 +1,15 @@
+
+new x = 10;
+new f = (Any x) { };
+
+mut x = 20;
+
+new x = 30;
+
+
+new x = 10;
+new f = (Number x!) returns Number {
+    mut x = 20;
+};
+f(x!);
+assert x == 20;

@@ -1,0 +1,14 @@
+
+
+# Function Sigils
+pure();
+impure!();
+might_fail?();
+both?!();  # particularly like this one
+
+# Argument Sigils
+f(immutable);
+f(mutable!);
+
+# Parameter Sigils
+def f(Type immutable mutable! might_be_none? glob*) { };

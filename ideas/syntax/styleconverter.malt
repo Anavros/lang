@@ -1,0 +1,57 @@
+
+# What if we had a few different styles that the user could work in?
+# There could be a tool to convert between each style.
+# They're all the same intermediate representation; just different parsers.
+# Best of both worlds, at the cost of more front-end work?
+
+###
+Potential Downsides / Concerns
+-> Consider optional semicolons in languages like javascript. Sometimes they're
+required, sometimes not. Meaning can change or become non-obvious.
+    -> If styles are enforced at the module level, there will be no mixing and
+    matching.
+    -> Just ensure that there's no ambiguity.
+-> What about other modules that import the code being changed? Would my_var and
+myVar be the same variable? Which one do you choose? That shouldn't switch up.
+-> Also, think about how annoying it is when one library uses caseOne and other
+uses case_two. Everything should be consistent.
+-> How much of a problem is it going to be if my_var and myVar are considered
+the same? Will variables be case-sensitive at all? What about map vs Map?
+    -> If names are case-insensitive and underscores are ignored, then both
+    styles would be equivalent.
+-> Consider that typical naming conventions, i.e. some_var, SomeType,
+SOME_CONSTANT; are almost never enforced by the compiler. They're only
+conventions. Type safety in this case is not enforced at all.
+-> Although, there is the real concern of f being mistaken for F, etc. That's
+the big gotcha.
+###
+
+long_var
+# snake-to-camel
+longVar
+
+def f() {
+    print(10);
+};
+# braces-to-indentation
+def f()
+    print(10)
+
+
+
+
+@ style=braces
+def square(Number n) returns Number {
+    return n^2;
+};
+
+for x in range(10) {
+    print square(x);
+};
+
+@ style=indent
+def square(Number n) returns Number
+    return n^2
+
+for x in range(10)
+    print square(x)

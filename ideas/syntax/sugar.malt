@@ -1,0 +1,15 @@
+
+def binary(a, b) { };
+binary(a, b);
+a binary b;
+
+def unary(a) { };
+unary(a);
+a.unary();
+unary a;
+
+go(a);
+go a;
+swarm(10, a);
+swarm 10 a;
+10 swarm a;

@@ -1,0 +1,12 @@
+
+###
+Honestly everything needs to be async and easy to thread. I'm not a huge fan of
+threading, usually because it's complicated and unintuitive, but this is a
+language for interactive systems. Good threading could save the day here.
+
+We'll need a couple of components working together here. For one, we already
+have a good way to keep track of mutation, through read/write references and
+mutating functions.
+
+
+###

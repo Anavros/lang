@@ -14,3 +14,14 @@ apply(render, Sub[Location+Sprite](a));
 
 # In general the idea of creating a heterogenous sequence and then iterating
 # over only the types you need.
+
+
+# Also, a better map function to replace python's list comprehensions.
+[x.strip() for x in xs.split()]
+map(x => x.strip(), xs.split())
+
+[x.foo for x in xs]
+map(x => x.foo, xs)
+
+[x(0) for x in xs]
+map(x => x.0, xs)

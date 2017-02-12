@@ -9,3 +9,13 @@ main = Func {
     result = factorial(n);
     print("{n}! => {result}");
 }
+
+
+def factorial(Num n=1),
+    match n,
+        1    => return 1
+        else => return n + factorial(n-1)
+
+def main(),
+    def n, 5
+    print("{n}! => {factorial(n)}")

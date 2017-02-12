@@ -1,0 +1,278 @@
+
+###
+In the interest of being hacker-friendly, maybe we should consider a python-like
+minimalistic syntax.
+
+Notable annoyances with python's syntax:
+-> Writing 'pass' everywhere.
+-> Oneline statements are often hard to read.
+-> Try/Except statements never look good, whether inline or in blocks.
+
+Generally, I like the brace-less, semicolon-less, comma-using form. Although it
+does have a few problems. In some cases, it reads really well, but in others
+something like a colon would be more fitting. Of course the colon is used for
+type annotations already.
+
+The comma fits in places where 'then' would be used. If a, then b, else, then c.
+But it doesn't fit where declarations are expected. Do this: loop: match:.
+###
+
+
+# Simple subroutine.
+# It's hard to beat the super-idomatic braces syntax.
+h = {
+    print("Hello.");
+};
+# Vs.
+h() =>
+    print("Hello.")
+# Vs.
+def h,
+    print("Hello.")
+
+
+# Function with an argument and return value.
+f = (x:Num) : Num {
+    return x^2;
+};
+# Vs.
+f = (x:Num) => Num:
+    return x^2
+# Vs.
+def f(x:Num) : Num,
+    return x^2
+
+
+# Simple conditional.
+if condition {
+    a();
+} else {
+    b();
+};
+# Vs.
+if condition =>
+    a()
+else =>
+    b()
+# Vs.
+if condition,
+    a()
+else,
+    b()
+
+
+# Match statement.
+match {
+    x < 0 { x() };
+    x == 0 { y() };
+    x > 0 { z() };
+};
+# Vs.
+match =>
+    x < 0 => x()
+    x == 0 => y()
+    x > 0 => z()
+# Vs.
+match,
+    x < 0, x()
+    x == 0, y()
+    x > 0, z()
+
+
+# For loop.
+for x in y { print(x); };
+# Vs.
+for x in y => print(x)
+# Vs.
+for x in y, print(x)
+
+
+# For loop using multiple iterators.
+for t, u, v in x, y, z {
+    e = sum(t, u, v);
+};
+# Vs.
+for t, u, v in x, y, z =>
+    e = sum(t, u, v)
+
+
+# Conditional with an expression.
+if x - y > z { f(); };
+# Vs.
+if x - y > z, f()
+
+
+# Another conditional.
+if a(), b(), c() { f(); };
+# Vs.
+if a(), b(), c(), f()
+# Vs.
+if a(), b(), c() => f()
+
+
+# Nested conditionals.
+if foo {
+    if bar {
+        a();
+    } else {
+        b();
+    };
+} else {
+    if baz {
+        c();
+    } else {
+        d();
+    };
+};
+# Vs.
+if foo,
+    if bar,
+        a()
+    else,
+        b()
+else,
+    if baz,
+        c()
+    else,
+        d()
+# Vs.
+if foo { if bar { a(); } else { b(); }; } else { if baz { c(); } else { d(); }; };
+# Vs.
+if foo, if bar, a(); else, b(); else, if baz, c(); else, d()
+# Vs.
+if foo => if bar => a(); else => b(); else => if baz => c(); else => d()
+
+
+# Creating an internal scope.
+do {
+    x = 10;
+};
+# Vs.
+do,
+    x = 10
+# Vs.
+do =>
+    x = 10
+
+
+# Declaring a type.
+Point = (x:y:z:Float);
+# Vs.
+Point = (x:y:z:Float)
+# Vs.
+dec Point(x:y:z:Float)
+# Vs.
+Point = (Float x y z)
+
+
+# Variable declaration and assignment.
+x = 10;
+x = 20;
+# Vs.
+def x => 10
+x = 20
+# Vs.
+def x 10
+set x 20
+
+
+# Looping.
+loop {
+    statement;
+};
+# Vs.
+loop,
+    statement
+# Vs.
+loop =>
+    statement
+# Vs.
+loop ::
+    statement
+# Vs.
+loop:
+    statement
+
+
+# A complicated example.
+loop =>
+    if x < 10 =>
+        if even(x), a()
+        else, b()
+    else, c()
+    d()
+
+loop =>
+    if x <= 10 =>
+        if even(x) => a()
+        else       => b()
+    else => c()
+    d()
+
+while True:
+    if x < 10:
+        if even(x):
+            a()
+        elif odd(x):
+            b()
+    else:
+        c()
+    d()
+
+loop {
+    if x < 10 {
+        if even(x) {
+            a()
+        } else {
+            b()
+        };
+    } else {;
+        c();
+    };
+    d();
+};
+
+loop =>
+    if x < 10 =>
+        if even(x) => a()
+        else       => b()
+    else => c()
+    d()
+
+x = 7
+loop => match x =>
+    5 => a()
+    6 => b()
+    7 => c()
+
+# In general,
+keyword, statement
+keyword =>
+    statment
+keyword, a; b
+keyword =>
+    a
+    b
+
+# or
+keyword =>
+    keyword =>
+        statement
+keyword => keyword =>
+    statement
+keyword => keyword => statement
+
+keyword =>
+    a
+    b
+keyword => a
+    b
+keyword => a; b
+
+# What if we used semicolons but not braces?
+keyword:
+    keyword:
+        statement;
+keyword:
+    a;
+    b;

@@ -12,3 +12,7 @@ print("good") until condition;
 # Could we use a variable from a while condition?
 print("number generated") while gen_numbers();
 print(x) for x in gen_numbers();  # ?
+
+# Expressions
+x = 0 or 1 if even;
+x = test(even, true=0, false=1);
