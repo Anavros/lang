@@ -1,0 +1,47 @@
+
+# Blocks are groups of statements joined within a pair of braces.
+{
+    print(10);
+    print(11);
+    print(12);
+};
+
+# A special form of block only contains one expression. A semicolon is not
+# needed here.
+{ print(5+5) };
+
+# They are not evaluated in place, but rather stored for later use.
+# This allows them to be used for function definitions.
+new f = {
+    print(10);
+};
+f();  # prints 10
+
+# To run a block directly, use the 'do' function.
+# This parses the block and then calls it immediately.
+do {
+    print(10);
+};  # prints 10
+
+# Each block contains its own scope. Variables from higher scopes are inherited.
+# TODO: detailed lexical scoping rules.
+
+# Parameters can be specified in a tuple before the opening brace.
+new square = (Number x) { x^2 };
+new print_all = (Any items*) {
+    for i in items {
+        print(i);
+    };
+};
+
+# Return types are tricky.
+new length = (String s) returns Number {
+    new n = 0;
+    for c in s.chars() {
+        n++;
+    };
+    return n;
+};
+
+new len = (String s) returns Number { s.length() };
+new len = (String s) { s.length() };

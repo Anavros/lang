@@ -28,3 +28,18 @@ tea = Drink(2, "earthy yet spicy, " +
     "grounded in reality");
 coffee = Drink(1, "warm and musty");
 tea.drink();
+
+# Try 2
+
+let Beverage = (
+    Number liters = 0,
+    String flavor = "",
+    drink! = {
+        liters = minus(liters, 1, min=0);
+    },
+);
+
+let tea = Beverage(2, "earthy yet spicy,
+    grounded in reality");
+let coffee = Beverage(1, "warm and musty");
+tea.drink!();

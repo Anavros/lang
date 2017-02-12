@@ -84,6 +84,7 @@ map(f, objects);
 
 # What about a shortcut if you're targeting a specific function:
 objects = Array[param(f)]();
+applytomatches(f, objects);
 
 ###
 Is there anything wrong with that?
