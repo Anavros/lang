@@ -33,15 +33,8 @@ class FnDef:
         self.params = params
         self.ret = ret
     def __str__(self):
-        return functiondef.standard(self)
-
-
-class FnCall:
-    def __init__(self, name, args):
-        self.name = name
-        self.args = args
-    def __str__(self):
-        return functioncall.standard(self)
+        #return functiondef.standard(self)
+        return functiondef.mathematical(self)
 
 
 class Param:
@@ -52,11 +45,12 @@ class Param:
         self.option = option
         self.default = default
     def __str__(self):
-        return parameter.standard(self)
+        #return parameter.standard(self)
+        return parameter.mathematical(self)
 
 
 class Params:
-    def __init__(self, *params):
+    def __init__(self, params):
         self.params = params
     def __str__(self):
         return parameterlist.standard(self)
@@ -69,6 +63,14 @@ class Var:
         self.maybe = maybe
     def __str__(self):
         return variable.standard(self)
+
+
+class FnCall:
+    def __init__(self, name, args):
+        self.name = name
+        self.args = args
+    def __str__(self):
+        return functioncall.standard(self)
 
 
 class Arg:
@@ -91,9 +93,9 @@ class Args:
 lines = [
     St(Assign(Var('x'), 10)),
     Param('str', 'String', option=True),
-    Params(Param('n', 'Number'), Param('e', 'Number')),
-    St(FnDef('pow', Params(
-        Param('n', 'Number'), Param('e', 'Number')), 'Number')),
+    Params([Param('n', 'Number'), Param('e', 'Number')]),
+    St(FnDef('pow', Params([
+        Param('n', 'Number'), Param('e', 'Number')]), 'Number')),
     St(Assign(Var('n'), FnCall('pow', Args(Arg(16), Arg(2))))),
 ]
 
