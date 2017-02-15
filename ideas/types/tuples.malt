@@ -7,11 +7,26 @@ a = (1, 2, 3);
 b = (x=1, y=2, z=3);
 
 # Tuples can be accessed by index or by keyword.
-a.at(0);
+a.0;
 b.x;
+a.{n};
+b.{var};
 
 # Not all members have to be named.
 c = (1, foo=3, bar=7);
+
+###
+There is a notable difference between groups of values and groups of typed
+names.
+###
+
+a = (x=1, y=2, z=3)
+#b = [x=1:y=2:z=3:Number]
+
+a.x
+b.x  # not usable directly! has to be initiated
+c = b()
+c.x
 
 # Group types are named tuples.
 Point : (x:y:z:Num);
@@ -27,3 +42,16 @@ module.insert();
 # There will probably be some sugar for that.
 # It could mesh with the "print a variable's value and its name in one
 # statement" idea.
+
+
+# Consider this:
+P = [x:y:z:Float]  # constructor for a composite type
+P.x  # not valid because x hasn't been initialized, even if it has a default val
+a = P(1.0, 2.0, 3.0)  # set constructed by P with values given here
+a.x  # now works
+
+# Alternative syntax:
+P = { x:y:z:Float, };
+# Too close to functions:
+f = { print(x); };
+f(x:y:z:Float) { };

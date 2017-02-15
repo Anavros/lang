@@ -4,6 +4,19 @@
 def call(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None):
     ...
 
+# Try Two
+
+def call(String args*, File stdin? stdout? stderr?, Boolean shell=false, Number timeout?) { };
+
+def call(
+    String args*,
+    File stdin? stdout? stderr?,
+    Boolean shell=false,
+    Number timeout?
+) {
+};
+
+# Old
 
 call = Func (args:Sequence[String], *,
 stdin:File, stdout:File, stderr:File, shell=false, timeout:Int) {

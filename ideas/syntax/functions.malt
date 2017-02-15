@@ -1,0 +1,5 @@
+
+# Syntax for function definitions.
+
+# Function taking a group argument.
+def f([x:y:Number], scale: Float) { };

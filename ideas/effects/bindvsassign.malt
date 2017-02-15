@@ -26,3 +26,12 @@ do {
     x := 10;  # not a fan of that operator, but it does have precedence
 };
 print(x);
+
+let x = 1;
+let y = 1;
+do {
+    mut x = 10;
+    let y = 10;
+};
+print(x);  # 10
+print(y);  # 1

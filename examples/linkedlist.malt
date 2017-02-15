@@ -1,0 +1,69 @@
+
+namespace ll {
+    Link = Type[T] {
+        value = (..):T;
+        next = (..):Link;
+    }
+
+    LinkedList = Type[T] {
+        head = (..):Link[T];
+        at_index = Func(list:LinkedList, i:Num)
+            : Link { }
+        append = Func(list:LinkedList, link:Link)
+            { }
+    }
+}
+
+import ll
+
+list = (..):ll.LinkedList;
+ll.at_index(list, 10);
+list.at_index(10);
+list@10;
+
+
+
+
+def final?() {
+};
+
+def Link[T] {
+};
+
+Link[T] = Token[Empty] || (T value, Link[T] next=Empty);
+
+List[T] {
+    head: Link[T];
+    next: Function[=> Link[T]?];
+    terminal: Function[=> Link[T]?];
+    terminal: => Link[T]? { };
+    nth: [=> Link[T]?]
+};
+
+
+Link[T] = EmptyLink || (
+    T value,
+    Link[T] next=EmptyLink,
+);
+
+def List[T] = (
+    T head,
+    Method final? = {
+    };
+    Method nth? = (Number n => Link[T]?) {
+        def current = head;
+        def count = n;
+        while current != EmptyLink {
+            if count <= 0 {
+                return Success(current);
+            } else {;
+                current = current.next;
+                count--;
+            };
+        };
+        return Failure();
+    };
+);
+
+
+import lists

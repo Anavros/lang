@@ -1,5 +1,147 @@
 
 # How to define a new type.
 
-let Point = (
+# Simple type.
+let Count = (String thing, Number times);
+Count = (thing: String, times: Number);
+
+Count[thing: String, times: Number];
+c = Count(thing = "hello", times = 10);
+
+# Parameterized types.
+let Count[T] = (T thing, Number times);
+let Pair[A, B] = (A x, B y);  # can't do (A a, B b) sadly
+
+Pair[A, B] = [A a, B b];
+p = Pair[String, String](a="allo", b="bolly");
+
+# Type with default values.
+let Count[T] = (T x, Number n=0);
+Count[T] = (x: T, n: Number(0));
+
+def new_count[T](object: T) => [T, Number] {
+    return (T object=object, Number n=0);
+};
+
+# Type with a member function.
+# This is where it all breaks down.
+reset = [Count c!] {
+    mut c.n = 0;
+};
+
+Count[T] = [
+    x : T,
+    n=0 : Number,
+    reset = {
+        mut n = 0;
+    };
+    Function reset! = {
+        mut n = 0;
+    },
+];
+c.reset!();
+
+# Type with a function parameter. Aka an abstract interface.
+Iterable[T] = (
+    Function[=> T] next,
 );
+
+Iterable[T] {
+    next : Function[=> T]
+};
+
+Iterable[T].next[=> T] {
+    ...
+};
+
+{
+    x*2  # expression
+};
+
+{
+    a(); # statements
+    b();
+    c();
+};
+
+{
+    a : Number,  # parameters
+    b : Number,
+    c : String,
+};
+
+Health.init[hp: Number, max=100: Number => Health] {
+    return (hp);
+};
+
+Health[max=100] {
+    hp : Number[0 => 100];
+};
+
+import Health from objects;
+
+Health.heal(hp : Number) {
+    hp += hp;
+}
+
+
+class Health {
+    def init(self: Health, hp: Number, max: Number) {
+        self.hp = hp;
+        self.max = max;
+    };
+    @property
+    def hp(self: Health, n: Number) {
+        self.hp = sum(self.hp, n, min=0, max=self.max);
+    };
+};
+
+def Health(hp:Number) [Number] {
+    output = [];
+    output.hp = hp;
+    return output;
+};
+
+class Item {
+    size: Number;
+    amount: Number;
+    description: String;
+    weight: Number;
+    def init(self: Item, description: String, size: Number, amount: Number) {
+        self.description = description;
+        self.size = size;
+        self.amount = amount;
+        self.weight = size*amount;
+    };
+};
+
+
+class Item {
+    description:String,
+    size:amount:Number,
+    weight=size*amount,
+};
+
+
+Item = [String description, Number size amount] {
+    weight = size*amount;
+};
+
+# The types and names something taking an Item can expect.
+interface Item : (
+    description: String,
+    size:amount: Number,
+    weight: Number,
+);
+# The actual item is just a set.
+def new_item(String description, Number size, Number amount) {
+    item = [];
+    item.description = description;
+    item.size = size;
+    item.amount = amount;
+    item.weight = size*amount;
+    return item;
+};
+
+h.heal(n);
+h.hp += n;

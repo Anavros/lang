@@ -11,6 +11,8 @@ main = Func {
 }
 
 
+# Try Two
+
 def factorial(Num n=1),
     match n,
         1    => return 1
@@ -19,3 +21,13 @@ def factorial(Num n=1),
 def main(),
     def n, 5
     print("{n}! => {factorial(n)}")
+
+
+# Try Three
+
+def factorial(Num n=1) {
+    match n {
+        1       => return 1;
+        default => return n + factorial(n-1);
+    };
+};

@@ -1,0 +1,12 @@
+
+# Panic crashes the program. It is only used in irrecoverable situations;
+# everywhere else, use result types. Panics can not be recovered.
+
+# It can be manually induced using the panic function.
+panic!();
+
+# Results can be handled gracefully with an 'err default' or unwrapped
+# forcefully. If a result is unwrapped and it turns out to be a failure, the
+# program will panic.
+let f = open?(name) err stdin;  # if failure, f = stdin
+let f = force!(open?(name));    # if failure, panic

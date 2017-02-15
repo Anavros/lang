@@ -5,8 +5,21 @@ Alternatively, how can functions be selected appropriately when they all use the
 same name and perfom the same task?
 ###
 
-a = Array();
-l = LinkedList();
-t = Tree();
+def a = Array();
+def l = LinkedList();
+def t = Tree();
 
-iterate = (s:?) { };
+def Iterable[T] = (
+    Number iteration = 0;
+    Function[=> T] next;
+);
+
+def Array[T] = ( ) :: Iterable(next = { });
+def LinkedList[T] = ( ) :: Iterable(next = { });
+def Tree[T] = ( ) :: Iterable(next = { });
+
+def iterate(Iterable[Any] items) {
+    loop c = repeat(items.next()) {
+        print(c);
+    };
+};

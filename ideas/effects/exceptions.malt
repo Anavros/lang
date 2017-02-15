@@ -20,3 +20,26 @@ input = {
 };
 
 try x = input() err x = "default";
+
+
+
+# The solution: result types.
+Result[T] = Success[T] | Failure
+let input = returns Result[String] {
+    if stdin {
+        return Success[String](stdin.readline());
+    } else {
+        return Failure;
+    };
+};
+x = match input() {
+    Success(s) { s };
+    Failure { "default" };
+};
+
+# 'function returns Result[T]' sugars to 'function?'.
+let input? = returns String? {
+};
+
+# 'match ...' sugars to 'call err default'.
+x = input() err "default";

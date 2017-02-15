@@ -3,6 +3,19 @@
 Cast a string to an number and handle all possible exceptions.
 ###
 
+def num?(String s) returns Number? {
+    if s.contains(letters) or s.length < 1 {
+        fail;
+    } else {
+        succeed magic.cast(str);
+    };
+};
+
+n = num?(string) err 0;
+n = force num?(string);
+
+# Old
+
 numcast = (str:String) : Num? {
     if str.contains(letters) or str.empty() {
         return none;

@@ -1,0 +1,27 @@
+
+
+def strings = Array[String](
+    "spam",
+    "eggs",
+    "sausage",
+);
+
+# Read-only function.
+def count_all_chars(Array[String] strings) returns Number {
+    return sum(map((s){s.length}, strings));
+    return sum(map(s => s.length, strings));
+    total = 0;
+    for s in strings {
+        mut total += s.length;
+    };
+};
+
+# Mutating function.
+def change_first_to_a(Array[String] strings!) {
+    for s in strings {
+        mut s.0 = 'a';
+    };
+};
+
+n = count_all_chars(strings);
+change_first_to_a(strings!);

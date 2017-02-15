@@ -34,7 +34,7 @@ tea.drink();
 let Beverage = (
     Number liters = 0,
     String flavor = "",
-    drink! = {
+    Method drink! = {
         liters = minus(liters, 1, min=0);
     },
 );

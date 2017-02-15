@@ -1,0 +1,17 @@
+
+# Stepping stones of language construction.
+
+# Data.
+0 = 0000 0000
+1 = 0000 0001
+2 = 0000 0010
+
+# Sum types.
+Number : 0 || 1 || 2 || ...
+
+# Product types.
+Pair : {Number a, Number b}
+Quad : {Pair a, Pair b}
+
+# Parameterized types.
+Pair[A, B] {A a, B b}

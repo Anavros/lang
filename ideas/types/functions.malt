@@ -1,0 +1,36 @@
+
+# What is the type signature of a function?
+
+def hello() = { };
+# Is
+Function;
+[=>];
+
+def value() returns Number = { };
+def value(=> Number) = { };
+# Is
+Function[=> Number];
+
+def show(String message) = { };
+# Is
+Function[String];
+
+def uppercase(String s) returns String = { };
+def uppercase(String s => String) = { };
+# Is
+Function[String => String];
+
+def repeat(String s, Number n) returns String = { };
+def repeat(String s, Number n => String) = { };
+# Is
+Function[String, Number => String];
+
+def len_and_first_letter(String s) returns (Number, String) = { };
+def len_and_first_letter(String s => Number, String) = { };
+# Is
+Function[String => Number, String];
+
+# What about functions that accept functions as parameters?
+def use(Function[Number => Number] f, Number n => Number) = { };
+# Is
+Function[Function[Number => Number], Number];

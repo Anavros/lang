@@ -1,0 +1,37 @@
+
+ Most Noteworthy Features
+==========================
+
+:Types:
+# The type system is very lightweight and based completely on composition.
+
+# Objects can be made from more than one type.
+
+# Function parameters can require more than one type for an object.
+
+# Parameterized types like arrays can contain objects with a set of types.
+
+# Incomplete types can be used as interfaces.
+
+:Mutability:
+# Parameters are references that are immutable by default.
+        def try_to_mutate(Point p) {
+            mut p.x = 10;  # not allowed
+        };
+        try_to_mutate(p);
+
+# Parameters can be set as mutable individually.
+        def try_to_mutate(Point p!) {
+            mut p.x = 10;
+        };
+        try_to_mutate(p!);  # success
+
+:Exceptions:
+# There are no exceptions, only panics and result types.
+        file = open?("example.txt") err stdin;
+
+:Syntax:
+# Variables are not case-sensitive and underscores are ignored.
+
+# Source files can be written in one of many syntaxes. Different syntaxes
+# compile into the same abstract syntax tree.

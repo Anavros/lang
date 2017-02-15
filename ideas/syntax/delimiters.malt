@@ -1,4 +1,76 @@
 
+# Uses for parens.
+# Precedence grouping.
+(a-b)*c;
+# Function calls.
+f(1, e=10);
+# Record-style values, aka tuples or product types.
+x = (1, e=10);
+# Parameter lists.
+f = (n:Number, e=10:Number) { };
+
+# Uses for square brackets.
+# Parameter lists.
+f = [n:Number, e=10:Number] { };
+I = [desc: String, size: Number, count: Number];
+
+# Uses for braces.
+# A single expression.
+{ 2*2 };
+
+# A block of statements.
+{
+    x();
+    y();
+    z();
+};
+# With optional parameters.
+[x: Number] {
+    loop x {
+        f();
+    };
+};
+
+
+# What if { } are for code not directly executed?
+{ 2*2 };
+(x: Number) {
+    print(x);
+};
+Type (
+    Number a* b?,
+);
+type (
+    1, 2, 3, none
+);
+
+
+###
+# A list of parameters.
+[ a: Number, b: String, x: y: Float ];
+# With optional type parameters.
+[T] {
+    a: T,
+    b: Number,
+};
+###
+
+# A set of values, optionally named.
+[1, 2, z=3];
+
+# ???
+f(1, 2, z=3)
+f <- (1, 2, 3)
+
+# A list of types.
+[String, Number, Array[Number]]
+# ???
+[String => Number]
+# ???
+[x : String, y : Number => Number]
+
+
+
 # Parentheses are used for lists of expressions, separated by commas.
 # They are used for anonymous tuples, structure definitions, and function calls.
 tuple = (1, 2, 3);
