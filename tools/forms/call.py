@@ -1,3 +1,0 @@
-
-def standard(c):
-    pass

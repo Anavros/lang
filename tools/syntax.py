@@ -1,6 +1,15 @@
 
-from forms import assignment, variable, call, parameter, parameterlist
-from forms import functiondef, statement
+from forms import assignment, variable, parameter, parameterlist
+from forms import functiondef, statement, argument, argumentlist
+from forms import functioncall, program
+import yacker
+
+
+class Program:
+    def __init__(self, statements):
+        self.statements = statements
+    def __str__(self):
+        return program.standard(self)
 
 
 class St:
@@ -25,6 +34,14 @@ class FnDef:
         self.ret = ret
     def __str__(self):
         return functiondef.standard(self)
+
+
+class FnCall:
+    def __init__(self, name, args):
+        self.name = name
+        self.args = args
+    def __str__(self):
+        return functioncall.standard(self)
 
 
 class Param:
@@ -54,16 +71,30 @@ class Var:
         return variable.standard(self)
 
 
+class Arg:
+    def __init__(self, value, key=None, mut=False, option=False):
+        self.value = value
+        self.key = key
+        self.mut = mut
+        self.option = option
+    def __str__(self):
+        return argument.standard(self)
+
+
+class Args:
+    def __init__(self, *args):
+        self.args = args
+    def __str__(self):
+        return argumentlist.standard(self)
+
+
 lines = [
     St(Assign(Var('x'), 10)),
     Param('str', 'String', option=True),
     Params(Param('n', 'Number'), Param('e', 'Number')),
-    FnDef(
-        'pow',
-        Params(
-            Param('n', 'Number'), Param('e', 'Number')),
-        'Number',
-    ),
+    St(FnDef('pow', Params(
+        Param('n', 'Number'), Param('e', 'Number')), 'Number')),
+    St(Assign(Var('n'), FnCall('pow', Args(Arg(16), Arg(2))))),
 ]
 
 
@@ -72,5 +103,16 @@ def main():
         print(element)
 
 
+def read(path):
+    with open(path, 'r') as f:
+        source = f.read()
+    program = yacker.run(source)
+    print(program)
+
+
 if __name__ == '__main__':
-    main()
+    import sys
+    if len(sys.argv) > 1:
+        read(sys.argv[1])
+    else:
+        main()

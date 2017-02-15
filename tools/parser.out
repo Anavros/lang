@@ -1,0 +1,298 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COLON
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> program statement
+Rule 2     program -> statement
+Rule 3     statement -> function_call SEMICOLON
+Rule 4     statement -> assignment SEMICOLON
+Rule 5     function_call -> NAME LPAREN argument_list RPAREN
+Rule 6     argument -> value
+Rule 7     argument_list -> argument_list COMMA argument
+Rule 8     argument_list -> argument
+Rule 9     assignment -> variable ASSIGN value
+Rule 10    variable -> NAME
+Rule 11    value -> variable
+Rule 12    value -> constant
+Rule 13    constant -> STRING
+Rule 14    constant -> NUMERAL
+
+Terminals, with rules where they appear
+
+ASSIGN               : 9
+COLON                : 
+COMMA                : 7
+LPAREN               : 5
+NAME                 : 5 10
+NUMERAL              : 14
+RPAREN               : 5
+SEMICOLON            : 3 4
+STRING               : 13
+error                : 
+
+Nonterminals, with rules where they appear
+
+argument             : 7 8
+argument_list        : 5 7
+assignment           : 4
+constant             : 12
+function_call        : 3
+program              : 1 0
+statement            : 1 2
+value                : 6 9
+variable             : 9 11
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . program statement
+    (2) program -> . statement
+    (3) statement -> . function_call SEMICOLON
+    (4) statement -> . assignment SEMICOLON
+    (5) function_call -> . NAME LPAREN argument_list RPAREN
+    (9) assignment -> . variable ASSIGN value
+    (10) variable -> . NAME
+
+    NAME            shift and go to state 2
+
+    function_call                  shift and go to state 4
+    variable                       shift and go to state 5
+    statement                      shift and go to state 1
+    assignment                     shift and go to state 6
+    program                        shift and go to state 3
+
+state 1
+
+    (2) program -> statement .
+
+    NAME            reduce using rule 2 (program -> statement .)
+    $end            reduce using rule 2 (program -> statement .)
+
+
+state 2
+
+    (5) function_call -> NAME . LPAREN argument_list RPAREN
+    (10) variable -> NAME .
+
+    LPAREN          shift and go to state 7
+    ASSIGN          reduce using rule 10 (variable -> NAME .)
+
+
+state 3
+
+    (0) S' -> program .
+    (1) program -> program . statement
+    (3) statement -> . function_call SEMICOLON
+    (4) statement -> . assignment SEMICOLON
+    (5) function_call -> . NAME LPAREN argument_list RPAREN
+    (9) assignment -> . variable ASSIGN value
+    (10) variable -> . NAME
+
+    NAME            shift and go to state 2
+
+    function_call                  shift and go to state 4
+    variable                       shift and go to state 5
+    statement                      shift and go to state 8
+    assignment                     shift and go to state 6
+
+state 4
+
+    (3) statement -> function_call . SEMICOLON
+
+    SEMICOLON       shift and go to state 9
+
+
+state 5
+
+    (9) assignment -> variable . ASSIGN value
+
+    ASSIGN          shift and go to state 10
+
+
+state 6
+
+    (4) statement -> assignment . SEMICOLON
+
+    SEMICOLON       shift and go to state 11
+
+
+state 7
+
+    (5) function_call -> NAME LPAREN . argument_list RPAREN
+    (7) argument_list -> . argument_list COMMA argument
+    (8) argument_list -> . argument
+    (6) argument -> . value
+    (11) value -> . variable
+    (12) value -> . constant
+    (10) variable -> . NAME
+    (13) constant -> . STRING
+    (14) constant -> . NUMERAL
+
+    NAME            shift and go to state 17
+    STRING          shift and go to state 14
+    NUMERAL         shift and go to state 12
+
+    value                          shift and go to state 16
+    constant                       shift and go to state 18
+    argument                       shift and go to state 19
+    variable                       shift and go to state 13
+    argument_list                  shift and go to state 15
+
+state 8
+
+    (1) program -> program statement .
+
+    NAME            reduce using rule 1 (program -> program statement .)
+    $end            reduce using rule 1 (program -> program statement .)
+
+
+state 9
+
+    (3) statement -> function_call SEMICOLON .
+
+    NAME            reduce using rule 3 (statement -> function_call SEMICOLON .)
+    $end            reduce using rule 3 (statement -> function_call SEMICOLON .)
+
+
+state 10
+
+    (9) assignment -> variable ASSIGN . value
+    (11) value -> . variable
+    (12) value -> . constant
+    (10) variable -> . NAME
+    (13) constant -> . STRING
+    (14) constant -> . NUMERAL
+
+    NAME            shift and go to state 17
+    STRING          shift and go to state 14
+    NUMERAL         shift and go to state 12
+
+    value                          shift and go to state 20
+    constant                       shift and go to state 18
+    variable                       shift and go to state 13
+
+state 11
+
+    (4) statement -> assignment SEMICOLON .
+
+    NAME            reduce using rule 4 (statement -> assignment SEMICOLON .)
+    $end            reduce using rule 4 (statement -> assignment SEMICOLON .)
+
+
+state 12
+
+    (14) constant -> NUMERAL .
+
+    RPAREN          reduce using rule 14 (constant -> NUMERAL .)
+    COMMA           reduce using rule 14 (constant -> NUMERAL .)
+    SEMICOLON       reduce using rule 14 (constant -> NUMERAL .)
+
+
+state 13
+
+    (11) value -> variable .
+
+    RPAREN          reduce using rule 11 (value -> variable .)
+    COMMA           reduce using rule 11 (value -> variable .)
+    SEMICOLON       reduce using rule 11 (value -> variable .)
+
+
+state 14
+
+    (13) constant -> STRING .
+
+    RPAREN          reduce using rule 13 (constant -> STRING .)
+    COMMA           reduce using rule 13 (constant -> STRING .)
+    SEMICOLON       reduce using rule 13 (constant -> STRING .)
+
+
+state 15
+
+    (5) function_call -> NAME LPAREN argument_list . RPAREN
+    (7) argument_list -> argument_list . COMMA argument
+
+    RPAREN          shift and go to state 22
+    COMMA           shift and go to state 21
+
+
+state 16
+
+    (6) argument -> value .
+
+    RPAREN          reduce using rule 6 (argument -> value .)
+    COMMA           reduce using rule 6 (argument -> value .)
+
+
+state 17
+
+    (10) variable -> NAME .
+
+    RPAREN          reduce using rule 10 (variable -> NAME .)
+    COMMA           reduce using rule 10 (variable -> NAME .)
+    SEMICOLON       reduce using rule 10 (variable -> NAME .)
+
+
+state 18
+
+    (12) value -> constant .
+
+    RPAREN          reduce using rule 12 (value -> constant .)
+    COMMA           reduce using rule 12 (value -> constant .)
+    SEMICOLON       reduce using rule 12 (value -> constant .)
+
+
+state 19
+
+    (8) argument_list -> argument .
+
+    RPAREN          reduce using rule 8 (argument_list -> argument .)
+    COMMA           reduce using rule 8 (argument_list -> argument .)
+
+
+state 20
+
+    (9) assignment -> variable ASSIGN value .
+
+    SEMICOLON       reduce using rule 9 (assignment -> variable ASSIGN value .)
+
+
+state 21
+
+    (7) argument_list -> argument_list COMMA . argument
+    (6) argument -> . value
+    (11) value -> . variable
+    (12) value -> . constant
+    (10) variable -> . NAME
+    (13) constant -> . STRING
+    (14) constant -> . NUMERAL
+
+    NAME            shift and go to state 17
+    STRING          shift and go to state 14
+    NUMERAL         shift and go to state 12
+
+    value                          shift and go to state 16
+    constant                       shift and go to state 18
+    argument                       shift and go to state 23
+    variable                       shift and go to state 13
+
+state 22
+
+    (5) function_call -> NAME LPAREN argument_list RPAREN .
+
+    SEMICOLON       reduce using rule 5 (function_call -> NAME LPAREN argument_list RPAREN .)
+
+
+state 23
+
+    (7) argument_list -> argument_list COMMA argument .
+
+    RPAREN          reduce using rule 7 (argument_list -> argument_list COMMA argument .)
+    COMMA           reduce using rule 7 (argument_list -> argument_list COMMA argument .)
+
