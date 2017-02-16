@@ -1,3 +1,3 @@
 
 def standard(l):
-    return ', '.join(map(str, l.args))
+    return '('+', '.join(map(str, l.args))+')'

@@ -1,7 +1,4 @@
 
-from forms import assignment, variable, parameter, parameterlist
-from forms import functiondef, statement, argument, argumentlist
-from forms import functioncall, program
 import yacker
 
 
@@ -9,22 +6,34 @@ class Program:
     def __init__(self, statements):
         self.statements = statements
     def __str__(self):
-        return program.standard(self)
+        return '\n'.join(map(str, self.statements))
 
 
 class St:
     def __init__(self, body):
         self.body = body
-    def __str__(self):
-        return statement.standard(self)
+    def __str__(s):
+        return str(s.body) + ';'
 
 
-class Assign:
+# Double 'def' Def+FnDef
+class Def:
     def __init__(self, name, value):
         self.name = name
         self.value = value
-    def __str__(self):
-        return assignment.standard(self)
+    def __str__(a):
+        return "def {name} = {value}".format(**a.__dict__)
+        #return "{name} = {value}".format(**a.__dict__)
+
+
+class Mut:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+    def __str__(a):
+        return "mut {name} = {value}".format(**a.__dict__)
+        #return "{name} := {value}".format(**a.__dict__)
+
 
 
 class FnDef:
@@ -32,9 +41,11 @@ class FnDef:
         self.name = name
         self.params = params
         self.ret = ret
-    def __str__(self):
-        #return functiondef.standard(self)
-        return functiondef.mathematical(self)
+    def __str__(s):
+        base = "def {name}{params}"
+        if s.ret:
+            base += " returns {ret}"
+        return base.format(**s.__dict__)
 
 
 class Param:
@@ -44,33 +55,47 @@ class Param:
         self.mut = mut
         self.option = option
         self.default = default
-    def __str__(self):
-        #return parameter.standard(self)
-        return parameter.mathematical(self)
+    def __str__(s):
+        return "{type} {name}".format(**s.__dict__)
+        #return "{name}:{type}".format(**s.__dict__)
 
 
 class Params:
     def __init__(self, params):
         self.params = params
     def __str__(self):
-        return parameterlist.standard(self)
+        return '('+', '.join(map(str, self.params))+')'
 
 
-class Var:
-    def __init__(self, name, mut=False, maybe=False):
+class StrDef:
+    def __init__(self, name, params, generics=None):
         self.name = name
-        self.mut = mut
-        self.maybe = maybe
+        self.params = params
+        self.generics = generics
+    def __str__(s):
+        return "{name}{generics} = {params}".format(**s.__dict__)
+
+
+class TpParam:
+    def __init__(self, name):
+        self.name = name
     def __str__(self):
-        return variable.standard(self)
+        return self.name
+
+
+class TpParams:
+    def __init__(self, params):
+        self.params = params
+    def __str__(self):
+        return '['+', '.join(map(str, self.params))+']'
 
 
 class FnCall:
     def __init__(self, name, args):
         self.name = name
         self.args = args
-    def __str__(self):
-        return functioncall.standard(self)
+    def __str__(s):
+        return "{name}{args}".format(**s.__dict__)
 
 
 class Arg:
@@ -79,24 +104,36 @@ class Arg:
         self.key = key
         self.mut = mut
         self.option = option
-    def __str__(self):
-        return argument.standard(self)
+    def __str__(a):
+        if a.key:
+            base = "{key} = {value}"
+        else:
+            base = "{value}"
+        if a.option:
+            base += '?'
+        if a.mut:
+            base += '!'
+        return base.format(**a.__dict__)
 
 
 class Args:
-    def __init__(self, *args):
+    def __init__(self, args):
         self.args = args
+    def __str__(l):
+        return '('+', '.join(map(str, l.args))+')'
+
+
+class Var:
+    def __init__(self, name, mut=False, maybe=False):
+        self.name = name
+        self.mut = mut
+        self.maybe = maybe
     def __str__(self):
-        return argumentlist.standard(self)
+        return self.name
 
 
 lines = [
-    St(Assign(Var('x'), 10)),
-    Param('str', 'String', option=True),
-    Params([Param('n', 'Number'), Param('e', 'Number')]),
-    St(FnDef('pow', Params([
-        Param('n', 'Number'), Param('e', 'Number')]), 'Number')),
-    St(Assign(Var('n'), FnCall('pow', Args(Arg(16), Arg(2))))),
+    FnDef("panic", Params([]))
 ]
 
 

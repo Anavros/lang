@@ -1,3 +1,12 @@
-def pow(Number n, Number e) returns Number;
+
+def panic() { };
 x = 10;
-print("hello");
+def pow(Number n, Number e) returns Number { };
+x = 10;
+x := 20;
+print("hello", "world");
+print();
+tuple = x;
+tuple = (1, 2, 3);
+kw = (x=1, y=2, z=3);
+def Pair[A, B] = (A a, B b);

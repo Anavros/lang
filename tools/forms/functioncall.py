@@ -1,3 +1,3 @@
 
 def standard(c):
-    return "{name}({args})".format(**c.__dict__)
+    return "{name}{args}".format(**c.__dict__)
