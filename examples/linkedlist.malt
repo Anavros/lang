@@ -1,4 +1,39 @@
 
+
+module ll;
+define ll.Empty = Token;
+
+struct ll.link[T](T value, ll.link[T] next = ll.Empty) {
+    define link.{*} = {*args};
+    return link;
+};
+
+define ll.connect(Link a! b) {
+    mutate a.next = b;
+};
+
+define ll.nth(Link[T] head, Number n) returns Link[T]? {
+    if n == 0 {
+        return head;
+    } else {
+        if head == ll.Empty {
+            return Failure(IndexError);
+        } else {
+            return ll.nth(head.next, n-1);
+        };
+    };
+};
+
+# Another file.
+import Link, nth, connect from ll;
+
+def head = Link[Float](5.5);
+connect(head, Link[Float](4.0));
+assert nth(head, 1) == 4.0;
+
+
+# Old
+
 namespace ll {
     Link = Type[T] {
         value = (..):T;

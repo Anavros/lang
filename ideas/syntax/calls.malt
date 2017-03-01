@@ -1,0 +1,15 @@
+
+
+baz(bar(foo(a)))
+a.foo().bar().baz()
+foo(a) -> bar() -> baz()
+
+
+map((x){to_int(x)}, split(strip(a)))
+a.strip().split().map((x) { to_int(x) })
+strip(a) -> split() -> map((x){to_int(x)})
+
+
+vector.normalize(vector.move(vector.origin(), +1, +2, -0.5))
+vector.origin().move(+1, +2, -0.5).normalize()
+vector.origin() -> vector.move(+1, +2, -0.5) -> vector.normalize()

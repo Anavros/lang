@@ -1,7 +1,8 @@
 
 import module;
 import name from module;
-import name from module as n;
+import name as n from module;
+import foo as f, bar as b from module;
 
 # Modules should be able to package functionality into nice chunks.
 

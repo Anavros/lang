@@ -1,17 +1,47 @@
 
 Purpose:
-To quickly create small, maintainable systems.
+Small to mid-sized interactive systems like games and user-facing apps.
 
 Faster development than rigid languages like java.
 More explicit and easy-to-maintain typing than python.
 Cleaner and more consistent syntax than c++.
 More integrated data structures than c.
 
+?
+-> Good locality of code. Behavior should be definied in small chunks.
+-> Constraint types checked at runtime.
+-> Explicit coupling. Changing something in one module should very rarely
+change something in another.
+-> Little to no inversion of control. Events and other async code should be
+handled in a way that reads procedurally. There should be tools to prevent the
+necessity of inverting control in framework mainloop type situations.
+    -> Handle dependency cases nicely. Imagine:
+        class TextEditor {
+            check : SpellChecker;
+            function new() {
+                check = SpellChecker();
+            }
+        }
+    -> TextEditor is tied to SpellChecker.
+    -> Compared with:
+        class TextEditor {
+            check : SpellChecker;
+            function new(c : ISpellChecker) {
+                check = c;
+            }
+        }
+    -> Now you can pass in anything that fits the bill.
+    -> This is a good thing.
+    -> I guess the principle of inversion of control isn't so bad, it's just
+    that the implementation tends to be very restricting.
+    -> More fundamentally, it's about separating the 'what' from the 'when'.
+    -> If you can handle that in a natural, procedural way, then great!
+
 Use-Cases:
--> Single-user interactive programs.
+-> Game programming for single or multi-player games.
 -> Data visualizations.
--> Command-driven event loops.
--> Terminal user interfaces.
+-> Asyncronous event loops.
+-> User interfaces in general.
 
 Anti-Cases:
 -> Advanced graphics processing as in c++.
@@ -21,22 +51,19 @@ Anti-Cases:
 -> Hardcore security like rust.
 -> Extreme low-level speed like c.
 -> Inheritance-based polymorphism as in java or c#.
--> Complex GUI programming.
 
 Features:
 -> Highly composable types using subtype polymorphism instead of inheritance.
--> Syntax well suited to interactive development.
--> Probably a nice REPL.
--> Explicit syntax with marking for mutability and side-effects.
 -> Included suite of fundamental data structures like trees, maps, and fsm.
--> Probably full unicode support.
--> Integrated development tools like unit testing, debugging, and documentation.
 -> Syntax as consistent and simple as possible.
--> Manual memory management without being annoying if that's possible.
+
+Tools:
+-> Probably a nice REPL.
 -> Closely-tied toolset that doesn't impose too many structural restrictions.
--> Quick to getting starting making interactive programs.
+-> Integrated development tools like unit testing, debugging, and documentation.
 
 Acceptance Cases:
 -> It is fast and easy to create a basic interactive program.
 -> The syntax is consistent and easy to understand.
 -> Programs are structured in a natural way.
+-> Quick to getting starting making interactive programs.

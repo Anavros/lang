@@ -1,0 +1,36 @@
+
+import gui;
+
+mod position {
+    float x = 0, y = 0;
+
+    def origin() returns position { };
+
+    def move() { };
+};
+
+mod sprite {
+    image im;
+};
+
+def render(sprite+image item) {
+    gui.blit(item.im, (item.x, item.y));
+};
+
+def create_renderable(float x, float y, image im) {
+    pos = new position;
+    pos.x = x;
+    pos.y = y;
+    spr = new sprite;
+    spr.im = im;
+    return pos::spr
+};
+
+mod renderable {
+    :: position;
+    :: sprite;
+};
+
+def render(renderable item) {
+    ...
+};

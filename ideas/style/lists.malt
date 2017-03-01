@@ -1,0 +1,16 @@
+
+# This is really a front-end sugar kind of deal.
+# But couldn't lists be separated by a combination of newlines and commas?
+
+x = (a, b, c);
+
+x = (
+    a
+    b
+    c
+);
+
+x = (
+    a, b
+    c
+)

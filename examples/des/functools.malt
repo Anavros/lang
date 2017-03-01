@@ -13,22 +13,14 @@ Apply a function to each element in a sequence, creating a new sequence.
 Limits of the function are imposed upon the elements of the input and output
 sequences.
 ###
-map = (f:Function[A=>B], old:Sequence[A]) : Sequence[B] {
-    new = Sequence(old.bounds);
-    # Need a good way to iterate over two lists together.
+def map(Function[A=>B] f, Sequence[A] old) returns Sequence[B] {
+    def new = Sequence(old.length);
     for i in old.bounds {
-        # Does that work for setting elements as well as getting them?
-        new.at(i) = f(old.at(i));
+        new.{i} = f(old.{i});
     };
 };
-invert = (b:Bool) : Bool {
-    return not b;
-};
-map(invert, ?) := (Sequence[Bool]) : Sequence[Bool];
 
-
-inverted = map(invert, Array(true, true, false));
-inverted == Array(false, false, true);
+assert map((b){not b}, Array(true, true, true)) == Array(false, false, false);
 
 
 
@@ -39,17 +31,15 @@ Performs a naive linear search. What about sorted lists, where a binary search
 would do? Do different types get to define different inclusion methods?
 ###
 
-invariants:
-    item == s.iteritem
-
-included = (item, list, iter:Function, eq:Function) : Bool {
-    for other in iter(list) {
-        if eq(item, other) {  # T == T
+def included(T element, Iterable[T] list) returns Bool {
+    for x in list.iterate() {  # methods?
+        if element == x  {
             return true;
         };
     };
     return false;
 };
+
 
 ###
 Compute the sum of a sequence by calling the add function on each element. By
@@ -60,6 +50,20 @@ doesn't work on strings because the starting point is 0, not "".
 Sums are special cases of folds. Note that the identity of addition is 0, while
 the identity of multiplication is 1.
 ###
+
+def reduce(Function[A, A] f, Sequence[A] items, A identity) returns A {
+    def reduction = identity;
+    for i in items.iterate() {
+        mut reduction = f(reduction, i);
+    };
+    return reduction;
+};
+
+
+def sum = partial(reduce, add, identity=0);
+
+
+
 sum = (s:Sequence[Add]) {
     total = [Add].identity;
     for e in s {

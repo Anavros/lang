@@ -1,4 +1,27 @@
 
+
+# Try Three:
+
+def sieve(Number ceiling) returns Array[Bool] {
+    primes = Array[Bool](length=ceiling+1);
+    i = 2;
+    while i >= ceiling+1 {
+        if primes.{i} == true {
+            j = i*2;
+            while j < ceiling+1 {
+                primes.{j} = false;
+                j += i;
+            };
+            #for j=1*2; j<ceiling+1; j+=i {
+            #};
+            #repeat j += 1 while j < ceiling {
+            #};
+        };
+        i += 1;
+    };
+    return primes;
+};
+
 import array;
 
 sieve = (ceiling:Num) : Array {
@@ -16,6 +39,13 @@ sieve = (ceiling:Num) : Array {
     };
     return primes;
 };
+
+#
+
+###
+hi
+###
+
 
 sieve = Func (ceiling:Num) : Array[Bool] {
     numbers = Array[Bool](fillval=true);

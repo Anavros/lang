@@ -1,15 +1,48 @@
 
-new x = 10;
-new f = (Any x) { };
-
-mut x = 20;
-
-new x = 30;
-
-
-new x = 10;
-new f = (Number x!) returns Number {
-    mut x = 20;
+new *x = 10;
+new f = (x) {
 };
-f(x!);
+*x = 20;
+new x = 10;
+new f = (x: *Number) returns Number {
+    *x = 20;
+};
+f(*x);
 assert x == 20;
+
+# Member access.
+new *group = ('a', 'b', 'c', foo='bar');
+assert group.0 == 'a';
+assert group.1 == 'b';
+assert group.2 == 'c';
+assert group.3 == 'bar';
+assert group.foo == group.3;
+
+# Multiple and variable assignment.
+# Access every member with 'group.*'.
+*group.* = 2*2;  # too many stars!
+*group.(foo, 0) = 3;
+
+# Regex match?
+*group."[0-2]" = 5;
+
+# Functions/messages can be named like this I guess?
+mod Logger {
+    # Too magic.
+    "[0-9]+" = {
+        loop @name.to_number() {
+            print();
+        };
+    };
+    # Too verbose.
+    # What if you wanted a bunch of different patterns?
+    __message__(string) = {
+        if /[0-9]+/ matches string {
+            loop string.to_number() {
+                print();
+            };
+        };
+    };
+};
+Logger.0(); # Is 0 a valid message / method call?
+# Probably not like that.

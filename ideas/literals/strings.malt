@@ -1,0 +1,42 @@
+
+# Normal strings.
+"normal string"
+
+# Strings with variable interpolation.
+format("a serving of {breakfast}", breakfast="eggs")
+f"a serving of {breakfast}"
+"a serving of |breakfast|"
+"a serving of `breakfast`"
+"a serving of <breakfast>"
+"a serving of {breakfast}"
+
+# Regular expressions.
+'\w+(?=/()'.match("foo(bar)") => ('foo')
+regex("\w+(?=\()")
+r"\w+(?=/()"
+/\w+(?=\()/
+
+# Literal strings.
+'use \whatever\ characters | you want'
+
+# Multi-line strings.
+# Indentation is ignored and newlines are converted to spaces.
+print "hello,
+    world,
+    over
+    multiple
+    lines";
+print "hello, world, over multiple lines";
+
+# Literal strings.
+# A little different than python.
+# Newlines on the opening and closing """ are ignored.
+# Indentation is important.
+print """
+    Table:
+        A:
+        B:
+        C:
+""";
+
+print "    Table:\n        A:\n        B:\n        C:"

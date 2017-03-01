@@ -1,0 +1,10 @@
+
+# Why don't we have a range type in addition to the normal numerical values.
+# It would be dynamically checked at runtime for correctness. Being a dedicated
+# type, you'd only have to use it when you needed it, leaving the other number
+# types as super fast built-ins.
+
+num = 10;
+int = -1;
+float = 3.14;
+range = range.between(1, 12);

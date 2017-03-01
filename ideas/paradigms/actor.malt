@@ -1,0 +1,8 @@
+
+###
+This problem domain might be a good fit for message-oriented programming.
+Imagine a set of actors, each with their own internal state and functions,
+communicating over a series of named channels. It's highly concurrent, avoids
+global mutation, and works well with interactive systems. Mixed with a healthy
+dose of standard procedural programming, it could be pretty effective.
+###

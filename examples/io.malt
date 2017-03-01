@@ -1,0 +1,115 @@
+
+# Python IO module class hierarchy.
+###
+IOBase:
+    RawIOBase:
+        FileIO:
+        BufferedReader:
+            BufferedRandom:
+        BufferedWriter:
+            BufferedRandom:
+    BufferedIOBase:
+        BytesIO:
+        BufferedRWPair:
+    TextIOBase:
+        TextIOWrapper:
+        StringIO:
+###
+
+# Golang IO interfaces..
+###
+Reader
+Writer
+Closer
+Seeker
+ReadWriter
+ReadWriteCloser
+etc..
+###
+
+
+
+# Approach One:
+
+# io.malt
+struct File {
+    Number fileno;
+    Number pos;
+};
+
+interface Reader {
+    def read(File f) returns String { };
+};
+
+interface Writer {
+    def write(File f, String s) { };
+};
+
+interface Seeker {
+    def seek(File f) { };
+};
+
+interface Teller {
+    def tell(File f) returns Number { };
+};
+
+interface ReadWriter = Reader + Writer;
+
+# test.malt
+import io;
+def read_and_write(io.ReadWriter rw, io.File f) {
+    rw.read(f);
+    rw.write(f);
+};
+f = io.File()
+rw = io.ReadWriter();
+read_and_write(rw, f);
+
+
+
+# Approach Two:
+
+# io.malt
+class File {
+    Number fileno;
+    Number pos;
+    def read() returns String { };
+    def write(String s) { };
+    def seek() { };
+    def tell() returns Number { };
+};
+
+# test.malt
+import io;
+f = io.File();
+def read_and_write(File f) { };
+
+
+
+# Approach Three:
+
+# io.malt
+mod file {
+    num fileno;
+    num pos;
+    num length;
+};
+
+def file.open() returns file { };
+def file.read() returns string { };
+def file.write(string s) { };
+def file.seek() { };
+def file.tell() returns num { };
+
+# test.malt
+import io;
+
+def read_and_write(file f) {
+    x=f.read();
+    f.write(x);
+};
+
+f = new io.file;
+read_and_write(f);
+
+# This hasn't been too revealing. We probably need a different example.

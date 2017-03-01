@@ -1,0 +1,41 @@
+
+###
+Reactive programming involves values that change over time, as contrasted to
+values that are changed discretely in steps. It could be very appropriate for
+interactive programming.
+
+The real trouble with this style is that it tends to obfuscate what's actually
+going on internally. So the ideal implementation would involve a limited,
+imperative-friendly reaction model that is transparent and easy to understand.
+###
+
+# Consider a use-case in graphics programming.
+# Draw a rectangle around the mouse cursor that follows it wherever it goes.
+
+# In an imperative style.
+# Draws every frame but is simple to implement.
+loop {
+    def rect = (x-d, y-d, x+d, y+d);
+    draw(rect);
+    sleep(framerate);
+};
+
+# In a reactive style.
+# Only redraws when the mouse moves but requires more overhead.
+when changed(x, y, d) {
+    def rect = (x-d, y-d, x+d, y+d);
+    draw(rect);
+};
+
+# In a publish-subscribe style.
+on guichannel.mouse_movement (x, y) {
+    def rect = (x-d, y-d, x+d, y+d);
+    draw(rect);
+};
+
+# Maybe a reactive style could work with the already-extant system.
+def rect() { (x-d, y-d, x+d, y+d) };
+loop {
+    draw(rect());
+    sleep(framerate);
+};

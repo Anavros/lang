@@ -1,5 +1,22 @@
 
-Familiarity vs Cleverness
+:Familiarity vs Cleverness:
 I would like to come up with some new ideas, especially where consistent and
 explicit syntax is concerned. Changes that make a big difference are definitely
 ok. On the other hand, avoid changing things just for the sake of changing them.
+
+:Paradigms:
+First and foremost this is an imperative, procedural language. It's simple,
+easy to understand, and easy to implement. Built on that foundation it also has
+flexible polymorphism, through objects and generics, that enables code reuse.
+And strong support for concurrency and event-driven programming, to enable
+highly interactive programming.
+
+No one philosophy dictates the whole system, although within the language things
+should still be as consistent as possible.
+
+:Scalability:
+Natural support for concurrency and parallelism is crucial to support user
+interaction. Code must be easy to run across multiple cores of the same system,
+and easy to split into lightweight threads that can handle a lot of I/O waiting.
+However, it is not important to scale across multiple systems, as in building
+distributed applications over server farms.

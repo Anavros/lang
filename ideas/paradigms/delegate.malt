@@ -1,0 +1,38 @@
+
+# Each module defines its own functions.
+# Generic functions can be specified as static functions.
+
+# generic.malt
+protocol Shape {
+    def volume() returns Float;
+};
+
+def half_volume(s: Shape) returns Float {
+    return s.volume() / 2;
+};
+
+
+
+# specific.malt
+import generic;
+import pi from math;
+
+module Sphere adopts generic.Shape {
+    def radius: Float;
+
+    def volume() returns Float {
+        return (4/3)*pi*radius^2;
+    };
+
+    def half_volume = generic.half_volume;
+};
+
+module Cube {
+    def length: Float;
+
+    def volume() returns Float {
+        return length^3;
+    };
+
+    def half_volume = generic.half_volume;
+};

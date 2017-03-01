@@ -1,0 +1,16 @@
+
+###
+Consider this approach.
+Standard types are extremely loose in their definition. Integers, floats,
+strings, etc, can be any one of a very wide range of values. User types are
+meant to be restrictions of that.
+
+This by nature has to be checked at runtime. By committing to runtime checks, we
+can make the type system a whole lot more powerful.
+###
+
+Datetime :: {
+    year :: Range(-10_000, +10_000);
+    month::"jan"|"feb"|"mar"|"apr"|"may"|"jun"|"jul"|"aug"|"sep"|"oct"|"nov"|"dec";
+    # etc
+};

@@ -1,9 +1,8 @@
 
-def panic() { };
-x = 10;
-def pow(Number n, Number e) returns Number { };
 x = 10;
 x := 20;
+def panic() { };
+def pow(Number n, Number e) returns Number { };
 print("hello", "world");
 print();
 tuple = x;

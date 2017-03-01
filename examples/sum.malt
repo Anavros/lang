@@ -22,3 +22,17 @@ sum = func(*ns:Int, min=?, max=?) : Int {
     }
     return total;
 }
+
+# Try Three
+
+def sum(Number ns* min? max?) {
+    def total = 0;
+    for n in ns {
+        total += n;
+    };
+    return select {
+        given min and min > total => min;
+        given max and max < total => max;
+        default => total;
+    };
+};

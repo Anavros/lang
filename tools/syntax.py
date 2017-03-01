@@ -22,8 +22,8 @@ class Def:
         self.name = name
         self.value = value
     def __str__(a):
-        return "def {name} = {value}".format(**a.__dict__)
-        #return "{name} = {value}".format(**a.__dict__)
+        #return "def {name} = {value}".format(**a.__dict__)
+        return "{name} = {value}".format(**a.__dict__)
 
 
 class Mut:
@@ -32,6 +32,7 @@ class Mut:
         self.value = value
     def __str__(a):
         return "mut {name} = {value}".format(**a.__dict__)
+        #return "write {value} >> {name}".format(**a.__dict__)
         #return "{name} := {value}".format(**a.__dict__)
 
 

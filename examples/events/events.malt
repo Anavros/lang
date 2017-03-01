@@ -1,0 +1,18 @@
+
+
+# These callback interfaces are limited to whatever the library wants to pass.
+# Access to other parameters is limited to closures.
+
+# What about using partial application?
+def on_mouse_click(clicks: *Number) {
+    *clicks += 1;
+};
+
+def on_mouse_move(current:(x:*Number, y:*Number), new:(x:Number, y: Number)) {
+    *current.x = new.x;
+    *current.y = new.y;
+};
+
+def on_key_press(pressed: *Stream, k: Key) {
+    *pressed.add(k);
+};

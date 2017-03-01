@@ -1,78 +1,18 @@
 
-# We need to get declaration syntax consistent.
+mod vector;
 
-# Structure specification.
-str Health {
-    Number health_points;
-    Fn[Number =>] heal(), harm();
-    Fn[=> Number] get_health_points();
-};
-str Health {
-    Number health_points;
-    Fn heal(Number n);
-    Fn harm(Number n);
-    Fn get_health_points() returns Number;
+def vector.new(Float x y z) {
+    mod v;
+    def v.x = x;
+    def v.y = y;
+    def v.z = z;
+    #def v.{x, y, z} = x, y, z;
+    #def v.{*} = {*args};
+    return v;
 };
 
-# Doesn't have to specify everything. Sequence is abstract in the sense that is
-# has to be given a concrete implementation elsewhere.
-str Sequence[T] {
-    Number length;
-    Fn iterate() returns T;
-};
+a = vector.new(0, 0, 0);
 
-# Structure with default values.
-# Should specs have defaults? Or should the functions that create them?
-# But you can instantiate structs directly, right?
-str Point {
-    Float x=1.0, y=2.0, z=3.0;
-};
+def vector.origin = partial(vector.new, 0, 0, 0);
 
-fun foo() {
-    x=1.0;
-    y=2.0;
-    z=3.0;
-    proto fun harm(Number n);
-};
-
-fun bar(Float x=1.0 y=2.0 z=3.0) {
-};
-
-
-
-Health = (hp:Number);
-
-a = [hp=100];
-b = Health(hp=100);
-
-[
-    hp = 100,
-    heal = (points: Number) { mut hp += points; },
-    sq = (x) { x*x },
-];
-
-def heal(hp: Health, points: Number) {
-    mut hp.hp += points;
-};
-
-def heal for Health(points: Number) {
-};
-
-import Health from a
-import heal, harm from b
-
-# Keep structure parameter lists separate from implementations.
-
-# Parameterized structs.
-Point = [
-    Type N;
-    N x, y, z;
-];
-Point(Float, 1, 2, 3);
-use_float_point[Point[Float] fp] { };
-# Vs.
-Point<N> = [
-    N x, y, z;
-];
-Point<Float>(1, 2, 3);
-use_float_point[Point<Float> fp] { };
+b = vector.origin();

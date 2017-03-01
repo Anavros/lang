@@ -1,15 +1,120 @@
 
-def binary(a, b) { };
-binary(a, b);
-a binary b;
+###
+Honestly, I feel like the extreme flexibility is taking it too far. There could
+be a specific syntax for creating special functions, but having it used by
+default just creates confusion.
+###
 
-def unary(a) { };
-unary(a);
-a.unary();
-unary a;
+# Standard n-ary function call.
+foo()
+foo(a)
+foo(a, b)
+foo(a, b, bar=baz)
+foo(a, b, bar=baz, f=quux())
 
-go(a);
-go a;
-swarm(10, a);
-swarm 10 a;
-10 swarm a;
+# Binary functions can be made infix?
+minus(2, 1)
+2 minus 1
+
+# Unary functions can be made prefix?
+print "string"
+force open("file.txt")
+
+print(a, b, (force(open(f).read()) default ""))
+print a, b, force open(f).read() default ""
+
+# Are there going to be conflicts if unary functions can be called like this?
+def open(path: String) returns File? { };
+def force(r: Result[T, E]) returns T or panics { };
+def readall(f: File) returns String { };
+def upper(s: String) returns String { };
+
+new s = upper(readall(force(open(FILEPATH))) err "default")
+new s = open?(FILEPATH).force().readall().upper();
+new s = upper readall force open FILEPATH;
+print(a, b, upper readall open FILEPATH err "default"); 
+print(a, b, upper readall open (FILEPATH) err ("default")); 
+print(a, b, upper (readall open FILEPATH) err ("default"); 
+
+# Maybe infix has higher priority than unary?
+print(a, b, upper (readall(open FILEPATH) err "default")); 
+
+force open (FILEPATH) err (default)
+force (open FILEPATH) err (default)
+
+# What about functions with keyword args?
+open FILEPATH "r"
+open(FILEPATH, "r")
+open FILEPATH mode="r"
+force(open?(FILEPATH, mode='w'))
+
+
+# Functions with block parameters can be written inline.
+loop({ print(10) })
+loop {
+    print(10)
+}
+
+if(x, { print(y) })
+if x {
+    print(y)
+}
+
+loop(times=10, block={ print() })
+loop 10 {
+    print()
+}
+
+# The block parameter must come last?
+loop({ foo() }, times=10);
+loop {
+    foo()
+} times 10
+
+
+# Combinations can be created using keyword arguments.
+do({ foo() }, while=true)
+do {
+    foo()
+} while true
+
+if x {
+    a()
+} elif y {
+    b()
+} elif z {
+    c()
+} else {
+    d()
+}
+if(x, {a()}, elif=((y, {b()}), (z, {c()})), else={d()})
+if x {a())} elif y {b()} elif z {c()} else {d()}
+
+match x {
+    1 => true
+    2 => false
+    3 => true
+}
+match(x, ((1, true), (2, false), (3, true)))
+
+# ?
+block function loop(determinant={true}, block) { }
+loop {true} { }
+loop times(15) { }
+loop {condition} { }
+
+# ?
+block function loop(times?: Number, until?: => Bool, code: Block) { }
+loop { }
+loop 10 { }
+loop 10 or until x <= 0 {
+}
+
+# ?
+function map<A, B>(f: A => B, items: Series) { }
+map(x) {
+    x^2
+} items
+map i in items {
+    i^2
+}

@@ -1,0 +1,63 @@
+
+# Note: View patterns could be very easy with read-only messages.
+
+# Consider different types of messages.
+###
+Request-Reply
+    This is the standard function call protocol. The caller requests a response
+    from the function and passes in a set of arguments, then waits for the
+    function to return a reply.
+Publish-Subscribe
+One-Way
+###
+
+new *bus = message.Bus();
+
+protocol Info {
+    c : Glyph;
+    # No constructors?
+    # It is just plain old data.
+    # Is there a default?
+};
+
+mod Controller {
+    push : message.Bus;
+
+    press_key(c: Glyph) = {
+        push.send(Info(c));  # Maybe make an agreed-upon protocol object.
+        #push.send(c);  # also works
+        push.signal();  # activates asyncronous behavior?
+    };
+};
+
+module View {
+    pull : message.Bus;
+
+    function echo() = print;
+
+    on pull.signal {  # not sure how that will work
+        echo(pull.receive());
+    };
+    # May be equivalent to:
+    pull.callback("signal", { echo(pull.receive()); });
+
+    # On any other message.
+    # E.g. View.foobar("baz") => print("foobar", "baz")
+    # While View.echo("hello") => echo("hello") because echo is defined.
+    /*/ = {
+        echo(@call, @args);
+    };
+    # Alternative syntax.
+    other(call, args+) = {
+        echo(call, args);
+    };
+    route /.*/ => other;
+    # Or.
+    route /.*/(args+) {
+        echo(__capture__, args.unpack())
+    };
+    # Or.
+    route (call=/.*/, args=/.*/) {
+        ...
+    };
+};

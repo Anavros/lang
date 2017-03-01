@@ -1,0 +1,5 @@
+
+# Floating point comparisons could be done with a different operator.
+x = 1 / 3;
+assert x == 0.33;  # not true, but close
+assert compare(x, 0.33, epsilon=0.1);  # true

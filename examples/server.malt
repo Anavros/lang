@@ -1,0 +1,62 @@
+
+# An echo server and client.
+# Deals with blocking and threading.
+
+# Server
+# Open a socket on a given port.
+# Wait for a client connection.
+# Loop interaction with the client.
+
+# server.malt
+import socket;
+
+def start(Number port) returns Socket {
+    server = socket.bind(port);
+    client = await server.accept();  # blocks
+    return client;
+};
+
+def run(Socket client) {
+    repeat data = await client.receive() {  # stops on failure
+        client.send(data);
+    };
+};
+# server.malt
+
+# client.malt
+import socket;
+
+def connect(Number host, Number port) returns Socket {
+    return socket.connect(host, port);
+};
+
+def run(Socket server) {
+    loop {
+        data = await stdin.readln() err stop;
+        server.send(data) err stop;
+        response = server.receive() err stop;
+        stdout.writeln(response);
+    };
+};
+# client.malt
+
+# main.malt
+import server, client;
+
+# Order:
+###
+bind server and start waiting for client connection
+start client and connect to server
+start server and client loops
+###
+def main() {
+    host = "localhost";
+    port = 50000;
+    s = server.start(port);
+    c = client.connect(host, port);
+    async server.run(s);
+    async client.run(c);
+    s.close();
+    c.close();
+};
+# main.malt

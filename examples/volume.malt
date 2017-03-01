@@ -1,0 +1,58 @@
+
+# An example of polymorphism / function overloading.
+# Write volume functions for a collection of shapes.
+
+
+def cube.volume(Float edge) returns Float {
+    return edge^3;
+};
+
+def sphere.volume(Float radius) returns Float {
+    return (4/3)*pi*radius^3;
+};
+
+def cylinder.volume(Float height, Float radius) returns Float {
+    return pi*radius^2*height;
+};
+
+def generic_volume(shape, volume_function) {
+    return volume_function(shape);
+};
+
+def sum_all_volumes(Series shapes) returns Float {
+    def total = 0.0;
+    for shape in shapes {
+        mut total += shape.volume(???);
+    };
+};
+
+
+
+# With traditional data+function style classes.
+abstract Shape {
+    def volume() returns Float;
+};
+
+class Cube has Shape {
+    Float edge;
+    def volume() => { edge^3 };
+};
+
+class Sphere has Shape {
+    Float radius;
+    def volume() => { (4/3)*pi*radius^3 };
+};
+
+class Cylinder has Shape {
+    Float height;
+    Float radius;
+    def volume() => { pi*radius^2*height };
+};
+
+def sum_all_volumes(Shape shapes*) returns Float {
+    def total = 0.0;
+    for s in shapes {
+        mut total += s.volume();
+    };
+    return total;
+};

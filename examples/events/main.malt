@@ -1,0 +1,28 @@
+
+import gl;
+import on_mouse_click, on_mouse_move, on_key_press from events;
+import Stream from collections;
+
+*clicks = 0;
+*current_x = 0;
+*current_y = 0;
+*keys_pressed = Stream.empty();
+
+# Use partial application to pass extra parameters into callbacks.
+# Problem solved.
+click_callback = partial(on_mouse_click, *clicks);
+move_callback = partial(on_mouse_move, (*current_x, *current_y));
+key_callback = partial(on_key_press, *keys_pressed);
+
+# Alternative syntax.
+click_callback = on_mouse_click.bind(*clicks);
+move_callback = on_mouse_move.bind((*current_x, *current_y));
+key_callback = on_key_press.bind(keys_pressed);
+
+
+main = {
+    gl.on_mouse_click(click_callback); # has to pass ()
+    gl.on_mouse_move(move_callback); # has to pass (x, y)
+    gl.on_key_press(key_callback); # has to pass (key)
+    gl.mainloop(); # No more control flow.
+};

@@ -1,0 +1,34 @@
+
+
+# Function Sigils
+pure();
+impure!();
+might_fail?();
+both?!();  # particularly like this one
+might_block&();
+
+# Argument Sigils
+f(immutable);
+f(mutable!);
+
+# Parameter Sigils
+def f(Type immutable mutable! might_be_none? glob*) { };
+
+###
+Should we use sigils for impure functions?
+
+Benefits:
+-> Potential effects are obvious to reader.
+-> Serve as a reminder to programmer that effects need to be handled.
+-> Compiler could require handling of side effects.
+Drawbacks:
+-> Verbose and a little strange.
+-> Lots of repetition, especially considering that effects must be handled.
+
+For casual readers, the sigils are an obvious mark. For experienced programmers,
+the sigils are useless noise. Learning programmers have to look through
+documentation anyway to figure out function signatures, and therefore will see
+effects too. Attributes can still be tracked, and the compiler can still require
+handling of special cases, but the sigils can go. The visual cues will be the
+handling cases.
+###

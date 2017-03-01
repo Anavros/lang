@@ -1,8 +1,24 @@
 
+
 ###
 Load a file from the disk.
 Handle errors appropriately.
 ###
+
+
+# Update
+
+def read(String path) returns File? {
+    ...
+};
+
+# A few different options on handling errors.
+f = read("filename.txt") err stdin;
+f = force read("filename.txt");
+
+
+
+# Old
 
 PATH = "./file";
 

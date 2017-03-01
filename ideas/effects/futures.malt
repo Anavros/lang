@@ -1,0 +1,24 @@
+
+function download_data() {
+    # some blocking io
+};
+
+# Blocks.
+new data = download_data();
+use(data);
+other_process();
+
+# Spawns a new thread b.
+new data = future download_data();
+# Runs in thread b.
+on data.complete {
+    use(data);
+};
+# Free to run in thread a.
+other_process();
+
+thread b {
+    new data = download_data();
+};
+
+separate(new data = download_data());

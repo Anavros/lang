@@ -1,0 +1,44 @@
+
+# How do you handle a variety of types that all provide an iterable sequence?
+
+# main.malt
+import array, list, vector, sequence from sequences;
+
+def print_all(sequence[any] items) {
+    for i in items.iterate() {
+        print(i);
+    };
+};
+
+a = array.new()
+b = array.alternate_creation_method()
+
+print_all(a);
+
+
+# sequences.malt
+abs sequence[t] {
+    abs iterate() yields t;
+};
+
+mod array[t] is sequence[t] {
+    mem start;
+    num length;
+    num size;
+    def iterate() yields t {
+    };
+    constructor new(num length) {
+    };
+    constructor alternate() {
+    };
+};
+
+mod list[t] is sequence[t] {
+    def iterate() yields t {
+    };
+};
+
+mod vector[t] is sequence[t] {
+    def iterate() yields t {
+    };
+};

@@ -1,0 +1,96 @@
+
+class Vector {
+    Float x;
+    Float y;
+    Float z;
+    Number group;
+
+    constructor new(Float x, Float y, Float z) {
+        .x = x;
+        .y = y;
+        .z = z;
+    };
+
+    method move(Float x, Float y, Float z) {
+        mut .x = x;
+        mut .y = y;
+        mut .z = z;
+    };
+
+    method extrude(Float n) {
+        mut .x *= n;
+        mut .y *= n;
+        mut .z *= n;
+    };
+
+    method normalize() {
+        mag = sqrt(sum(. mul .));
+        .move(.x/mag, .y/mag, .z/mag);
+    };
+
+    static infix add(Vector a, Vector b) {
+        return Vector.new(a.x + b.x, a.y + b.y, a.z + a.y);
+    };
+
+    static infix mul(Vector a, Vector b) {
+        return Vector.new(a.x * b.x, a.y * b.y, a.z * a.y);
+    };
+
+    static infix div(Vector a, Vector b) {
+        return Vector.new(a.x / b.x, a.y / b.y, a.z / a.y);
+    };
+
+    static infix sub(Vector a, Vector b) {
+        return Vector.new(a.x - b.x, a.y - b.y, a.z - a.y);
+    };
+};
+
+
+import vector;
+v = vector.new(0, 0, 0, 69);
+v.move!(1, -1, 0);
+print(v vector.add v);
+
+
+# Compare to an un-dispatched version.
+function new(Float x, Float y, Float z, Number group) {
+    return (x=x, y=y, z=z, group=group) : Vector;
+};
+
+function move(Vector v!, Float x, Float y, Float z) {
+    mut v.x = x;
+    mut v.y = y;
+    mut v.z = z;
+};
+
+function extrude(Vector v!, Float n) {
+    mut v.{*} *= n;
+};
+
+function normalize(Vector v!) {
+    new = v mul v;
+    mag = sqrt(sum(new.x, new.y, new.z));
+    move(v!, new.x/mag, new.y/mag, new.z/mag);
+};
+
+infix add(Vector a, Vector b) {
+    return Vector.new(a.x + b.x, a.y + b.y, a.z + a.y);
+};
+
+infix mul(Vector a, Vector b) {
+    return Vector.new(a.x * b.x, a.y * b.y, a.z * a.y);
+};
+
+infix div(Vector a, Vector b) {
+    return Vector.new(a.x / b.x, a.y / b.y, a.z / a.y);
+};
+
+infix sub(Vector a, Vector b) {
+    return Vector.new(a.x - b.x, a.y - b.y, a.z - a.y);
+};
+
+
+import vector;
+v = vector.new(0, 0, 0, 69);
+vector.move(v!, 1, -1, 0);
+print(v vector.add v);

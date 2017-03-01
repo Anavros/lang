@@ -1,4 +1,67 @@
 
+# Motivations:
+###
+-> Code reuse through polymorphism is good and fits with the idea of "don't
+repeat yourself".
+-> Method overloading is unclear and prone to bugs.
+-> Tree-like hierarchy is too rigid.
+-> Therefore the goal is to allow polymorphic code reuse without ambiguating
+names and without forcing a strict hierarchy.
+-> In general we're looking for simplicity and clarity.
+-> Don't worry about static dispatch or super low-level performance. The
+design in general will probably work better with a lot of dynamic features.
+###
+
+
+# health.malt
+struct Health {
+    Number points;
+};
+
+def new(Number starting = 0) returns Health {
+    return mod:Health {
+        points = starting;
+    };
+};
+
+def heal(Health h!, Number amount) {
+    mut h.points += amount;
+};
+
+# other.malt
+struct Other {
+    Number hp;
+};
+
+def new() returns Other {
+    return mod:Other {
+        hp = 10;
+    };
+};
+
+def heal(Other o!, Number amount) {
+    mut o.hp += amount;
+};
+
+
+# main.malt
+import health;
+import other;
+def heal_all[T](Sequence[T] items, Function[T!, Number] healer, Number amount) {
+    for item in items {
+        healer(item, amount);
+    };
+};
+
+h = health.new();
+items = Sequence[Health](h);
+heal_all[Health](items, health.heal, 10);
+
+o = other.new();
+others = Sequence[Other](o);
+heal_all[Other](others, other.heal, 10);
+
+
 ###
 How can one function work over many types?
 Alternatively, how can functions be selected appropriately when they all use the

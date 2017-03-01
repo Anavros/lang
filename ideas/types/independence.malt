@@ -1,0 +1,5 @@
+
+###
+Maybe a better way to model all this is to keep everything separated into nice
+discrete chunks that communicate via message passing.
+###

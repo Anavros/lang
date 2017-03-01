@@ -1,0 +1,55 @@
+
+# You know, we really don't need open classes.
+# I thought it would be nice to allow little modules to be built from things
+# sourced all over. But really, we can keep object creation local. There's
+# always the possibility of creating an extension class.
+
+# As a counter, consider this example.
+### lib.malt
+mod a {
+    string id;
+    constructor from_b(b other) {
+        .id = "b->a"
+    };
+};
+
+mod b {
+    string id;
+    constructor from_a(a other) {
+        .id = "a->b";
+    };
+};
+
+
+# And now in a another file, you create a new class.
+### extension.malt
+import a, b from lib;
+
+mod c {
+    string id;
+    constructor from_a(a other) {
+        .id = "a->c";
+    };
+    constructor from_b(b other) {
+        .id = "b->c";
+    };
+};
+
+# And you want to add a 'from_c' constructor to a and b. How?
+def a.from_c(c other) {
+    a.id = "c->a";
+};
+def b.from_c(c other) {
+    b.id = "c->b";
+};
+
+
+# How to import all of this?
+import lib;
+x = lib.a.from_b(...);
+y = lib.b.from_a(x);
+import extension;
+z = extension.c.from_b(y);
+# w = extension.b.from_c(z);
+# or
+# w = lib.b.from_c(z);
