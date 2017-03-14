@@ -3,12 +3,26 @@
 TYPE_NUM = "Num"
 
 
+class Program:
+    def __init__(self, statements):
+        self.statements = statements
+
+    def __repr__(self):
+        return "Program {{\n{}\n}}".format(self.statements)
+
+
+class Call:
+    def __init__(self, function, args):
+        self.function = function
+        self.args = args
+
+    def __repr__(self):
+        return "Call({}, {})".format(self.function, self.args)
+
+
 class Function:
     def __init__(self, name):
         self.name = name
-        self.return_type = None
-        self.parameters = None
-        self.code = None
 
     def __repr__(self):
         return "Fn[{}]".format(self.name)

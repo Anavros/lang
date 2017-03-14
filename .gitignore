@@ -1,6 +1,6 @@
 *.swp
 examples/blossom/
-old/
+**/old/
 **/brunch
 **/__pycache__/
 implementation/parser.out

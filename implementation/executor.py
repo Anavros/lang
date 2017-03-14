@@ -2,24 +2,31 @@
 import objects
 
 
-def run(operations):
-    global ops
-    dump(operations)
-    for o in operations:
-        call(o)
+def run(program):
+    dump(program)
+    execute(program)
 
 
-def dump(operations):
-    for o in operations:
+def execute(program):
+    for o in program.statements:
+        if isinstance(o, objects.Program):
+            execute(o)
+        elif isinstance(o, objects.Call):
+            call(o)
+        else:
+            print("Unknown operation type:", o)
+
+
+def dump(program):
+    for o in program.statements:
         print(o)
     print("\nExecuting...\n")
 
 
-def call(args):
+def call(c):
     global ops, functions
-    f, args = args
     try:
-        functions[f.name](args)
+        functions[c.function.name](c.args)
     except KeyError:
         print("Unknown function:", f.name)
 
@@ -48,6 +55,17 @@ def assign(args):
     else:
         variables[name] = value
         print("Set '{}' to '{}'.".format(name, value))
+
+
+def mutate(args):
+    global variables
+    name, value = args
+    name, value = name.value, value.value
+    if name in variables.keys():
+        variables[name] = value
+        print("Mutate '{}' to '{}'.".format(name, value))
+    else:
+        print("Variable '{}' does not exist.")
 
 
 def output(arglist):
@@ -80,7 +98,8 @@ ops = {
 functions = {
     'print': output,
     'function': create_new_function,
-    'assign': assign
+    'assign': assign,
+    'mutate': mutate,
 }
 
 

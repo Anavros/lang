@@ -3,6 +3,10 @@
 # Yes, they seem to work just fine.
 print("hello", "world");
 function("force");
+{
+    print("subroutines!");
+};
 force();
 assign("x", 10);
+mutate("x", 20);
 print(x);

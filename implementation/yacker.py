@@ -9,35 +9,43 @@ def p_program(p):
     program : program statement
     """
     p[0] = p[1]
-    p[0].append(p[2])
+    p[0].statements.append(p[2])
 
 
 def p_program_end(p):
     """
     program : statement
     """
-    p[0] = [p[1]]
+    p[0] = Program([p[1]])
 
 
 def p_statement(p):
     """
     statement : call SEMICOLON
+              | block SEMICOLON
     """
     p[0] = p[1]
+
+
+def p_block(p):
+    """
+    block : LBRACE program RBRACE
+    """
+    p[0] = p[2]
 
 
 def p_call(p):
     """
     call : NAME LPAREN arguments RPAREN
     """
-    p[0] = (Function(p[1]), p[3])
+    p[0] = Call(Function(p[1]), p[3])
 
 
 def p_call_empty(p):
     """
     call : NAME LPAREN RPAREN
     """
-    p[0] = (Function(p[1]), [])
+    p[0] = Call(Function(p[1]), [])
 
 
 def p_arguments_single(p):
