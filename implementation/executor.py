@@ -7,6 +7,12 @@ def run(program):
     execute(program)
 
 
+def dump(program):
+    for o in program.statements:
+        print(o)
+    print("\nExecuting...\n")
+
+
 def execute(program):
     for o in program.statements:
         if isinstance(o, objects.Program):
@@ -15,51 +21,55 @@ def execute(program):
             # TODO? Remove hard-coded return?
             # Should return be a function too?
             if o.function.name == 'return':
-                return
+                return evaluate_all(o.args)
             else:
-                call(o)
+                retval = call(o) # should this return a value?
+                # return retval  # ?
         else:
             print("Unknown operation type:", o)
+    return []
 
 
-def dump(program):
-    for o in program.statements:
-        print(o)
-    print("\nExecuting...\n")
+def evaluate_all(args):
+    return list(map(evaluate, args))
+
+def evaluate(expr):
+    global variables
+    # expr could be a constant, a variable, or a call.
+    # or a block I guess.
+    if isinstance(expr, objects.Constant):
+        return expr.value
+    elif isinstance(expr, objects.Variable):
+        try:
+            return variables[expr.name]
+        except KeyError:
+            return '?'
+    elif isinstance(expr, objects.Call):
+        return call(expr)
+    elif isinstance(expr, objects.Program):
+        return expr
+    else:
+        print("Can't evaluate '{}'.".format(expr))
 
 
-def call(c):
+def call(o):
+    name = o.function.name
+    args = evaluate_all(o.args)
     global operations, functions
-    name = c.function.name
-    args = c.args
     if name in operations.keys():
         operations[name](args)
     elif name in functions.keys():
-        #print("Calling '{}'...".format(name))
-        execute(functions[name])
+        subprogram = functions[name]
+        print("Executing subprogram.")
+        return execute(subprogram)
     else:
         print("Function '{}' is not defined.".format(name))
-
-
-def _convert(args):
-    global variables
-    values = []
-    for a in args:
-        if isinstance(a, objects.Variable):
-            try:
-                value = variables[a.name]
-            except KeyError:
-                value = '?'
-            values.append(value)
-        elif isinstance(a, objects.Constant):
-            values.append(a.value)
-    return values
+    return []
 
 
 def assign(args):
     global variables
     name, value = args
-    name, value = name.value, value.value
     if name in variables.keys():
         print("Variable '{}' already exists!".format(name))
     else:
@@ -70,7 +80,6 @@ def assign(args):
 def mutate(args):
     global variables
     name, value = args
-    name, value = name.value, value.value
     if name in variables.keys():
         variables[name] = value
         print("Mutate '{}' to '{}'.".format(name, value))
@@ -79,15 +88,11 @@ def mutate(args):
 
 
 def output(arglist):
-    print(*_convert(arglist))
+    print(*arglist)
 
 
 def noop(_):
     print("...")
-
-
-def ret(_):
-    print("Should be returning...")
 
 
 def create_new_function(args):
@@ -95,8 +100,7 @@ def create_new_function(args):
     if len(args) != 2:
         print("Bad arguments to function()!")
         return
-    constant, block = args
-    name = constant.value
+    name, block = args
     if name in functions.keys():
         print("Function '{}' already exists.".format(name))
     else:
@@ -110,7 +114,6 @@ operations = {
     'function': create_new_function,
     'assign': assign,
     'mutate': mutate,
-    'return': ret,
 }
 functions = { }
 variables = { }

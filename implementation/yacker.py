@@ -67,6 +67,7 @@ def p_value(p):
     value : variable
           | constant
           | block
+          | call
     """
     p[0] = p[1]
 
