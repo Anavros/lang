@@ -17,3 +17,12 @@ open = (Number port, Protocol protocol);
 open = (Number port, String protocol);
 
 # Honestly the string is best in this situation.
+
+
+# What about '+key' or '-key' for bools?
+function socket.open(port: Num, reuseaddr: Bool) { };
+socket.open(50000, +reuseaddr);
+
+# Does it conflict with arithmetic?
+socket.open(-port, -reuseaddr);
+# Yeah it kind of does.

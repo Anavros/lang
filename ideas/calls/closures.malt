@@ -1,0 +1,35 @@
+
+# There should be explicit control over whether an enclosed variable is frozen
+# in place by value, permanently bound to an outside reference, or dynamically
+# adapting to any outside value. Along with appropriate error handling etc.
+
+outside = "Hello!";
+
+function by_value() {
+    freeze outside;
+    # 'outside' is locked to the value it was during this function's creation.
+    print(outside);  # always prints 'Hello!'
+};
+
+function by_reference() {
+    follow outside;  # might fail?
+
+    # In case that variable is deleted.
+    reference(outside) default "Woops!";
+
+    # 'outside' becomes the value it is right now.
+    print(outside);  # prints whatever 'outside' is.
+};
+
+by_value();         # "Hello!"
+by_reference();     # "Hello!"
+
+outside = "Goodbye.";
+
+by_value();         # "Hello!"
+by_reference()      # "Goodbye."
+
+delete outside;
+
+by_value();         # "Hello!"
+by_reference();     # "Woops!"

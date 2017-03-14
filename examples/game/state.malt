@@ -1,0 +1,8 @@
+
+import Person from objects;
+
+state = (
+    season = 0,
+    time = 0,
+    player = Person.new(),
+);

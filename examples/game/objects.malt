@@ -1,0 +1,15 @@
+
+module Base {
+    id : Number;
+    connections : List[String];
+    climate : Number;
+    health : Number;
+};
+
+module Transport { };
+
+module Person {
+    function new() {
+        return (food=100);
+    };
+};

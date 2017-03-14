@@ -1,0 +1,36 @@
+
+import foo;
+import a, b, c from foo;
+import foo as bar;
+
+# Potential option: use slashes as namespace separators.
+import html;
+d = html/div.new();
+
+# Control what is available outside your module using exports.
+
+# list.malt
+function new();
+
+export * {
+    list = new;
+}
+
+
+# importer.malt
+import list;
+list.new();
+
+# Vs.
+import * from list;
+list();
+
+
+# Or just:
+function list();
+export list;
+# export (list=list);
+
+# And then:
+import list;
+list();

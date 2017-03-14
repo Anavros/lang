@@ -1,0 +1,19 @@
+
+###PYTHON###
+def mux():
+    while True:
+        ready, _, _ = select([stdin], [], [])
+        for x in ready:
+            print(x)
+###
+
+function mux() {
+    loop {
+        ready, _, _ = select([stdin], [], []);
+        for x in ready {
+            print(x);
+        };
+    };
+};
+
+# Figure out a way to do this with signals.

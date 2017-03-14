@@ -1,0 +1,32 @@
+
+array = [
+    "spam"
+    "eggs"
+    "sausage"
+    "pork"
+    "beans"
+    "bacon"
+]
+
+hsmap = {
+    breakfast => "cinnamon rolls"
+    lunch => "sandwich"
+    dinner => "pork roast"
+    dessert => "pie"
+}
+
+table = {
+    breakfast => ["cinnamon rolls", "sweet", "pastry"]
+    lunch => ["sandwich", "savory", "deli"]
+    dinner => ["pork roast", "savory", "meat"]
+    dessert => ["pie", "sweet", "pastry"]
+}
+
+An array has constant lookup time by index.
+    array[2] => "sausage"
+
+A hash map by key.
+    hsmap["breakfast"] => "cinnamon rolls"
+
+A table by ...?
+    table.all("savory")

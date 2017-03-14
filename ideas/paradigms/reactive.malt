@@ -9,6 +9,38 @@ going on internally. So the ideal implementation would involve a limited,
 imperative-friendly reaction model that is transparent and easy to understand.
 ###
 
+###
+Consider this: programming breaks down to the what (data), the how (functions),
+and the when (threads). Make the when as big of a point as the what and the how.
+###
+
+on program.start {
+    print("Hello, world!");
+};
+
+on module.load {
+    new CONFIG = 100;
+};
+
+# Signals could be built-in or just a prominent library.
+import Signal, Window;
+
+ui = Signal.new();
+on Window.event(e) when e.name == "click" {
+    ui.mouse_click(e.x, e.y);;
+};
+
+on ui.mouse_click(x: Float, y: Float) {
+    print("(|x|, |y|)");
+};
+# Vs.
+window.on_click(function(event) {
+    print("(|event.x|, |event.y|)");
+});
+
+
+
+
 # Consider a use-case in graphics programming.
 # Draw a rectangle around the mouse cursor that follows it wherever it goes.
 

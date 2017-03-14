@@ -1,0 +1,27 @@
+
+import state;
+import array;
+
+function update() {
+}
+
+function info() {
+    here = state.bases.at(state.location);
+    return """
+        Base: |here.id|
+        -> Stove: |here.upgrades.get('stove')|
+        -> Dock: |here.upgrades.get('dock')|
+        -> Mill: |here.upgrades.get('mill')|
+        Food: |state.player.food|
+        Time: |state.time|
+        Season: |state.season|
+    """;
+};
+
+function actions(items) {
+    html = ""
+    for key, action in items.pairs() {
+        string.join(html, "<button type='button' onclick=blossom.activate('|action.id|')>|action.label|</button>\n");
+    };
+    return html;
+};

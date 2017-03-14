@@ -1,0 +1,15 @@
+
+# Download HTML for every URL in a list, spawning a new thread for each URL.
+
+urls = (
+    "www.google.com",
+    "www.github.com",
+    "www.stackexchange.com",
+);
+
+function download(url: String) returns String {
+    return magic.get(url);
+};
+
+# Async I guess?
+pages = swarm(download, urls);

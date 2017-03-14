@@ -1,0 +1,11 @@
+
+function a(state) { };
+function b(state, x) { };
+function c(state, x, y) { };
+
+reference state;
+function a() { };
+function b(x) { };
+function c(x, y) { };
+
+# This is pretty much just a closure.

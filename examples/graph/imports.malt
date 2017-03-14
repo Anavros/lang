@@ -1,0 +1,53 @@
+
+# game.package
+entry = main.start  # start reading here
+
+# main.malt
+import post;  # external package
+import view;
+
+function start() {
+    post(view.html.format(|constants|))
+};
+
+
+# state.malt
+import types;
+
+new x = 0;
+new y = 0;
+
+new p = types.Player ("User", 0);
+
+
+# constants.malt
+constant LOGFILE = "debug.log";
+constant TITLE = "Example!";
+
+
+# types.malt
+datatype Player (name: String, score: Number);
+
+
+# view.malt
+import TITLE from constants;
+observe x, y from state;  # read-only reference, updates when state updates
+# Could we do differential updates here?
+# Revaluate everything that relies on x whenever x changes?
+# But only those things, not everything?
+
+active html = '''
+<h1>{TITLE}</h1>
+<div style="width: {x}; height: {y};"></div>
+''';
+
+update html on change x, y;
+
+
+# events.malt
+control state; # read/write reference
+
+on mousemove(x, y) {
+    update state.x = x;
+    update state.y = y;
+};

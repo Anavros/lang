@@ -1,0 +1,5 @@
+
+# We could take some inspiration from MVC frameworks.
+# Keep data and business logic separated in the model, then have control
+# functions set up on event signals to affect that. Views are read-only
+# references, and can be reactive or whatever.

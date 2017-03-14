@@ -1,0 +1,52 @@
+
+# Tables do make things easy to organize.
+
+# Imagine a dictionary of keys to lists.
+
+keys = {
+    'A01' : ('q', 3, 'LP'),
+    'A02' : ('w', 2, 'LR'),
+}
+
+# And say you need access by something other than position?
+# There isn't a good way.
+
+keys = table.new(
+    ('place',   'value',   'cost',      'finger'),
+    ('A01',     'q',        3,          'LP'),
+    ('A02',     'w',        2,          'LR'),
+);
+
+keys.all('cost', 3);  # => Entry('A01', ...);
+keys.first('finger', 'LR');  # => Entry('A02', ...)
+
+# You could even make it more granular.
+keys = table.new("""
+    row col val cst hnd fng
+    a   1   q   3   l   p
+    a   2   w   2   l   r
+""");
+
+lefties = keys.all(hnd => 'l');
+smalls = keys.(predicate = {col < 3});
+
+# The really interesting thing here is how tables interact with types.
+# Recall the selective application function?
+
+apply(render, entities, filter=[Position::Sprite]);
+
+# Consider the same sort of function on a table of types.
+vars = table.literal("""
+    name    types
+    foo     A, B, C
+    bar     B, C
+    baz     A
+""");
+
+# Or maybe like this.
+vars = table.literal("""
+    name    A       B       C
+    foo     x=1     y=4     z=16
+    bar             y=2     z=8
+    baz     x=2
+""");

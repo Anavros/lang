@@ -1,0 +1,28 @@
+
+# A group type for signals, similar to threads.
+
+# Each signal group gets a set of callbacks and event handlers. There may be
+# an optional data structure too.
+
+# Groups can then be run in a new thread or entered as a main loop.
+
+counter = signal.group(
+    clicks = 0;
+);
+
+counter.on click() {
+    counter.clicks += 1;
+};
+
+counter.when clicks > 10 {
+    print("Ten!");
+    counter.clicks = 0;
+};
+
+# Async
+counter.run();
+
+loop 10 {
+    counter.click();
+};
+# Will print "Ten!"; clicks will be 0.

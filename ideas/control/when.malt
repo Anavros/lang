@@ -1,0 +1,23 @@
+
+clicks = 0;
+
+on click() {
+    clicks += 1;
+    if clicks > 10 {
+        print("Hooray!");
+        clicks = 0;
+    }
+}
+
+# Vs.
+
+on click() {
+    clicks += 1;
+};
+# Called whenever clicks is set above 10, regardless of what set it.
+when clicks > 10 {
+    print("Hooray!");
+    clicks = 0;
+};
+
+# A more complicated example.

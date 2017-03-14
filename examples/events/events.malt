@@ -16,3 +16,37 @@ def on_mouse_move(current:(x:*Number, y:*Number), new:(x:Number, y: Number)) {
 def on_key_press(pressed: *Stream, k: Key) {
     *pressed.add(k);
 };
+
+# An alternative option.
+module EventCounter {
+    clicks: Number;
+    mouse: (x: Number, y: Number);
+    keys: Stream[Key];
+
+    constructor new() {
+        clicks = 0;
+        mouse = (0, 0);
+        keys = Stream[Key].empty();
+    };
+
+    on click() {
+        *clicks += 1;
+    };
+
+    on move(x: Number, y:Number) {
+        *mouse.x = x;
+        *mouse.y = y;
+    };
+
+    on keypress(k: Key) {
+        *keys.insert(k);
+    };
+
+    when clicks > 10 {
+        print("Hooray!");
+    };
+};
+
+ec = EventCounter.new();
+ec.click();
+ec.move(3, 4);

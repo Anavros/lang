@@ -1,0 +1,10 @@
+
+###
+One of the big goals of the language is to make things obvious. It should be
+clear what does what, and when.
+
+It might be helpful to model how a new programmer learns the structure of an
+extant project. It would consitute a graph, with an origin at some main module
+or entry point, and moving outward. It should be obvious where to look to find
+something.
+###

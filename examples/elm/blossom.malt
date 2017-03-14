@@ -1,0 +1,17 @@
+
+
+game = group(
+    ui = group(
+        entry = ""
+    )
+    blossom = group(
+        map = world_map
+        location = "Plains"
+    )
+);
+
+new view = """
+<text>Base: {}</text>
+<br/>
+<input oninput='{}' value='{game.ui.entry}'/>
+""";

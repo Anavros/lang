@@ -1,0 +1,19 @@
+
+# Aspect oriented programming allows you to add orthagonal concerns to abitrary
+# functions. It seems a lot like decorators in python.
+
+function log(f) {
+    print("Entering |f.name|()...");
+    result = f(args);
+    print("Complete.");
+    return result;
+};
+
+@log
+function main() {
+    print("Hello, world!");
+};
+
+on program.start { main() };
+
+# Doesn't seem too useful.

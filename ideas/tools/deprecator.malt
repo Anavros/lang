@@ -1,0 +1,44 @@
+
+# There should be language + tools support for changing interfaces without
+# breaking things.
+
+# The best way to prevent breaking is to minimize the public surface area.
+
+
+
+# There could also be tools for temporarily supporting old functions.
+
+# Version 1
+state = (x=0, y=0);
+
+# Version 2
+state = (
+    mouse_x = 0;
+    mouse_y = 0;
+    refer x => mouse_x;
+    refer y => mouse_y;
+);
+
+# Calling
+state.x  # works for both, but causes a warning on version 2
+
+# Or something like...
+
+# Version 1
+function foo(x, y) { };
+
+# Version 2
+function foobar(a, b, c, x) { };
+redirect foo(x, y) => foobar(0, 0, 0, x);
+
+
+# Adding new features is relatively easier.
+# You could apply a patch, so to speak, on a function or type.
+# New users use the patched version, old ones are unchanged.
+datatype bar(a, b, c);
+datetype bar2 = bar + (baz);
+
+# Maybe each build will have a semantic version.
+# Functions could then be annotated with their expected versions.
+# This way, old code can transparently work with new code.
+redirect @(< 1.2) bar(a, b, c) ...

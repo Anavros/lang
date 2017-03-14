@@ -38,3 +38,6 @@ Match Statements
 Partial functions also have a nice use in matching statements, but it's not sure
 how that syntax will work.
 ###
+
+# Pipelines as in elixir.
+[1, 2, 3, 4, 5] |> map(add.bind(?, 3)) |> filter(divisible.bind(?, 2)) |> print();

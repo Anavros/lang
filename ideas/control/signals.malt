@@ -1,0 +1,18 @@
+
+import channel, signal;
+
+# Define all possible signal signatures on a given channel.
+channel window {
+    signal move(String);
+    signal upgrade(String);
+    signal gather(String, Number);
+};
+
+window.move('plains');
+
+module player {
+    location : String;
+    on window.move(new) {
+        *location = new;
+    };
+};

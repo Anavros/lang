@@ -1,4 +1,60 @@
 
+# Try Two
+
+###
+All normal functions take the form "function(a, b, c);".
+
+However there is a special kind of function called an operator that is free to
+define its own layout. Operators cannot be called in the normal fashion?
+Operator names are restricted by the same rules as normal functions.
+###
+
+foo(1, 2, 3);
+# Is defined as...
+function foo(a, b, c) {
+};
+
+loop { };
+# Which can also be called as...
+loop({ });
+# Is defined as...
+operator (loop (statements: Block)) {
+};
+
+if x > y { } else { };
+# Which can also be called as...
+if(x > y, { }, else = { });
+# Is defined as...
+operator (if (predicate: Bool) (istrue: Block) (else (isfalse: Block))?) {
+};
+
+open(f) default stdin;
+# Which can also be called as...
+default(open(f), stdin);
+# Is defined as...
+operator ((r: Result[T, E]) default (fallback: T)) {
+    match r {
+        Failure e { return fallback; };
+        Success s { return s; };
+    };
+};
+
+loop 10 { };
+# Which can also be called as...
+loop(10, { });  # Optional argument before required?
+# Is defined as...
+operator (loop (count: Number)? (statements: Block)) {
+};
+# Or...
+loop = (operator (count: Number)? (statements: Block)) {
+};
+# Or...
+loop = operator("loop", Number?, Block) {
+};
+
+
+# Old
+
 ###
 Honestly, I feel like the extreme flexibility is taking it too far. There could
 be a specific syntax for creating special functions, but having it used by

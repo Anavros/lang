@@ -1,0 +1,33 @@
+
+new Region : Union[
+    Plains
+    Forest
+    Coastline
+    Highlands
+    Outcrop
+];
+
+new World : Table[Region, Group[Region]];
+
+map : World = table.make(schema : (id: Region, routes: Group[Region])
+    Plains,    (Forest, Coastline)
+    Forest,    (Plains, Highlands)
+    Coastline, (Plains, Outcrop)
+    Outcrop,   (Coastline)
+    Highlands, (Plains, Highlands)
+);
+
+function route_checker(w: World) {
+    freeze w; # Use current value, not continuous reference.
+    return operator((a: Region), |name|, (b: Region)) {
+        return b in w.routes(a);
+    };
+};
+
+leads_to = route_checker(world_map);
+if Plains leads_to Highlands {
+    print("Yes.");
+};
+
+operator (w: World) connects_to (r: Region) {
+};
