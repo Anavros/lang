@@ -24,11 +24,16 @@ def dump(program):
 
 
 def call(c):
-    global ops, functions
-    try:
-        functions[c.function.name](c.args)
-    except KeyError:
-        print("Unknown function:", f.name)
+    global operations, functions
+    name = c.function.name
+    args = c.args
+    if name in operations.keys():
+        operations[name](args)
+    elif name in functions.keys():
+        #print("Calling '{}'...".format(name))
+        execute(functions[name])
+    else:
+        print("Function '{}' is not defined.".format(name))
 
 
 def _convert(args):
@@ -73,35 +78,29 @@ def output(arglist):
 
 
 def noop(_):
-    print("Noop noop!")
+    print("...")
 
 
-# Only accepts a name and no arguments right now.
 def create_new_function(args):
     global functions
-    if len(args) != 1:
+    if len(args) != 2:
         print("Bad arguments to function()!")
         return
-    name = args[0].value
+    constant, block = args
+    name = constant.value
     if name in functions.keys():
         print("Function '{}' already exists.".format(name))
     else:
-        functions[name] = noop
+        functions[name] = block
         print("Created new function:", name)
 
 
-ops = {
-    'CALL': call,
-}
-
-
-functions = {
+# Built-in functions.
+operations = {
     'print': output,
     'function': create_new_function,
     'assign': assign,
     'mutate': mutate,
 }
-
-
-variables = {
-}
+functions = { }
+variables = { }

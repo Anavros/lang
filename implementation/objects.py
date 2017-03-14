@@ -23,9 +23,10 @@ class Call:
 class Function:
     def __init__(self, name):
         self.name = name
+        self.code = "TODO!"
 
     def __repr__(self):
-        return "Fn[{}]".format(self.name)
+        return "Fn[{} => {}]".format(self.name, self.code)
 
 
 class Constant:

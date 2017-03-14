@@ -22,7 +22,6 @@ def p_program_end(p):
 def p_statement(p):
     """
     statement : call SEMICOLON
-              | block SEMICOLON
     """
     p[0] = p[1]
 
@@ -67,6 +66,7 @@ def p_value(p):
     """
     value : variable
           | constant
+          | block
     """
     p[0] = p[1]
 

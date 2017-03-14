@@ -1,12 +1,23 @@
 
 # Do comments work?
 # Yes, they seem to work just fine.
-print("hello", "world");
-function("force");
-{
-    print("subroutines!");
-};
-force();
+print("Starting!");
+
+function("say_hello", {
+    print("h");
+    print("e");
+    print("l");
+    print("l");
+    print("o");
+    print("!");
+});
+
+say_hello();
+say_hello();
+say_hello();
+
 assign("x", 10);
 mutate("x", 20);
 print(x);
+
+print("Complete.");
