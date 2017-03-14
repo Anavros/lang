@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'LPAREN RPAREN ASSIGN SEMICOLON COMMA COLON NUMERAL STRING NAME\n    program : program statement\n    \n    program : statement\n    \n    statement : call SEMICOLON\n              | assignment SEMICOLON\n    \n    call : NAME LPAREN arguments RPAREN\n    \n    assignment : variable ASSIGN value\n    \n    arguments : value\n    \n    arguments : arguments COMMA value\n    \n    value : variable\n          | constant\n    \n    variable : NAME\n    \n    constant : STRING\n             | NUMERAL\n    '
+_lr_signature = 'LPAREN RPAREN ASSIGN SEMICOLON COMMA COLON NUMERAL STRING NAME\n    program : program statement\n    \n    program : statement\n    \n    statement : call SEMICOLON\n    \n    call : NAME LPAREN arguments RPAREN\n    \n    arguments : value\n    \n    arguments : arguments COMMA value\n    \n    value : variable\n          | constant\n    \n    variable : NAME\n    \n    constant : STRING\n             | NUMERAL\n    '
     
-_lr_action_items = {'SEMICOLON':([1,5,12,13,14,15,16,17,20,],[7,11,-10,-11,-13,-12,-9,-6,-5,]),'COMMA':([12,13,14,15,16,18,19,22,],[-10,-11,-13,-12,-9,21,-7,-8,]),'NAME':([0,4,6,7,8,9,10,11,21,],[3,3,-2,-4,13,13,-1,-3,13,]),'RPAREN':([12,13,14,15,16,18,19,22,],[-10,-11,-13,-12,-9,20,-7,-8,]),'NUMERAL':([8,9,21,],[14,14,14,]),'ASSIGN':([2,3,],[8,-11,]),'$end':([4,6,7,10,11,],[0,-2,-4,-1,-3,]),'STRING':([8,9,21,],[15,15,15,]),'LPAREN':([3,],[9,]),}
+_lr_action_items = {'RPAREN':([8,9,10,11,12,13,14,17,],[15,-9,-5,-7,-8,-10,-11,-6,]),'SEMICOLON':([4,15,],[7,-4,]),'NAME':([0,1,2,5,6,7,16,],[3,3,-2,-1,9,-3,9,]),'COMMA':([8,9,10,11,12,13,14,17,],[16,-9,-5,-7,-8,-10,-11,-6,]),'$end':([1,2,5,7,],[0,-2,-1,-3,]),'STRING':([6,16,],[13,13,]),'NUMERAL':([6,16,],[14,14,]),'LPAREN':([3,],[6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'constant':([8,9,21,],[12,12,12,]),'assignment':([0,4,],[1,1,]),'call':([0,4,],[5,5,]),'arguments':([9,],[18,]),'value':([8,9,21,],[17,19,22,]),'variable':([0,4,8,9,21,],[2,2,16,16,16,]),'statement':([0,4,],[6,10,]),'program':([0,],[4,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement':([0,1,],[2,5,]),'arguments':([6,],[8,]),'value':([6,16,],[10,17,]),'variable':([6,16,],[11,11,]),'constant':([6,16,],[12,12,]),'call':([0,1,],[4,4,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,14 +29,12 @@ _lr_productions = [
   ('program -> program statement','program',2,'p_program','yacker.py',9),
   ('program -> statement','program',1,'p_program_end','yacker.py',17),
   ('statement -> call SEMICOLON','statement',2,'p_statement','yacker.py',24),
-  ('statement -> assignment SEMICOLON','statement',2,'p_statement','yacker.py',25),
-  ('call -> NAME LPAREN arguments RPAREN','call',4,'p_call','yacker.py',32),
-  ('assignment -> variable ASSIGN value','assignment',3,'p_assignment','yacker.py',40),
-  ('arguments -> value','arguments',1,'p_arguments','yacker.py',47),
-  ('arguments -> arguments COMMA value','arguments',3,'p_arguments_list','yacker.py',54),
-  ('value -> variable','value',1,'p_value','yacker.py',62),
-  ('value -> constant','value',1,'p_value','yacker.py',63),
-  ('variable -> NAME','variable',1,'p_variable','yacker.py',70),
-  ('constant -> STRING','constant',1,'p_constant','yacker.py',77),
-  ('constant -> NUMERAL','constant',1,'p_constant','yacker.py',78),
+  ('call -> NAME LPAREN arguments RPAREN','call',4,'p_call','yacker.py',31),
+  ('arguments -> value','arguments',1,'p_arguments','yacker.py',38),
+  ('arguments -> arguments COMMA value','arguments',3,'p_arguments_list','yacker.py',45),
+  ('value -> variable','value',1,'p_value','yacker.py',53),
+  ('value -> constant','value',1,'p_value','yacker.py',54),
+  ('variable -> NAME','variable',1,'p_variable','yacker.py',61),
+  ('constant -> STRING','constant',1,'p_constant','yacker.py',68),
+  ('constant -> NUMERAL','constant',1,'p_constant','yacker.py',69),
 ]

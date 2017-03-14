@@ -19,12 +19,17 @@ t_ASSIGN    = r'='
 t_SEMICOLON = r';'
 t_COMMA     = r','
 t_COLON     = r':'
-t_STRING    = r'".*"'
 t_NAME      = r'[A-Za-z_][A-Za-z_0-9]*'
 
 def t_NUMERAL(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+
+def t_STRING(t):
+    r'"[^"]*"'
+    t.value = t.value.strip('"')
     return t
 
 

@@ -1,3 +1,9 @@
+
+# Do comments work?
+# Yes, they seem to work just fine.
 print("hello", "world");
-x = 10;
+# Can't have empty param lists yet.
+function("force");
+force(10);
+assign("x", 10);
 print(x);
