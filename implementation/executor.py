@@ -12,7 +12,12 @@ def execute(program):
         if isinstance(o, objects.Program):
             execute(o)
         elif isinstance(o, objects.Call):
-            call(o)
+            # TODO? Remove hard-coded return?
+            # Should return be a function too?
+            if o.function.name == 'return':
+                return
+            else:
+                call(o)
         else:
             print("Unknown operation type:", o)
 
@@ -81,6 +86,10 @@ def noop(_):
     print("...")
 
 
+def ret(_):
+    print("Should be returning...")
+
+
 def create_new_function(args):
     global functions
     if len(args) != 2:
@@ -101,6 +110,7 @@ operations = {
     'function': create_new_function,
     'assign': assign,
     'mutate': mutate,
+    'return': ret,
 }
 functions = { }
 variables = { }

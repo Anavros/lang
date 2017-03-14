@@ -26,7 +26,7 @@ class Function:
         self.code = "TODO!"
 
     def __repr__(self):
-        return "Fn[{} => {}]".format(self.name, self.code)
+        return "Fn|{}|".format(self.name)
 
 
 class Constant:
@@ -34,7 +34,7 @@ class Constant:
         self.value = value
 
     def __repr__(self):
-        return "C[{}]".format(self.value)
+        return "C|{}|".format(self.value)
 
 
 class Variable:
@@ -42,4 +42,4 @@ class Variable:
         self.name = name
 
     def __repr__(self):
-        return "V[{}]".format(self.name)
+        return "V|{}|".format(self.name)

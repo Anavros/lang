@@ -8,6 +8,7 @@ function("say_hello", {
     print("e");
     print("l");
     print("l");
+    return();
     print("o");
     print("!");
 });
