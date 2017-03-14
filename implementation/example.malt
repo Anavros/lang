@@ -2,8 +2,7 @@
 # Do comments work?
 # Yes, they seem to work just fine.
 print("hello", "world");
-# Can't have empty param lists yet.
 function("force");
-force(10);
+force();
 assign("x", 10);
 print(x);

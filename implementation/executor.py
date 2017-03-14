@@ -59,7 +59,6 @@ def noop(_):
 
 
 # Only accepts a name and no arguments right now.
-# Which is bad because the parser doesn't recognize empty params.
 def create_new_function(args):
     global functions
     if len(args) != 1:

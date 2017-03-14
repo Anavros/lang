@@ -11,7 +11,7 @@ class Function:
         self.code = None
 
     def __repr__(self):
-        return "Function({})".format(self.name)
+        return "Fn[{}]".format(self.name)
 
 
 class Constant:
@@ -19,7 +19,7 @@ class Constant:
         self.value = value
 
     def __repr__(self):
-        return "Constant({})".format(self.value)
+        return "C[{}]".format(self.value)
 
 
 class Variable:
@@ -27,4 +27,4 @@ class Variable:
         self.name = name
 
     def __repr__(self):
-        return "Variable({})".format(self.name)
+        return "V[{}]".format(self.name)

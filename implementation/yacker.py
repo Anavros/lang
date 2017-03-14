@@ -33,7 +33,14 @@ def p_call(p):
     p[0] = (Function(p[1]), p[3])
 
 
-def p_arguments(p):
+def p_call_empty(p):
+    """
+    call : NAME LPAREN RPAREN
+    """
+    p[0] = (Function(p[1]), [])
+
+
+def p_arguments_single(p):
     """
     arguments : value
     """
