@@ -1,0 +1,317 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ASSIGN
+    COLON
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> program statement
+Rule 2     program -> statement
+Rule 3     statement -> call SEMICOLON
+Rule 4     block -> LBRACE program RBRACE
+Rule 5     call -> NAME LPAREN arguments RPAREN
+Rule 6     call -> NAME LPAREN RPAREN
+Rule 7     arguments -> value
+Rule 8     arguments -> arguments COMMA value
+Rule 9     value -> variable
+Rule 10    value -> constant
+Rule 11    value -> block
+Rule 12    value -> call
+Rule 13    variable -> NAME
+Rule 14    constant -> STRING
+Rule 15    constant -> NUMERAL
+
+Terminals, with rules where they appear
+
+ASSIGN               : 
+COLON                : 
+COMMA                : 8
+LBRACE               : 4
+LPAREN               : 5 6
+NAME                 : 5 6 13
+NUMERAL              : 15
+RBRACE               : 4
+RPAREN               : 5 6
+SEMICOLON            : 3
+STRING               : 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+arguments            : 5 8
+block                : 11
+call                 : 3 12
+constant             : 10
+program              : 1 4 0
+statement            : 1 2
+value                : 7 8
+variable             : 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . program statement
+    (2) program -> . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    NAME            shift and go to state 2
+
+    statement                      shift and go to state 3
+    program                        shift and go to state 1
+    call                           shift and go to state 4
+
+state 1
+
+    (0) S' -> program .
+    (1) program -> program . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    NAME            shift and go to state 2
+
+    statement                      shift and go to state 5
+    call                           shift and go to state 4
+
+state 2
+
+    (5) call -> NAME . LPAREN arguments RPAREN
+    (6) call -> NAME . LPAREN RPAREN
+
+    LPAREN          shift and go to state 6
+
+
+state 3
+
+    (2) program -> statement .
+
+    NAME            reduce using rule 2 (program -> statement .)
+    $end            reduce using rule 2 (program -> statement .)
+    RBRACE          reduce using rule 2 (program -> statement .)
+
+
+state 4
+
+    (3) statement -> call . SEMICOLON
+
+    SEMICOLON       shift and go to state 7
+
+
+state 5
+
+    (1) program -> program statement .
+
+    NAME            reduce using rule 1 (program -> program statement .)
+    $end            reduce using rule 1 (program -> program statement .)
+    RBRACE          reduce using rule 1 (program -> program statement .)
+
+
+state 6
+
+    (5) call -> NAME LPAREN . arguments RPAREN
+    (6) call -> NAME LPAREN . RPAREN
+    (7) arguments -> . value
+    (8) arguments -> . arguments COMMA value
+    (9) value -> . variable
+    (10) value -> . constant
+    (11) value -> . block
+    (12) value -> . call
+    (13) variable -> . NAME
+    (14) constant -> . STRING
+    (15) constant -> . NUMERAL
+    (4) block -> . LBRACE program RBRACE
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    RPAREN          shift and go to state 16
+    NAME            shift and go to state 18
+    STRING          shift and go to state 11
+    NUMERAL         shift and go to state 12
+    LBRACE          shift and go to state 8
+
+    call                           shift and go to state 14
+    block                          shift and go to state 13
+    constant                       shift and go to state 15
+    arguments                      shift and go to state 9
+    variable                       shift and go to state 10
+    value                          shift and go to state 17
+
+state 7
+
+    (3) statement -> call SEMICOLON .
+
+    RBRACE          reduce using rule 3 (statement -> call SEMICOLON .)
+    NAME            reduce using rule 3 (statement -> call SEMICOLON .)
+    $end            reduce using rule 3 (statement -> call SEMICOLON .)
+
+
+state 8
+
+    (4) block -> LBRACE . program RBRACE
+    (1) program -> . program statement
+    (2) program -> . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    NAME            shift and go to state 2
+
+    statement                      shift and go to state 3
+    program                        shift and go to state 19
+    call                           shift and go to state 4
+
+state 9
+
+    (5) call -> NAME LPAREN arguments . RPAREN
+    (8) arguments -> arguments . COMMA value
+
+    RPAREN          shift and go to state 21
+    COMMA           shift and go to state 20
+
+
+state 10
+
+    (9) value -> variable .
+
+    RPAREN          reduce using rule 9 (value -> variable .)
+    COMMA           reduce using rule 9 (value -> variable .)
+
+
+state 11
+
+    (14) constant -> STRING .
+
+    RPAREN          reduce using rule 14 (constant -> STRING .)
+    COMMA           reduce using rule 14 (constant -> STRING .)
+
+
+state 12
+
+    (15) constant -> NUMERAL .
+
+    RPAREN          reduce using rule 15 (constant -> NUMERAL .)
+    COMMA           reduce using rule 15 (constant -> NUMERAL .)
+
+
+state 13
+
+    (11) value -> block .
+
+    RPAREN          reduce using rule 11 (value -> block .)
+    COMMA           reduce using rule 11 (value -> block .)
+
+
+state 14
+
+    (12) value -> call .
+
+    RPAREN          reduce using rule 12 (value -> call .)
+    COMMA           reduce using rule 12 (value -> call .)
+
+
+state 15
+
+    (10) value -> constant .
+
+    RPAREN          reduce using rule 10 (value -> constant .)
+    COMMA           reduce using rule 10 (value -> constant .)
+
+
+state 16
+
+    (6) call -> NAME LPAREN RPAREN .
+
+    SEMICOLON       reduce using rule 6 (call -> NAME LPAREN RPAREN .)
+    RPAREN          reduce using rule 6 (call -> NAME LPAREN RPAREN .)
+    COMMA           reduce using rule 6 (call -> NAME LPAREN RPAREN .)
+
+
+state 17
+
+    (7) arguments -> value .
+
+    RPAREN          reduce using rule 7 (arguments -> value .)
+    COMMA           reduce using rule 7 (arguments -> value .)
+
+
+state 18
+
+    (13) variable -> NAME .
+    (5) call -> NAME . LPAREN arguments RPAREN
+    (6) call -> NAME . LPAREN RPAREN
+
+    RPAREN          reduce using rule 13 (variable -> NAME .)
+    COMMA           reduce using rule 13 (variable -> NAME .)
+    LPAREN          shift and go to state 6
+
+
+state 19
+
+    (4) block -> LBRACE program . RBRACE
+    (1) program -> program . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    RBRACE          shift and go to state 22
+    NAME            shift and go to state 2
+
+    statement                      shift and go to state 5
+    call                           shift and go to state 4
+
+state 20
+
+    (8) arguments -> arguments COMMA . value
+    (9) value -> . variable
+    (10) value -> . constant
+    (11) value -> . block
+    (12) value -> . call
+    (13) variable -> . NAME
+    (14) constant -> . STRING
+    (15) constant -> . NUMERAL
+    (4) block -> . LBRACE program RBRACE
+    (5) call -> . NAME LPAREN arguments RPAREN
+    (6) call -> . NAME LPAREN RPAREN
+
+    NAME            shift and go to state 18
+    STRING          shift and go to state 11
+    NUMERAL         shift and go to state 12
+    LBRACE          shift and go to state 8
+
+    call                           shift and go to state 14
+    block                          shift and go to state 13
+    constant                       shift and go to state 15
+    variable                       shift and go to state 10
+    value                          shift and go to state 23
+
+state 21
+
+    (5) call -> NAME LPAREN arguments RPAREN .
+
+    SEMICOLON       reduce using rule 5 (call -> NAME LPAREN arguments RPAREN .)
+    RPAREN          reduce using rule 5 (call -> NAME LPAREN arguments RPAREN .)
+    COMMA           reduce using rule 5 (call -> NAME LPAREN arguments RPAREN .)
+
+
+state 22
+
+    (4) block -> LBRACE program RBRACE .
+
+    RPAREN          reduce using rule 4 (block -> LBRACE program RBRACE .)
+    COMMA           reduce using rule 4 (block -> LBRACE program RBRACE .)
+
+
+state 23
+
+    (8) arguments -> arguments COMMA value .
+
+    RPAREN          reduce using rule 8 (arguments -> arguments COMMA value .)
+    COMMA           reduce using rule 8 (arguments -> arguments COMMA value .)
+

@@ -3,5 +3,6 @@ examples/blossom/
 **/old/
 **/brunch
 **/__pycache__/
+**/.cache/
 implementation/parser.out
 implementation/parsetab.py

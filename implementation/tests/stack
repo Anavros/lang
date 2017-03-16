@@ -1,9 +1,0 @@
-
-Array = import array.Array;
-
-Stack = Type [T] (length:Num) {
-    * = Array[T](length);
-    # What if we want to omit the get and put
-    # functions?
-    delete get, put;
-}

@@ -1,6 +1,0 @@
-
-# Module
-Vertex = Type;
-Edge = Type(a:b:Vertex);
-
-# Usage

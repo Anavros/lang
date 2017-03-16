@@ -2,7 +2,7 @@
 import objects
 
 
-def run(program):
+def start(program):
     dump(program)
     execute(program)
 

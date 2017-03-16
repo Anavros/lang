@@ -48,13 +48,16 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+
 def t_error(t):
     print("Illegal character: '{}'.".format(t.value[0]))
     t.lexer.skip(1)
 
+
 lexer = lex.lex()
 
-def run(source):
+
+def dump(source):
     lexer.input(source)
     for t in lexer:
         print(t)

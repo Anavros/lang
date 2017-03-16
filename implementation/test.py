@@ -1,11 +1,16 @@
 
-import lexer
-import yacker
-import executor
+from interpreter import executor
+from parser.lexer import lexer
+from parser.yacker import yacker
 
-with open('example.malt', 'r') as f:
-    source = f.read()
 
-lexer.lexer.input(source)
-result = yacker.run(source, lexer.lexer)
-executor.run(result)
+def main():
+    with open('example.malt', 'r') as f:
+        source = f.read()
+    lexer.input(source)
+    program = yacker.parse(source, lexer)
+    executor.start(program)
+
+
+if __name__ == '__main__':
+    main()

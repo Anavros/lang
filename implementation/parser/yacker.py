@@ -1,7 +1,8 @@
 
 from ply import yacc
-from lexer import tokens
 from objects import *
+
+from parser.lexer import tokens
 
 
 def p_program(p):
@@ -91,8 +92,4 @@ def p_error(p):
     print("Syntax error.")
 
 
-parser = yacc.yacc()
-
-
-def run(source, lx):
-    return parser.parse(source, lx)
+yacker = yacc.yacc()
