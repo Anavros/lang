@@ -25,7 +25,18 @@ def test_comment_emptiness():
 
 def test_program_return_values():
     source = """
-    sum(2, 2);
+    return(sum(2, 2));
     """
+    # NOTE: in the future, not assigning a retval might be an error.
     program = lang.run(lang.ast(source))
-    assert program == [4]  # return vals are always lists
+    assert program == [[4]]  # return vals are always lists
+
+
+def test_function_creation():
+    source = """
+    function("four", {
+        return(4);
+    });
+    """
+    # Just make sure it doesn't throw any errors.
+    result = lang.run(lang.ast(source))

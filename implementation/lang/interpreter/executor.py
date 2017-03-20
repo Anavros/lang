@@ -1,16 +1,18 @@
 
 from lang import objects
 
-from lang.interpreter import operations, storage
+from lang.interpreter import operations, storage, tools
 
+debug = tools.debug
 
 def start(program):
+    tools.DEBUG = True
     assign_builtins()
     return execute(program)
 
 
 def assign_builtins():
-    storage.ops['print'] = operations.output
+    storage.ops['print'] = print
     storage.ops['assign'] = operations.assign
     storage.ops['mutate'] = operations.mutate
     storage.ops['function'] = operations.create_new_function
@@ -29,7 +31,7 @@ def dump(program):
 def execute(program):
     for o in program.statements:
         if isinstance(o, objects.Program):
-            execute(o)
+            return execute(o)
         elif isinstance(o, objects.Call):
             # TODO? Remove hard-coded return?
             # Should return be a function too?
@@ -37,7 +39,9 @@ def execute(program):
                 return evaluate_all(o.args)
             else:
                 retval = call(o) # should this return a value?
-                return retval
+                # If a function returns in the middle of the program,
+                # the whole program stops.
+                #return retval
         else:
             print("Unknown operation type:", o)
     return []
@@ -73,7 +77,7 @@ def call(o):
         # Actually, here's the problem. Sum has a retval.
         # But it's an operation.
         retval = ops[name](*args)
-        print("CALL:", name, "with", args, "returning", retval)
+        debug("CALL:", name, "with", args, "returning", retval)
         return [retval]
     elif name in storage.functions.keys():
         subprogram = storage.functions[name]

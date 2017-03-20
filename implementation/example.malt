@@ -1,2 +1,10 @@
 
-print(sum(2, 2));
+print(5);
+
+print(4);
+
+function("four", {
+    return(sum(2, 2));
+});
+
+print(four());

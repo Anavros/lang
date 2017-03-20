@@ -3,8 +3,7 @@
 from lang.interpreter import storage
 
 
-def assign(args):
-    name, value = args
+def assign(name, value):
     if name in storage.variables.keys():
         print("Variable '{}' already exists!".format(name))
     else:
@@ -12,8 +11,7 @@ def assign(args):
         print("Set '{}' to '{}'.".format(name, value))
 
 
-def mutate(args):
-    name, value = args
+def mutate(name, value):
     if name in storage.variables.keys():
         storage.variables[name] = value
         print("Mutate '{}' to '{}'.".format(name, value))
@@ -21,19 +19,7 @@ def mutate(args):
         print("Variable '{}' does not exist.")
 
 
-def output(arglist):
-    print(*arglist)
-
-
-def noop(_):
-    print("...")
-
-
-def create_new_function(args):
-    if len(args) != 2:
-        print("Bad arguments to function()!")
-        return
-    name, block = args
+def create_new_function(name, block):
     if name in storage.functions.keys():
         print("Function '{}' already exists.".format(name))
     else:
