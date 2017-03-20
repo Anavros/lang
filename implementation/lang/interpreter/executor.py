@@ -1,10 +1,23 @@
 
 from lang import objects
 
+from lang.interpreter import operations, storage
+
 
 def start(program):
-    dump(program)
-    execute(program)
+    assign_builtins()
+    return execute(program)
+
+
+def assign_builtins():
+    storage.ops['print'] = operations.output
+    storage.ops['assign'] = operations.assign
+    storage.ops['mutate'] = operations.mutate
+    storage.ops['function'] = operations.create_new_function
+    storage.ops['sum'] = operations.sum
+    storage.ops['difference'] = operations.difference
+    storage.ops['product'] = operations.product
+    storage.ops['quotient'] = operations.quotient
 
 
 def dump(program):
@@ -24,7 +37,7 @@ def execute(program):
                 return evaluate_all(o.args)
             else:
                 retval = call(o) # should this return a value?
-                # return retval  # ?
+                return retval
         else:
             print("Unknown operation type:", o)
     return []
@@ -34,14 +47,13 @@ def evaluate_all(args):
     return list(map(evaluate, args))
 
 def evaluate(expr):
-    global variables
     # expr could be a constant, a variable, or a call.
     # or a block I guess.
     if isinstance(expr, objects.Constant):
         return expr.value
     elif isinstance(expr, objects.Variable):
         try:
-            return variables[expr.name]
+            return storage.variables[expr.name]
         except KeyError:
             return '?'
     elif isinstance(expr, objects.Call):
@@ -55,65 +67,18 @@ def evaluate(expr):
 def call(o):
     name = o.function.name
     args = evaluate_all(o.args)
-    global operations, functions
-    if name in operations.keys():
-        operations[name](args)
-    elif name in functions.keys():
-        subprogram = functions[name]
+    ops = storage.ops
+    if name in ops.keys():
+        # Do none of the operations have retvals?
+        # Actually, here's the problem. Sum has a retval.
+        # But it's an operation.
+        retval = ops[name](*args)
+        print("CALL:", name, "with", args, "returning", retval)
+        return [retval]
+    elif name in storage.functions.keys():
+        subprogram = storage.functions[name]
         print("Executing subprogram.")
         return execute(subprogram)
     else:
         print("Function '{}' is not defined.".format(name))
     return []
-
-
-def assign(args):
-    global variables
-    name, value = args
-    if name in variables.keys():
-        print("Variable '{}' already exists!".format(name))
-    else:
-        variables[name] = value
-        print("Set '{}' to '{}'.".format(name, value))
-
-
-def mutate(args):
-    global variables
-    name, value = args
-    if name in variables.keys():
-        variables[name] = value
-        print("Mutate '{}' to '{}'.".format(name, value))
-    else:
-        print("Variable '{}' does not exist.")
-
-
-def output(arglist):
-    print(*arglist)
-
-
-def noop(_):
-    print("...")
-
-
-def create_new_function(args):
-    global functions
-    if len(args) != 2:
-        print("Bad arguments to function()!")
-        return
-    name, block = args
-    if name in functions.keys():
-        print("Function '{}' already exists.".format(name))
-    else:
-        functions[name] = block
-        print("Created new function:", name)
-
-
-# Built-in functions.
-operations = {
-    'print': output,
-    'function': create_new_function,
-    'assign': assign,
-    'mutate': mutate,
-}
-functions = { }
-variables = { }

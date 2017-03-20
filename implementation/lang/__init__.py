@@ -17,4 +17,4 @@ def ast(source):
 
 
 def run(root):
-    executor.start(root)
+    return executor.start(root)
