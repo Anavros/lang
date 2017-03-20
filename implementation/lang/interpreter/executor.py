@@ -1,5 +1,5 @@
 
-import objects
+from lang import objects
 
 
 def start(program):

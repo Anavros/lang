@@ -1,8 +1,8 @@
 
 from ply import yacc
-from objects import *
+from lang.objects import *
 
-from parser.lexer import tokens
+from lang.parser.lexer import tokens
 
 
 def p_program(p):
