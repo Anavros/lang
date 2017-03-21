@@ -1,3 +1,8 @@
 
 print(("a", "b", "c"));
-return((1, 2, 3));
+
+function("debug", ("n"), {
+    print("DEBUG:", n);
+});
+
+return(debug(2));

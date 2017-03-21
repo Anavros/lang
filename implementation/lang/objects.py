@@ -48,3 +48,13 @@ class Variable:
 
     def __repr__(self):
         return "V|{}|".format(self.name)
+
+
+class Scope:
+    def __init__(self, var, fun, ops):
+        self.variables = var
+        self.functions = fun
+        self.operations = ops
+
+    def __repr__(self):
+        return "Scope|...|"  # TODO
