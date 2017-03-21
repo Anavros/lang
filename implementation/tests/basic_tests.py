@@ -37,6 +37,8 @@ def test_function_creation():
     function("four", {
         return(4);
     });
+
+    four();
     """
     # Just make sure it doesn't throw any errors.
     result = lang.run(lang.ast(source))

@@ -6,9 +6,11 @@ from lang.interpreter import operations, storage, tools
 debug = tools.debug
 
 def start(program):
-    tools.DEBUG = True
+    tools.DEBUG = False
     assign_builtins()
-    return execute(program)
+    retval = execute(program)
+    print("Program finished with value:", retval)
+    return retval
 
 
 def assign_builtins():
@@ -25,7 +27,6 @@ def assign_builtins():
 def dump(program):
     for o in program.statements:
         print(o)
-    print("\nExecuting...\n")
 
 
 def execute(program):
@@ -53,6 +54,7 @@ def evaluate_all(args):
 def evaluate(expr):
     # expr could be a constant, a variable, or a call.
     # or a block I guess.
+    # or a tuple
     if isinstance(expr, objects.Constant):
         return expr.value
     elif isinstance(expr, objects.Variable):
@@ -64,6 +66,8 @@ def evaluate(expr):
         return call(expr)
     elif isinstance(expr, objects.Program):
         return expr
+    elif isinstance(expr, objects.Tuple):
+        return evaluate_all(expr.values)
     else:
         print("Can't evaluate '{}'.".format(expr))
 

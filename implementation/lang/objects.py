@@ -1,8 +1,5 @@
 
 
-TYPE_NUM = "Num"
-
-
 class Program:
     def __init__(self, statements):
         self.statements = statements
@@ -35,6 +32,14 @@ class Constant:
 
     def __repr__(self):
         return "C|{}|".format(self.value)
+
+
+class Tuple:
+    def __init__(self, values):
+        self.values = values
+
+    def __repr__(self):
+        return "T|{}|".format(', '.join(map(repr, self.values)))
 
 
 class Variable:

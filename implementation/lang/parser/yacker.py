@@ -69,8 +69,23 @@ def p_value(p):
           | constant
           | block
           | call
+          | tuple
     """
     p[0] = p[1]
+
+
+def p_tuple(p):
+    """
+    tuple : LPAREN arguments RPAREN
+    """
+    p[0] = Tuple(p[2])
+
+
+def p_tuple_empty(p):
+    """
+    tuple : LPAREN RPAREN
+    """
+    p[0] = Tuple([])
 
 
 def p_variable(p):

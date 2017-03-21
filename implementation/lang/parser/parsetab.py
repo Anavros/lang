@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'LPAREN RPAREN LBRACE RBRACE ASSIGN SEMICOLON COMMA COLON NUMERAL STRING NAME\n    program : program statement\n    \n    program : statement\n    \n    statement : call SEMICOLON\n    \n    block : LBRACE program RBRACE\n    \n    call : NAME LPAREN arguments RPAREN\n    \n    call : NAME LPAREN RPAREN\n    \n    arguments : value\n    \n    arguments : arguments COMMA value\n    \n    value : variable\n          | constant\n          | block\n          | call\n    \n    variable : NAME\n    \n    constant : STRING\n             | NUMERAL\n    '
+_lr_signature = 'LPAREN RPAREN LBRACE RBRACE ASSIGN SEMICOLON COMMA COLON NUMERAL STRING NAME\n    program : program statement\n    \n    program : statement\n    \n    statement : call SEMICOLON\n    \n    block : LBRACE program RBRACE\n    \n    call : NAME LPAREN arguments RPAREN\n    \n    call : NAME LPAREN RPAREN\n    \n    arguments : value\n    \n    arguments : arguments COMMA value\n    \n    value : variable\n          | constant\n          | block\n          | call\n          | tuple\n    \n    tuple : LPAREN arguments RPAREN\n    \n    tuple : LPAREN RPAREN\n    \n    variable : NAME\n    \n    constant : STRING\n             | NUMERAL\n    '
     
-_lr_action_items = {'RPAREN':([6,9,10,11,12,13,14,15,16,17,18,21,22,23,],[16,21,-9,-14,-15,-11,-12,-10,-6,-7,-13,-5,-4,-8,]),'STRING':([6,20,],[11,11,]),'COMMA':([9,10,11,12,13,14,15,16,17,18,21,22,23,],[20,-9,-14,-15,-11,-12,-10,-6,-7,-13,-5,-4,-8,]),'LPAREN':([2,18,],[6,6,]),'LBRACE':([6,20,],[8,8,]),'RBRACE':([3,5,7,19,],[-2,-1,-3,22,]),'$end':([1,3,5,7,],[0,-2,-1,-3,]),'NAME':([0,1,3,5,6,7,8,19,20,],[2,2,-2,-1,18,-3,2,2,18,]),'SEMICOLON':([4,16,21,],[7,-6,-5,]),'NUMERAL':([6,20,],[12,12,]),}
+_lr_action_items = {'COMMA':([9,10,11,12,13,14,15,16,17,19,20,21,22,24,26,27,28,],[-16,-17,-13,23,-11,-7,-12,-18,-9,-6,-10,23,-15,-5,-14,-8,-4,]),'LPAREN':([1,5,8,9,23,],[5,8,8,5,8,]),'NAME':([0,3,4,5,6,7,8,18,23,25,],[1,1,-2,9,-3,-1,9,1,9,1,]),'SEMICOLON':([2,19,24,],[6,-6,-5,]),'$end':([3,4,6,7,],[0,-2,-3,-1,]),'RBRACE':([4,6,7,25,],[-2,-3,-1,28,]),'NUMERAL':([5,8,23,],[16,16,16,]),'LBRACE':([5,8,23,],[18,18,18,]),'RPAREN':([5,8,9,10,11,12,13,14,15,16,17,19,20,21,22,24,26,27,28,],[19,22,-16,-17,-13,24,-11,-7,-12,-18,-9,-6,-10,26,-15,-5,-14,-8,-4,]),'STRING':([5,8,23,],[10,10,10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,8,],[1,19,]),'block':([6,20,],[13,13,]),'constant':([6,20,],[15,15,]),'arguments':([6,],[9,]),'statement':([0,1,8,19,],[3,5,3,5,]),'variable':([6,20,],[10,10,]),'call':([0,1,6,8,19,20,],[4,4,14,4,4,14,]),'value':([6,20,],[17,23,]),}
+_lr_goto_items = {'variable':([5,8,23,],[17,17,17,]),'arguments':([5,8,],[12,21,]),'value':([5,8,23,],[14,14,27,]),'call':([0,3,5,8,18,23,25,],[2,2,15,15,2,15,2,]),'program':([0,18,],[3,25,]),'statement':([0,3,18,25,],[4,7,4,7,]),'tuple':([5,8,23,],[11,11,11,]),'block':([5,8,23,],[13,13,13,]),'constant':([5,8,23,],[20,20,20,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -38,7 +38,10 @@ _lr_productions = [
   ('value -> constant','value',1,'p_value','yacker.py',69),
   ('value -> block','value',1,'p_value','yacker.py',70),
   ('value -> call','value',1,'p_value','yacker.py',71),
-  ('variable -> NAME','variable',1,'p_variable','yacker.py',78),
-  ('constant -> STRING','constant',1,'p_constant','yacker.py',85),
-  ('constant -> NUMERAL','constant',1,'p_constant','yacker.py',86),
+  ('value -> tuple','value',1,'p_value','yacker.py',72),
+  ('tuple -> LPAREN arguments RPAREN','tuple',3,'p_tuple','yacker.py',79),
+  ('tuple -> LPAREN RPAREN','tuple',2,'p_tuple_empty','yacker.py',86),
+  ('variable -> NAME','variable',1,'p_variable','yacker.py',93),
+  ('constant -> STRING','constant',1,'p_constant','yacker.py',100),
+  ('constant -> NUMERAL','constant',1,'p_constant','yacker.py',101),
 ]
