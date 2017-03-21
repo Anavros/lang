@@ -1,5 +1,10 @@
 
 
+class Result:
+    def __init__(self):
+        pass
+
+
 class Program:
     def __init__(self, statements):
         self.statements = statements
@@ -26,35 +31,19 @@ class Function:
         return "Fn|{}|".format(self.name)
 
 
-class Constant:
-    def __init__(self, value):
-        self.value = value
-
-    def __repr__(self):
-        return "C|{}|".format(self.value)
-
-
 class Tuple:
     def __init__(self, values):
+        # List of values with keys set to either positions or keywords.
         self.values = values
 
     def __repr__(self):
-        return "T|{}|".format(', '.join(map(repr, self.values)))
+        return str(self.values)
 
 
-class Variable:
-    def __init__(self, name):
-        self.name = name
-
-    def __repr__(self):
-        return "V|{}|".format(self.name)
-
-
-class Scope:
-    def __init__(self, var, fun, ops):
-        self.variables = var
-        self.functions = fun
-        self.operations = ops
+class Value:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
 
     def __repr__(self):
-        return "Scope|...|"  # TODO
+        return "{}={}".format(self.key, self.val) 

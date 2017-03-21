@@ -36,31 +36,39 @@ def p_block(p):
 
 def p_call(p):
     """
-    call : NAME LPAREN arguments RPAREN
+    call : NAME tuple
     """
-    p[0] = Call(Function(p[1]), p[3])
-
-
-def p_call_empty(p):
-    """
-    call : NAME LPAREN RPAREN
-    """
-    p[0] = Call(Function(p[1]), [])
+    p[0] = Call(Function(p[1]), p[2])
 
 
 def p_arguments_single(p):
     """
-    arguments : value
+    arguments : arg
     """
     p[0] = [p[1]]
 
 
 def p_arguments_list(p):
     """
-    arguments : arguments COMMA value
+    arguments : arguments COMMA arg
     """
     p[0] = [p[3]]
     p[0] = p[1] + p[0]  # prepend so they're in order
+
+
+def p_arg(p):
+    """
+    arg : value
+        | pair
+    """
+    p[0] = p[1]
+
+
+def p_pair(p):
+    """
+    pair : variable ASSIGN value
+    """
+    p[0] = Value(p[1], p[2])
 
 
 def p_value(p):
@@ -71,14 +79,18 @@ def p_value(p):
           | call
           | tuple
     """
-    p[0] = p[1]
+    p[0] = Value(None, p[1])
 
 
 def p_tuple(p):
     """
     tuple : LPAREN arguments RPAREN
     """
-    p[0] = Tuple(p[2])
+    bindings = p[2]
+    for i, value in enumerate(bindings):
+        if value.key is None:
+            value.key = i
+    p[0] = Tuple(bindings)
 
 
 def p_tuple_empty(p):
@@ -92,7 +104,7 @@ def p_variable(p):
     """
     variable : NAME
     """
-    p[0] = Variable(p[1])
+    p[0] = Value(p[1], None)
 
 
 def p_constant(p):
@@ -100,11 +112,11 @@ def p_constant(p):
     constant : STRING
              | NUMERAL
     """
-    p[0] = Constant(p[1])
+    p[0] = Value(None, p[1])
 
 
 def p_error(p):
-    print("Syntax error.")
+    print("Syntax error.", p)
 
 
 yacker = yacc.yacc()

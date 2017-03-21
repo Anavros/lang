@@ -1,43 +1,50 @@
 
 
-def assign(storage, name, value):
-    if name in storage.keys():
+def assign(scope):
+    name  = scope[0]
+    value = scope[1]
+    if name in scope.keys():
         print("Variable '{}' already exists!".format(name))
     else:
-        storage[name] = value
+        scope[name] = value
         print("Set '{}' to '{}'.".format(name, value))
 
 
-def mutate(storage, name, value):
-    if name in storage.keys():
-        storage[name] = value
-        print("Mutate '{}' to '{}'.".format(name, value))
+def mutate(scope):
+    name = scope[0]
+    newvalue = scope[1]
+    if name in scope.keys():
+        scope[name] = newvalue
+        print("Mutate '{}' to '{}'.".format(name, newvalue))
     else:
         print("Variable '{}' does not exist.")
 
 
-def create_new_function(scope, name, args, block):
+def create_new_function(scope):
+    name = scope[0]
+    args = scope[1]
+    code = scope[2]
     if name in scope.keys():
         print("Function '{}' already exists.".format(name))
     else:
-        def f(*args):
-            return scope['execute'](block, scope)
+        def f(scope):
+            return scope['execute'](code, scope)
         scope[name] = f
         print("Created new function:", name)
 
 
-def print_(scope, *args):
-    print(*args)
+def print_(scope):
+    print(*[v for k, v in scope.items() if type(k) is int])
 
 
-def sum_(_, a, b):
-    return a + b
+def sum_(scope):
+    return scope[0] + scope[1]
 
-def difference(_, a, b):
-    return a - b
+def difference(scope):
+    return scope[0] + scope[1]
 
-def product(_, a, b):
-    return a * b
+def product(scope):
+    return scope[0] + scope[1]
 
-def quotient(_, a, b):
-    return a / b
+def quotient(scope):
+    return scope[0] + scope[1]

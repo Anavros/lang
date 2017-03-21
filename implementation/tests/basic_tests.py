@@ -29,16 +29,28 @@ def test_program_return_values():
     """
     # NOTE: in the future, not assigning a retval might be an error.
     program = lang.run(lang.ast(source))
-    assert program == [[4]]  # return vals are always lists
+    assert program == [4]  # return vals are always lists
 
 
 def test_function_creation():
     source = """
-    function("four", {
+    function("four", (), {
         return(4);
     });
-
-    four();
+    return(four());
     """
     # Just make sure it doesn't throw any errors.
     result = lang.run(lang.ast(source))
+    assert result == [4];
+
+
+def test_function_argument_passing():
+    source = """
+    function("echo", (x), {
+        return(x);
+    });
+    return(echo("Hello"));
+    """
+    # Just make sure it doesn't throw any errors.
+    result = lang.run(lang.ast(source))
+    assert result == ["Hello"]
