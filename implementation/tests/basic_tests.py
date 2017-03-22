@@ -65,6 +65,15 @@ def test_named_arg_return():
     assert program == [('x', 1)]
 
 
+def test_variable_assignment():
+    source = """
+    assign("x", 10);
+    return(x);
+    """
+    program = lang.run(source)
+    assert program == [(0, 10)]
+
+
 def _test_function_creation():
     source = """
     function("four", (), {

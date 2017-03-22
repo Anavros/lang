@@ -3,7 +3,7 @@
 Send output from one function directly into another function.
 ###
 
-# Traditionally:
+# Recursively:
 y = foo(bar(baz(x)));
 
 # Single-dispatch style:
@@ -15,3 +15,9 @@ y = x >> foo() >> bar() >> baz();
 y << baz() << bar() << foo() << x;
 # Which is a little too close to c++ nonsense for my liking.
 y is baz() of bar() of foo(x);
+
+# Pipelining style:
+y = x
+|> foo()
+|> bar()
+|> baz();

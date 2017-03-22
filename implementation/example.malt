@@ -1,2 +1,4 @@
 
-return(x=sum(2, sum(2, sum(2, 2))));
+assign("x", 10);
+print(x);
+#return(x);

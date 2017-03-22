@@ -41,27 +41,36 @@ def evaluate(expr, scope):
                 return evaluate(args, scope)
             else:
                 # Don't return until return.
-                do(name, evaluate(args, scope), scope)
+                retval, scope = do(name, evaluate(args, scope), scope)
 
     elif type(expr) is Call:
         name = expr.name
         args = expr.args
         if name == 'return':
+            print("Calling return as expression? Probably bad.")
             return evaluate(args, scope)
         else:
             # If something is called as an expression,
             # we do need to return that value.
-            return do(name, evaluate(args, scope), scope)
+            retval, scope = do(name, evaluate(args, scope), scope)
+            return retval
 
     elif type(expr) is Tuple:
         bindings = []
         for value in expr.values:
-            bindings.append((value.key, evaluate(value.val, scope)))
+            bindings.append(evaluate(value, scope))
         return bindings
 
     elif type(expr) is Value:
         # if expr.val is None ... do name lookup
-        return expr.key, evaluate(expr.val, scope)
+        if expr.val is None:
+            if expr.key in scope.keys():
+                return expr.key, scope[expr.key]
+            else:
+                print("Lookup Error:", expr, type(expr))
+                return None, None
+        else:
+            return expr.key, evaluate(expr.val, scope)
 
     else:
         print("Evaluation Error:", expr, type(expr))
@@ -73,7 +82,7 @@ def do(name, args, scope):
         subscope = scope.copy();
         subscope.update(args);
         # return scope?
-        return scope[name](subscope)
+        return (scope[name](subscope), scope)
     else:
         print("Function '{}' is not defined.".format(name))
-        return []
+        return ([], scope)

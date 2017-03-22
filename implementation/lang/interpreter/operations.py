@@ -1,13 +1,15 @@
 
 
-def assign(scope):
-    name  = scope[0]
-    value = scope[1]
-    if name in scope.keys():
+def assign(local):
+    name  = local[0]
+    value = local[1]
+    if name in local.keys():
         print("Variable '{}' already exists!".format(name))
+        return local
     else:
-        scope[name] = value
+        local[name] = value
         print("Set '{}' to '{}'.".format(name, value))
+        return local
 
 
 def mutate(scope):
