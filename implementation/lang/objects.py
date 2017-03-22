@@ -5,33 +5,32 @@ class Result:
         pass
 
 
-class Program:
+class Lang: pass
+
+
+class Program(Lang):
     def __init__(self, statements):
         self.statements = statements
 
     def __repr__(self):
-        return "Program {{\n{}\n}}".format(self.statements)
+        lines = []
+        lines.append("PROGRAM {")
+        for st in self.statements:
+            lines.append(repr(st))
+        lines.append("}")
+        return '\n'.join(lines)
 
 
-class Call:
-    def __init__(self, function, args):
-        self.function = function
+class Call(Lang):
+    def __init__(self, name, args):
+        self.name = name
         self.args = args
 
     def __repr__(self):
-        return "Call({}, {})".format(self.function, self.args)
+        return "CALL({}, {})".format(self.name, self.args)
 
 
-class Function:
-    def __init__(self, name):
-        self.name = name
-        self.code = "TODO!"
-
-    def __repr__(self):
-        return "Fn|{}|".format(self.name)
-
-
-class Tuple:
+class Tuple(Lang):
     def __init__(self, values):
         # List of values with keys set to either positions or keywords.
         self.values = values
@@ -40,10 +39,10 @@ class Tuple:
         return str(self.values)
 
 
-class Value:
+class Value(Lang):
     def __init__(self, key, val):
         self.key = key
         self.val = val
 
     def __repr__(self):
-        return "{}={}".format(self.key, self.val) 
+        return "({}={})".format(self.key, self.val) 

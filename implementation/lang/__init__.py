@@ -16,5 +16,15 @@ def ast(source):
         return root
 
 
-def run(root):
-    return executor.start(root)
+def run(source):
+    return executor.start(ast(source))
+
+
+def dump_tokens(source):
+    lexer.input(source)
+    for token in lexer:
+        print(token)
+
+
+def dump_ast(source):
+    print(ast(source))
