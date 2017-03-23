@@ -70,6 +70,8 @@ def test_variable_assignment():
     assign("x", 10);
     return(x);
     """
+    # It tries to return [('x', 10)] because 'x' has a name.
+    # This probably isn't what we want?
     program = lang.run(source)
     assert program == [(0, 10)]
 

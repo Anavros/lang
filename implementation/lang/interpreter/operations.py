@@ -1,52 +1,59 @@
 
 
-def assign(local):
+# Create a binding in the global namespace.
+# Mutates global scope.
+def assign(scope, local):
     name  = local[0]
     value = local[1]
-    if name in local.keys():
+    if name in scope.keys():
         print("Variable '{}' already exists!".format(name))
-        return local
     else:
-        local[name] = value
+        scope[name] = value
         print("Set '{}' to '{}'.".format(name, value))
-        return local
+    return []
 
 
-def mutate(scope):
-    name = scope[0]
-    newvalue = scope[1]
+def mutate(scope, local):
+    name = local[0]
+    newvalue = local[1]
     if name in scope.keys():
         scope[name] = newvalue
         print("Mutate '{}' to '{}'.".format(name, newvalue))
     else:
         print("Variable '{}' does not exist.")
+    return []
 
 
-def create_new_function(scope):
-    name = scope[0]
-    args = scope[1]
-    code = scope[2]
+# Create a function in the global namespace.
+# Fails if such a function is already named.
+def create_new_function(scope, local):
+    name = local[0]
+    args = local[1]
+    code = local[2]
     if name in scope.keys():
         print("Function '{}' already exists.".format(name))
     else:
-        def f(scope):
+        def f(scope, local):
+            # confusing
             return scope['execute'](code, scope)
         scope[name] = f
         print("Created new function:", name)
+    return []
 
 
-def print_(scope):
-    print(*[v for k, v in scope.items() if type(k) is int])
+def print_(scope, local):
+    print(local)
+    return []
 
 
-def sum_(scope):
-    return scope[0] + scope[1]
+def sum_(scope, local):
+    return local[0] + local[1]
 
-def difference(scope):
-    return scope[0] + scope[1]
+def difference(scope, local):
+    return local[0] - local[1]
 
-def product(scope):
-    return scope[0] + scope[1]
+def product(scope, local):
+    return local[0] * local[1]
 
-def quotient(scope):
-    return scope[0] + scope[1]
+def quotient(scope, local):
+    return local[0] / local[1]

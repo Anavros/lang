@@ -38,10 +38,10 @@ def evaluate(expr, scope):
             name = statement.name
             args = statement.args
             if name == 'return':
-                return evaluate(args, scope)
+                return enumerate_args(evaluate(args, scope))
             else:
                 # Don't return until return.
-                retval, scope = do(name, evaluate(args, scope), scope)
+                retval = do(name, evaluate(args, scope), scope)
 
     elif type(expr) is Call:
         name = expr.name
@@ -52,7 +52,7 @@ def evaluate(expr, scope):
         else:
             # If something is called as an expression,
             # we do need to return that value.
-            retval, scope = do(name, evaluate(args, scope), scope)
+            retval = do(name, evaluate(args, scope), scope)
             return retval
 
     elif type(expr) is Tuple:
@@ -62,10 +62,14 @@ def evaluate(expr, scope):
         return bindings
 
     elif type(expr) is Value:
-        # if expr.val is None ... do name lookup
         if expr.val is None:
+            # Variable lookup.
             if expr.key in scope.keys():
-                return expr.key, scope[expr.key]
+                #return expr.key, scope[expr.key]
+                # Variables aren't necessarily kwargs.
+                # If you return expr.key, it will be treated like
+                # a kwarg.
+                return None, scope[expr.key]
             else:
                 print("Lookup Error:", expr, type(expr))
                 return None, None
@@ -77,12 +81,35 @@ def evaluate(expr, scope):
         return []
 
 
+def enumerate_args(args):
+    """
+    Change the keys of all unnamed args into their positions.
+    Named args are kept the same.
+    """
+    result = []
+    for i, argument in enumerate(args):
+        k, v = argument
+        if k is None:
+            k = i  # positional args have no keyword
+        result.append((k, v))
+    return result
+
+
+def convert_args(args):
+    """
+    Convert args from a list of (key, value) pairs to a dict.
+    """
+    return {k:v for k, v in args}
+
+
 def do(name, args, scope):
+    """
+    Call a lang function. Provides global and local scopes.
+    """
     if name in scope.keys():
-        subscope = scope.copy();
-        subscope.update(args);
-        # return scope?
-        return (scope[name](subscope), scope)
+        subscope = convert_args(enumerate_args(args));
+        # Mutates scope in place.
+        return scope[name](scope, subscope)
     else:
-        print("Function '{}' is not defined.".format(name))
-        return ([], scope)
+        print("Function Lookup Error:", name)
+        return []
