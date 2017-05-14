@@ -1,3 +1,10 @@
 
-assign("x", product(20, 20));
-print(x);
+function("four", (), {
+    return(4);
+});
+
+function("fours", (), {
+    return(4, 4);
+});
+
+return(fours());

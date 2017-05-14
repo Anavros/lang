@@ -27,6 +27,13 @@ def p_statement(p):
     p[0] = p[1]
 
 
+def p_return(p):
+    """
+    return : RETURN value SEMICOLON
+    """
+    p[0] = p[2]
+
+
 def p_call(p):
     """
     call : NAME tuple

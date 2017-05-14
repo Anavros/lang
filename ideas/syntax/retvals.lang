@@ -1,0 +1,17 @@
+
+# Are all return values tuples?
+
+function four() {
+    return 4;
+};
+
+four() == (4);
+
+function fours() {
+    return (4, 4);
+};
+
+fours() == (4, 4);
+
+# No.
+# Tuples must be explicitely returned.

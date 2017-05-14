@@ -1,0 +1,12 @@
+
+sum(product(2, 2), product(3, 3));
+sum(4, product(3, 3));
+sum(4, 9);
+13;
+
+2*2+3*3;
+4+3*3;
+4+9;
+13;
+
+return sum(4, 4);

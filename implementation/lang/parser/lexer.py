@@ -13,6 +13,7 @@ tokens = (
     "NUMERAL",
     "STRING",
     "NAME",
+    "RETURN",
 )
 
 t_LPAREN    = r'\('
@@ -24,6 +25,7 @@ t_SEMICOLON = r';'
 t_COMMA     = r','
 t_COLON     = r':'
 t_NAME      = r'[A-Za-z_][A-Za-z_0-9]*'
+t_RETURN    = r'return'
 
 def t_NUMERAL(t):
     r'\d+'

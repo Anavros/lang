@@ -7,6 +7,7 @@ from lang.interpreter import operations, tools
 debug = tools.debug
 tools.DEBUG = True
 
+
 def start(program):
     retval = evaluate(program, create_global_scope())
     print("Program finished with value:", retval)

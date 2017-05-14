@@ -10,54 +10,57 @@ Rule 0     S' -> program
 Rule 1     program -> program statement
 Rule 2     program -> statement
 Rule 3     statement -> call SEMICOLON
-Rule 4     call -> NAME tuple
-Rule 5     tuple -> LPAREN arguments RPAREN
-Rule 6     tuple -> LPAREN RPAREN
-Rule 7     arguments -> arg
-Rule 8     arguments -> arguments COMMA arg
-Rule 9     arg -> positional_value
-Rule 10    arg -> named_value
-Rule 11    arg -> variable
-Rule 12    named_value -> NAME ASSIGN value
-Rule 13    positional_value -> value
-Rule 14    value -> constant
-Rule 15    value -> block
-Rule 16    value -> call
-Rule 17    value -> tuple
-Rule 18    variable -> NAME
-Rule 19    constant -> STRING
-Rule 20    constant -> NUMERAL
-Rule 21    block -> LBRACE program RBRACE
+Rule 4     return -> RETURN value SEMICOLON
+Rule 5     call -> NAME tuple
+Rule 6     tuple -> LPAREN arguments RPAREN
+Rule 7     tuple -> LPAREN RPAREN
+Rule 8     arguments -> arg
+Rule 9     arguments -> arguments COMMA arg
+Rule 10    arg -> positional_value
+Rule 11    arg -> named_value
+Rule 12    arg -> variable
+Rule 13    named_value -> NAME ASSIGN value
+Rule 14    positional_value -> value
+Rule 15    value -> constant
+Rule 16    value -> block
+Rule 17    value -> call
+Rule 18    value -> tuple
+Rule 19    variable -> NAME
+Rule 20    constant -> STRING
+Rule 21    constant -> NUMERAL
+Rule 22    block -> LBRACE program RBRACE
 
 Terminals, with rules where they appear
 
-ASSIGN               : 12
+ASSIGN               : 13
 COLON                : 
-COMMA                : 8
-LBRACE               : 21
-LPAREN               : 5 6
-NAME                 : 4 12 18
-NUMERAL              : 20
-RBRACE               : 21
-RPAREN               : 5 6
-SEMICOLON            : 3
-STRING               : 19
+COMMA                : 9
+LBRACE               : 22
+LPAREN               : 6 7
+NAME                 : 5 13 19
+NUMERAL              : 21
+RBRACE               : 22
+RETURN               : 4
+RPAREN               : 6 7
+SEMICOLON            : 3 4
+STRING               : 20
 error                : 
 
 Nonterminals, with rules where they appear
 
-arg                  : 7 8
-arguments            : 5 8
-block                : 15
-call                 : 3 16
-constant             : 14
-named_value          : 10
-positional_value     : 9
-program              : 1 21 0
+arg                  : 8 9
+arguments            : 6 9
+block                : 16
+call                 : 3 17
+constant             : 15
+named_value          : 11
+positional_value     : 10
+program              : 1 22 0
+return               : 
 statement            : 1 2
-tuple                : 4 17
-value                : 12 13
-variable             : 11
+tuple                : 5 18
+value                : 4 13 14
+variable             : 12
 
 Parsing method: LALR
 
@@ -67,44 +70,34 @@ state 0
     (1) program -> . program statement
     (2) program -> . statement
     (3) statement -> . call SEMICOLON
-    (4) call -> . NAME tuple
+    (5) call -> . NAME tuple
 
-    NAME            shift and go to state 3
+    NAME            shift and go to state 4
 
-    program                        shift and go to state 1
-    statement                      shift and go to state 4
-    call                           shift and go to state 2
+    program                        shift and go to state 2
+    statement                      shift and go to state 3
+    call                           shift and go to state 1
 
 state 1
+
+    (3) statement -> call . SEMICOLON
+
+    SEMICOLON       shift and go to state 5
+
+
+state 2
 
     (0) S' -> program .
     (1) program -> program . statement
     (3) statement -> . call SEMICOLON
-    (4) call -> . NAME tuple
+    (5) call -> . NAME tuple
 
-    NAME            shift and go to state 3
+    NAME            shift and go to state 4
 
-    statement                      shift and go to state 5
-    call                           shift and go to state 2
-
-state 2
-
-    (3) statement -> call . SEMICOLON
-
-    SEMICOLON       shift and go to state 6
-
+    statement                      shift and go to state 6
+    call                           shift and go to state 1
 
 state 3
-
-    (4) call -> NAME . tuple
-    (5) tuple -> . LPAREN arguments RPAREN
-    (6) tuple -> . LPAREN RPAREN
-
-    LPAREN          shift and go to state 8
-
-    tuple                          shift and go to state 7
-
-state 4
 
     (2) program -> statement .
 
@@ -113,7 +106,26 @@ state 4
     RBRACE          reduce using rule 2 (program -> statement .)
 
 
+state 4
+
+    (5) call -> NAME . tuple
+    (6) tuple -> . LPAREN arguments RPAREN
+    (7) tuple -> . LPAREN RPAREN
+
+    LPAREN          shift and go to state 7
+
+    tuple                          shift and go to state 8
+
 state 5
+
+    (3) statement -> call SEMICOLON .
+
+    NAME            reduce using rule 3 (statement -> call SEMICOLON .)
+    $end            reduce using rule 3 (statement -> call SEMICOLON .)
+    RBRACE          reduce using rule 3 (statement -> call SEMICOLON .)
+
+
+state 6
 
     (1) program -> program statement .
 
@@ -122,304 +134,295 @@ state 5
     RBRACE          reduce using rule 1 (program -> program statement .)
 
 
-state 6
-
-    (3) statement -> call SEMICOLON .
-
-    RBRACE          reduce using rule 3 (statement -> call SEMICOLON .)
-    NAME            reduce using rule 3 (statement -> call SEMICOLON .)
-    $end            reduce using rule 3 (statement -> call SEMICOLON .)
-
-
 state 7
 
-    (4) call -> NAME tuple .
+    (6) tuple -> LPAREN . arguments RPAREN
+    (7) tuple -> LPAREN . RPAREN
+    (8) arguments -> . arg
+    (9) arguments -> . arguments COMMA arg
+    (10) arg -> . positional_value
+    (11) arg -> . named_value
+    (12) arg -> . variable
+    (14) positional_value -> . value
+    (13) named_value -> . NAME ASSIGN value
+    (19) variable -> . NAME
+    (15) value -> . constant
+    (16) value -> . block
+    (17) value -> . call
+    (18) value -> . tuple
+    (20) constant -> . STRING
+    (21) constant -> . NUMERAL
+    (22) block -> . LBRACE program RBRACE
+    (5) call -> . NAME tuple
+    (6) tuple -> . LPAREN arguments RPAREN
+    (7) tuple -> . LPAREN RPAREN
 
-    RPAREN          reduce using rule 4 (call -> NAME tuple .)
-    COMMA           reduce using rule 4 (call -> NAME tuple .)
-    SEMICOLON       reduce using rule 4 (call -> NAME tuple .)
+    RPAREN          shift and go to state 17
+    NAME            shift and go to state 16
+    STRING          shift and go to state 11
+    NUMERAL         shift and go to state 18
+    LBRACE          shift and go to state 23
+    LPAREN          shift and go to state 7
 
+    positional_value               shift and go to state 9
+    arguments                      shift and go to state 13
+    call                           shift and go to state 12
+    constant                       shift and go to state 20
+    variable                       shift and go to state 15
+    named_value                    shift and go to state 14
+    arg                            shift and go to state 22
+    value                          shift and go to state 21
+    block                          shift and go to state 10
+    tuple                          shift and go to state 19
 
 state 8
 
-    (5) tuple -> LPAREN . arguments RPAREN
-    (6) tuple -> LPAREN . RPAREN
-    (7) arguments -> . arg
-    (8) arguments -> . arguments COMMA arg
-    (9) arg -> . positional_value
-    (10) arg -> . named_value
-    (11) arg -> . variable
-    (13) positional_value -> . value
-    (12) named_value -> . NAME ASSIGN value
-    (18) variable -> . NAME
-    (14) value -> . constant
-    (15) value -> . block
-    (16) value -> . call
-    (17) value -> . tuple
-    (19) constant -> . STRING
-    (20) constant -> . NUMERAL
-    (21) block -> . LBRACE program RBRACE
-    (4) call -> . NAME tuple
-    (5) tuple -> . LPAREN arguments RPAREN
-    (6) tuple -> . LPAREN RPAREN
+    (5) call -> NAME tuple .
 
-    RPAREN          shift and go to state 9
-    NAME            shift and go to state 20
-    STRING          shift and go to state 17
-    NUMERAL         shift and go to state 12
-    LBRACE          shift and go to state 22
-    LPAREN          shift and go to state 8
+    SEMICOLON       reduce using rule 5 (call -> NAME tuple .)
+    RPAREN          reduce using rule 5 (call -> NAME tuple .)
+    COMMA           reduce using rule 5 (call -> NAME tuple .)
 
-    value                          shift and go to state 15
-    variable                       shift and go to state 10
-    block                          shift and go to state 13
-    tuple                          shift and go to state 18
-    call                           shift and go to state 19
-    constant                       shift and go to state 16
-    named_value                    shift and go to state 11
-    positional_value               shift and go to state 21
-    arguments                      shift and go to state 23
-    arg                            shift and go to state 14
 
 state 9
 
-    (6) tuple -> LPAREN RPAREN .
+    (10) arg -> positional_value .
 
-    RPAREN          reduce using rule 6 (tuple -> LPAREN RPAREN .)
-    COMMA           reduce using rule 6 (tuple -> LPAREN RPAREN .)
-    SEMICOLON       reduce using rule 6 (tuple -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 10 (arg -> positional_value .)
+    COMMA           reduce using rule 10 (arg -> positional_value .)
 
 
 state 10
 
-    (11) arg -> variable .
+    (16) value -> block .
 
-    RPAREN          reduce using rule 11 (arg -> variable .)
-    COMMA           reduce using rule 11 (arg -> variable .)
+    RPAREN          reduce using rule 16 (value -> block .)
+    COMMA           reduce using rule 16 (value -> block .)
 
 
 state 11
 
-    (10) arg -> named_value .
+    (20) constant -> STRING .
 
-    RPAREN          reduce using rule 10 (arg -> named_value .)
-    COMMA           reduce using rule 10 (arg -> named_value .)
+    RPAREN          reduce using rule 20 (constant -> STRING .)
+    COMMA           reduce using rule 20 (constant -> STRING .)
 
 
 state 12
 
-    (20) constant -> NUMERAL .
+    (17) value -> call .
 
-    RPAREN          reduce using rule 20 (constant -> NUMERAL .)
-    COMMA           reduce using rule 20 (constant -> NUMERAL .)
+    RPAREN          reduce using rule 17 (value -> call .)
+    COMMA           reduce using rule 17 (value -> call .)
 
 
 state 13
 
-    (15) value -> block .
+    (6) tuple -> LPAREN arguments . RPAREN
+    (9) arguments -> arguments . COMMA arg
 
-    RPAREN          reduce using rule 15 (value -> block .)
-    COMMA           reduce using rule 15 (value -> block .)
+    RPAREN          shift and go to state 24
+    COMMA           shift and go to state 25
 
 
 state 14
 
-    (7) arguments -> arg .
+    (11) arg -> named_value .
 
-    RPAREN          reduce using rule 7 (arguments -> arg .)
-    COMMA           reduce using rule 7 (arguments -> arg .)
+    RPAREN          reduce using rule 11 (arg -> named_value .)
+    COMMA           reduce using rule 11 (arg -> named_value .)
 
 
 state 15
 
-    (13) positional_value -> value .
+    (12) arg -> variable .
 
-    RPAREN          reduce using rule 13 (positional_value -> value .)
-    COMMA           reduce using rule 13 (positional_value -> value .)
+    RPAREN          reduce using rule 12 (arg -> variable .)
+    COMMA           reduce using rule 12 (arg -> variable .)
 
 
 state 16
 
-    (14) value -> constant .
+    (13) named_value -> NAME . ASSIGN value
+    (19) variable -> NAME .
+    (5) call -> NAME . tuple
+    (6) tuple -> . LPAREN arguments RPAREN
+    (7) tuple -> . LPAREN RPAREN
 
-    RPAREN          reduce using rule 14 (value -> constant .)
-    COMMA           reduce using rule 14 (value -> constant .)
+    ASSIGN          shift and go to state 26
+    RPAREN          reduce using rule 19 (variable -> NAME .)
+    COMMA           reduce using rule 19 (variable -> NAME .)
+    LPAREN          shift and go to state 7
 
+    tuple                          shift and go to state 8
 
 state 17
 
-    (19) constant -> STRING .
+    (7) tuple -> LPAREN RPAREN .
 
-    RPAREN          reduce using rule 19 (constant -> STRING .)
-    COMMA           reduce using rule 19 (constant -> STRING .)
+    SEMICOLON       reduce using rule 7 (tuple -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 7 (tuple -> LPAREN RPAREN .)
+    COMMA           reduce using rule 7 (tuple -> LPAREN RPAREN .)
 
 
 state 18
 
-    (17) value -> tuple .
+    (21) constant -> NUMERAL .
 
-    RPAREN          reduce using rule 17 (value -> tuple .)
-    COMMA           reduce using rule 17 (value -> tuple .)
+    RPAREN          reduce using rule 21 (constant -> NUMERAL .)
+    COMMA           reduce using rule 21 (constant -> NUMERAL .)
 
 
 state 19
 
-    (16) value -> call .
+    (18) value -> tuple .
 
-    RPAREN          reduce using rule 16 (value -> call .)
-    COMMA           reduce using rule 16 (value -> call .)
+    RPAREN          reduce using rule 18 (value -> tuple .)
+    COMMA           reduce using rule 18 (value -> tuple .)
 
 
 state 20
 
-    (12) named_value -> NAME . ASSIGN value
-    (18) variable -> NAME .
-    (4) call -> NAME . tuple
-    (5) tuple -> . LPAREN arguments RPAREN
-    (6) tuple -> . LPAREN RPAREN
+    (15) value -> constant .
 
-    ASSIGN          shift and go to state 24
-    RPAREN          reduce using rule 18 (variable -> NAME .)
-    COMMA           reduce using rule 18 (variable -> NAME .)
-    LPAREN          shift and go to state 8
+    RPAREN          reduce using rule 15 (value -> constant .)
+    COMMA           reduce using rule 15 (value -> constant .)
 
-    tuple                          shift and go to state 7
 
 state 21
 
-    (9) arg -> positional_value .
+    (14) positional_value -> value .
 
-    RPAREN          reduce using rule 9 (arg -> positional_value .)
-    COMMA           reduce using rule 9 (arg -> positional_value .)
+    RPAREN          reduce using rule 14 (positional_value -> value .)
+    COMMA           reduce using rule 14 (positional_value -> value .)
 
 
 state 22
 
-    (21) block -> LBRACE . program RBRACE
-    (1) program -> . program statement
-    (2) program -> . statement
-    (3) statement -> . call SEMICOLON
-    (4) call -> . NAME tuple
+    (8) arguments -> arg .
 
-    NAME            shift and go to state 3
+    RPAREN          reduce using rule 8 (arguments -> arg .)
+    COMMA           reduce using rule 8 (arguments -> arg .)
 
-    program                        shift and go to state 25
-    statement                      shift and go to state 4
-    call                           shift and go to state 2
 
 state 23
 
-    (5) tuple -> LPAREN arguments . RPAREN
-    (8) arguments -> arguments . COMMA arg
+    (22) block -> LBRACE . program RBRACE
+    (1) program -> . program statement
+    (2) program -> . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME tuple
 
-    RPAREN          shift and go to state 27
-    COMMA           shift and go to state 26
+    NAME            shift and go to state 4
 
+    program                        shift and go to state 27
+    statement                      shift and go to state 3
+    call                           shift and go to state 1
 
 state 24
 
-    (12) named_value -> NAME ASSIGN . value
-    (14) value -> . constant
-    (15) value -> . block
-    (16) value -> . call
-    (17) value -> . tuple
-    (19) constant -> . STRING
-    (20) constant -> . NUMERAL
-    (21) block -> . LBRACE program RBRACE
-    (4) call -> . NAME tuple
-    (5) tuple -> . LPAREN arguments RPAREN
-    (6) tuple -> . LPAREN RPAREN
+    (6) tuple -> LPAREN arguments RPAREN .
 
-    STRING          shift and go to state 17
-    NUMERAL         shift and go to state 12
-    LBRACE          shift and go to state 22
-    NAME            shift and go to state 3
-    LPAREN          shift and go to state 8
+    SEMICOLON       reduce using rule 6 (tuple -> LPAREN arguments RPAREN .)
+    RPAREN          reduce using rule 6 (tuple -> LPAREN arguments RPAREN .)
+    COMMA           reduce using rule 6 (tuple -> LPAREN arguments RPAREN .)
 
-    value                          shift and go to state 28
-    constant                       shift and go to state 16
-    block                          shift and go to state 13
-    tuple                          shift and go to state 18
-    call                           shift and go to state 19
 
 state 25
 
-    (21) block -> LBRACE program . RBRACE
-    (1) program -> program . statement
-    (3) statement -> . call SEMICOLON
-    (4) call -> . NAME tuple
+    (9) arguments -> arguments COMMA . arg
+    (10) arg -> . positional_value
+    (11) arg -> . named_value
+    (12) arg -> . variable
+    (14) positional_value -> . value
+    (13) named_value -> . NAME ASSIGN value
+    (19) variable -> . NAME
+    (15) value -> . constant
+    (16) value -> . block
+    (17) value -> . call
+    (18) value -> . tuple
+    (20) constant -> . STRING
+    (21) constant -> . NUMERAL
+    (22) block -> . LBRACE program RBRACE
+    (5) call -> . NAME tuple
+    (6) tuple -> . LPAREN arguments RPAREN
+    (7) tuple -> . LPAREN RPAREN
 
-    RBRACE          shift and go to state 29
-    NAME            shift and go to state 3
+    NAME            shift and go to state 16
+    STRING          shift and go to state 11
+    NUMERAL         shift and go to state 18
+    LBRACE          shift and go to state 23
+    LPAREN          shift and go to state 7
 
-    statement                      shift and go to state 5
-    call                           shift and go to state 2
+    positional_value               shift and go to state 9
+    call                           shift and go to state 12
+    constant                       shift and go to state 20
+    variable                       shift and go to state 15
+    named_value                    shift and go to state 14
+    arg                            shift and go to state 28
+    value                          shift and go to state 21
+    block                          shift and go to state 10
+    tuple                          shift and go to state 19
 
 state 26
 
-    (8) arguments -> arguments COMMA . arg
-    (9) arg -> . positional_value
-    (10) arg -> . named_value
-    (11) arg -> . variable
-    (13) positional_value -> . value
-    (12) named_value -> . NAME ASSIGN value
-    (18) variable -> . NAME
-    (14) value -> . constant
-    (15) value -> . block
-    (16) value -> . call
-    (17) value -> . tuple
-    (19) constant -> . STRING
-    (20) constant -> . NUMERAL
-    (21) block -> . LBRACE program RBRACE
-    (4) call -> . NAME tuple
-    (5) tuple -> . LPAREN arguments RPAREN
-    (6) tuple -> . LPAREN RPAREN
+    (13) named_value -> NAME ASSIGN . value
+    (15) value -> . constant
+    (16) value -> . block
+    (17) value -> . call
+    (18) value -> . tuple
+    (20) constant -> . STRING
+    (21) constant -> . NUMERAL
+    (22) block -> . LBRACE program RBRACE
+    (5) call -> . NAME tuple
+    (6) tuple -> . LPAREN arguments RPAREN
+    (7) tuple -> . LPAREN RPAREN
 
-    NAME            shift and go to state 20
-    STRING          shift and go to state 17
-    NUMERAL         shift and go to state 12
-    LBRACE          shift and go to state 22
-    LPAREN          shift and go to state 8
+    STRING          shift and go to state 11
+    NUMERAL         shift and go to state 18
+    LBRACE          shift and go to state 23
+    NAME            shift and go to state 4
+    LPAREN          shift and go to state 7
 
-    value                          shift and go to state 15
-    variable                       shift and go to state 10
-    block                          shift and go to state 13
-    tuple                          shift and go to state 18
-    call                           shift and go to state 19
-    constant                       shift and go to state 16
-    named_value                    shift and go to state 11
-    positional_value               shift and go to state 21
-    arg                            shift and go to state 30
+    block                          shift and go to state 10
+    constant                       shift and go to state 20
+    tuple                          shift and go to state 19
+    call                           shift and go to state 12
+    value                          shift and go to state 29
 
 state 27
 
-    (5) tuple -> LPAREN arguments RPAREN .
+    (22) block -> LBRACE program . RBRACE
+    (1) program -> program . statement
+    (3) statement -> . call SEMICOLON
+    (5) call -> . NAME tuple
 
-    RPAREN          reduce using rule 5 (tuple -> LPAREN arguments RPAREN .)
-    COMMA           reduce using rule 5 (tuple -> LPAREN arguments RPAREN .)
-    SEMICOLON       reduce using rule 5 (tuple -> LPAREN arguments RPAREN .)
+    RBRACE          shift and go to state 30
+    NAME            shift and go to state 4
 
+    statement                      shift and go to state 6
+    call                           shift and go to state 1
 
 state 28
 
-    (12) named_value -> NAME ASSIGN value .
+    (9) arguments -> arguments COMMA arg .
 
-    RPAREN          reduce using rule 12 (named_value -> NAME ASSIGN value .)
-    COMMA           reduce using rule 12 (named_value -> NAME ASSIGN value .)
+    RPAREN          reduce using rule 9 (arguments -> arguments COMMA arg .)
+    COMMA           reduce using rule 9 (arguments -> arguments COMMA arg .)
 
 
 state 29
 
-    (21) block -> LBRACE program RBRACE .
+    (13) named_value -> NAME ASSIGN value .
 
-    RPAREN          reduce using rule 21 (block -> LBRACE program RBRACE .)
-    COMMA           reduce using rule 21 (block -> LBRACE program RBRACE .)
+    RPAREN          reduce using rule 13 (named_value -> NAME ASSIGN value .)
+    COMMA           reduce using rule 13 (named_value -> NAME ASSIGN value .)
 
 
 state 30
 
-    (8) arguments -> arguments COMMA arg .
+    (22) block -> LBRACE program RBRACE .
 
-    RPAREN          reduce using rule 8 (arguments -> arguments COMMA arg .)
-    COMMA           reduce using rule 8 (arguments -> arguments COMMA arg .)
+    RPAREN          reduce using rule 22 (block -> LBRACE program RBRACE .)
+    COMMA           reduce using rule 22 (block -> LBRACE program RBRACE .)
 
