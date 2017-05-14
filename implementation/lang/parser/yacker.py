@@ -1,7 +1,7 @@
 
 from ply import yacc
 from lang.objects import *
-
+from lang.parser import runtime
 from lang.parser.lexer import tokens
 
 
@@ -38,7 +38,7 @@ def p_call(p):
     """
     call : NAME tuple
     """
-    p[0] = Call(p[1], p[2])
+    p[0] = runtime.evaluate_function(Call(p[1], p[2]))
 
 
 def p_tuple(p):

@@ -16,6 +16,11 @@ def ast(source):
         return root
 
 
+def evaluate(source):
+    lexer.input(source)
+    return yacker.parse(source, lexer)
+
+
 def run(source):
     return executor.start(ast(source))
 

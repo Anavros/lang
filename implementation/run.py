@@ -13,3 +13,6 @@ elif command == "tokens":
     lang.dump_tokens(source)
 elif command == "ast":
     lang.dump_ast(source)
+elif command == "evaluate":
+    result = lang.evaluate(source)
+    print("Evaluation:", result)
