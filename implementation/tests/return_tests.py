@@ -2,24 +2,31 @@
 import lang
 
 
-def test_empty_return():
+def test_return():
     source = """
-    return();
+    return;
     """
-    result = lang.run(source)
-    #assert result == None
-    assert result == []
+    result = lang.evaluate(source)
+    assert result == None
 
 
-def test_value_return():
+def test_integer_return():
     source = """
-    return("Hello");
+    return 4;
     """
-    result = lang.run(source)
-    assert result == [(0, "Hello")]
+    result = lang.evaluate(source)
+    assert result == 4
 
 
-def test_function_result_return():
+def test_string_return():
+    source = """
+    return "Hello";
+    """
+    result = lang.evaluate(source)
+    assert result == "Hello"
+
+
+def _test_function_result_return():
     source = """
     return(sum(2, 2));
     """
@@ -27,7 +34,7 @@ def test_function_result_return():
     assert program == [(0, 4)]
 
 
-def test_nested_result_return():
+def _test_nested_result_return():
     source = """
     return(sum(2, sum(2, 2)));
     """
@@ -35,7 +42,7 @@ def test_nested_result_return():
     assert program == [(0, 6)]
 
 
-def test_named_arg_return():
+def _test_named_arg_return():
     source = """
     return(x = 1);
     """
@@ -43,7 +50,7 @@ def test_named_arg_return():
     assert program == [('x', 1)]
 
 
-def test_variable_assignment():
+def _test_variable_assignment():
     source = """
     assign("x", 10);
     return(x);

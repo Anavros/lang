@@ -2,6 +2,8 @@
 from ply import lex
 
 tokens = (
+    "RETURN",
+    "DEFINE",
     "LPAREN",
     "RPAREN",
     "LBRACE",
@@ -13,8 +15,14 @@ tokens = (
     "NUMERAL",
     "STRING",
     "NAME",
-    "RETURN",
 )
+
+
+reserved = {
+    "return": "RETURN",
+    "define": "DEFINE",
+}
+
 
 t_LPAREN    = r'\('
 t_RPAREN    = r'\)'
@@ -24,8 +32,15 @@ t_ASSIGN    = r'='
 t_SEMICOLON = r';'
 t_COMMA     = r','
 t_COLON     = r':'
-t_NAME      = r'[A-Za-z_][A-Za-z_0-9]*'
-t_RETURN    = r'return'
+
+
+def t_NAME(t):
+    r'[A-Za-z_][A-Za-z_0-9]*'
+    if t.value in reserved.keys():
+        t.type = reserved[t.value]
+    return t
+    
+
 
 def t_NUMERAL(t):
     r'\d+'

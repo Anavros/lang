@@ -9,54 +9,64 @@ def p_program(p):
     """
     program : program statement
     """
-    p[0] = p[1]
-    p[0].statements.append(p[2])
+    p[0] = p[2]
 
 
 def p_program_end(p):
     """
-    program : statement
+    program : return SEMICOLON
     """
-    p[0] = Program([p[1]])
+    p[0] = p[1]
 
 
 def p_statement(p):
     """
     statement : call SEMICOLON
+    statement : definition SEMICOLON
     """
     p[0] = p[1]
 
 
 def p_return(p):
     """
-    return : RETURN value SEMICOLON
+    return : RETURN value
     """
     p[0] = p[2]
+
+
+def p_definition(p):
+    """
+    definition : DEFINE NAME value
+    """
+    runtime.add_variable(p[2], p[3])
+
+
+def p_function_definition(p):
+    """
+    definition : DEFINE NAME tuple block
+    """
+    runtime.add_variable(p[1], 0) # TODO
 
 
 def p_call(p):
     """
     call : NAME tuple
     """
-    p[0] = runtime.evaluate_function(Call(p[1], p[2]))
+    p[0] = runtime.evaluate_function(p[1], p[2])
 
 
 def p_tuple(p):
     """
     tuple : LPAREN arguments RPAREN
     """
-    bindings = p[2]
-    for i, value in enumerate(bindings):
-        if value.key is None:
-            value.key = i
-    p[0] = Tuple(bindings)
+    p[0] = p[2]
 
 
 def p_tuple_empty(p):
     """
     tuple : LPAREN RPAREN
     """
-    p[0] = Tuple([])
+    p[0] = ()
 
 
 def p_arguments_single(p):
@@ -108,7 +118,7 @@ def p_variable(p):
     """
     variable : NAME
     """
-    p[0] = Value(p[1], None)
+    p[0] = runtime.evaluate_variable(p[1])
 
 
 def p_constant(p):

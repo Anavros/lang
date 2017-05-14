@@ -2,10 +2,28 @@
 from lang.objects import *
 
 
-def evaluate_function(f):
-    print("Evaluating...", f.name, f.args)
-    if f.name == 'sum':
-        a, b = [x.val for x in f.args.values]
-        return Value(0, sum([a, b]))
+values = {}
+
+stdlib = {
+    'sum': sum,
+}
+
+
+def evaluate_variable(name):
+    if name in values.keys():
+        return values[name]
     else:
-        return f
+        raise KeyError("Variable '{}' is not defined.".format(name))
+
+
+def add_variable(name, value):
+    #print("DEFINE {} = {}".format(name, value))
+    values[name] = value;
+
+
+def evaluate_function(name, args):
+    #print("Evaluating...", name, args)
+    if name in stdlib.keys():
+        return stdlib[name](args)
+    else:
+        raise KeyError("Unknown function '{}'.".format(name))
